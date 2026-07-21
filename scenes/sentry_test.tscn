@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://mwxc1jk4ucwo"]
+
+[ext_resource type="Script" uid="uid://mynvl7igwo4e" path="res://scenes/sentry_test.gd" id="1_2sswj"]
+
+[node name="SentryTest" type="Node" unique_id=584489848]
+script = ExtResource("1_2sswj")

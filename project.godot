@@ -15,6 +15,10 @@ run/main_scene="uid://cwdgv27ajdfgw"
 config/features=PackedStringArray("4.7", "Mobile")
 config/icon="res://icon.svg"
 
+[debug]
+
+settings/gdscript/always_track_call_stacks=true
+
 [display]
 
 window/size/viewport_width=1280
@@ -29,3 +33,8 @@ window/stretch/mode="canvas_items"
 
 rendering_device/driver.windows="d3d12"
 renderer/rendering_method="mobile"
+
+[sentry]
+
+schema_version=4
+options/dsn="https://d7b36d3e9dd05804efd11e821a27acae@o4511773081141248.ingest.us.sentry.io/4511773088088064"
