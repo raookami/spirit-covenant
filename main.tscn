@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://dmyq10hq5law5"]
+
+[ext_resource type="Texture2D" uid="uid://c3c7lum23wpac" path="res://assets/spirites/characters/raookami/raookami.png" id="1_ig7tw"]
+
+[node name="Node2D" type="Node2D" unique_id=1905885776]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=669715120]
+position = Vector2(570, 278)
+texture = ExtResource("1_ig7tw")

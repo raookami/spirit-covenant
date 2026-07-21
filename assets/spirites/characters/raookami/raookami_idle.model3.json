@@ -1,0 +1,27 @@
+{
+  "Version": 3,
+  "FileReferences": {
+    "Moc": "raookami_idle.moc3",
+    "Textures": ["raookami_idle.2048/texture_00.png"],
+    "DisplayInfo": "raookami_idle.cdi3.json",
+    "Motions": {
+      "Idle": [
+        {
+          "File": "raookami_idle.motion3.json"
+        }
+      ]
+    }
+  },
+  "Groups": [
+    {
+      "Target": "Parameter",
+      "Name": "EyeBlink",
+      "Ids": []
+    },
+    {
+      "Target": "Parameter",
+      "Name": "LipSync",
+      "Ids": []
+    }
+  ]
+}

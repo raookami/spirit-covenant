@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://cwdgv27ajdfgw"]
+
+[ext_resource type="Script" uid="uid://d3cd7tnb3fxr1" path="res://scenes/battle.gd" id="1_dn72j"]
+
+[node name="Battle" type="Node2D" unique_id=1111014770]
+script = ExtResource("1_dn72j")
+
+[node name="GDCubismUserModel" type="GDCubismUserModel" parent="." unique_id=1315848375]
+assets = "res://assets/spirites/characters/raookami/raookami_idle.model3.json"
+anim_loop = false
+anim_loop_fade_in = true
+anim_expression = ""
+anim_motion = ""
+ParamAngleY = 0.0
+ParamEyeLOpen = 1.0
+ParamEyeROpen = 1.0
+ParamBreath = 0.0
+ParamHairFront = 0.0
+Part = 1.0
+Part3 = 1.0
+Part2 = 1.0
+position = Vector2(747.14966, 1467.0776)

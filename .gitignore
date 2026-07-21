@@ -1,0 +1,36 @@
+# Godot 4+ specific ignores
+.godot/
+.import/
+export_presets.cfg
+*.translation
+
+# Import artifacts
+*.import
+
+# Godot mono
+.mono/
+data_*/
+
+# System / OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Build output
+export/
+builds/
+*.exe
+*.pck
+
+# Live2D compile artifacts (kalau kamu compile ulang GDCubism dari source
+# di folder project, exclude hasil buildnya - source-nya sendiri boleh
+# di-track kalau memang disimpan di dalam project)
+addons/gd_cubism/bin/
+addons/gd_cubism/.sconsign.dblite
+
+# Cubism SDK (biasanya besar & bukan milikmu untuk redistribusi ulang)
+CubismSdkForNative*/
