@@ -23,7 +23,7 @@ Sistem Live2D (baru selesai 20 Juli 2026):
 - ✅ Idle motion loop mulus (`start_motion_loop()`, bukan `start_motion()` biasa)
 - ✅ `spirit.gd` sudah punya fallback otomatis: kalau spirit punya file `.model3.json`, pakai Live2D; kalau tidak, tetap pakai sistem PNG/placeholder lama — jadi 4 Spirit lain tidak perlu Live2D dulu buat tetap bisa dimainkan
 
-Artinya: **fondasi gameplay loop sudah ada, dan Live2D sudah masuk lebih awal dari rencana** (blueprint aslinya menaruh integrasi Live2D di Fase 2, tapi Raookami sudah jalan duluan di titik ini). Kamu ada di ujung Fase 0 / awal Fase 1.
+Artinya: **fondasi gameplay loop sudah ada, dan Live2D sudah masuk lebih awal dari rencana** (blueprint aslinya menaruh integrasi Live2D di Fase 2, tapi Raookami sudah jalan duluan di titik ini). **Fase 0 sudah selesai penuh per 22 Juli 2026** — termasuk StageConfig (data stage dipisah dari hardcode `battle.gd` ke `data/stage_01.tres`), version control (Git + GitHub, repo private), dan crash reporting (Sentry, sudah terverifikasi event masuk ke dashboard). Kamu sekarang siap masuk Fase 1.
 
 ---
 
@@ -57,15 +57,15 @@ Tujuan: pastikan semua sistem yang sudah ada tidak ada bug critical, dan project
 
 ### Checklist
 
-- [ ] Review semua script yang ada — pastikan tidak ada null reference tersembunyi (cek `is_instance_valid()` di semua tempat yang pegang referensi node lain)
-- [ ] Tambah null check di wave/enemy spawning (terutama saat wave kosong / enemies array)
-- [ ] Pastikan block mechanic di `spirit.gd` tidak crash kalau Spirit di-undeploy saat sedang blocking musuh
-- [ ] Setup Git / version control kalau belum ada
-- [ ] Buat Resource (`.tres`) atau JSON untuk `StageConfig` — pisahkan data stage dari hardcode
-- [x] Simple test scene: Spirit (Raoo) + jalur enemy + Crystal HP — sudah jalan di `battle.tscn`, tinggal pastikan kondisi menang/kalah lengkap
+- [x] Review semua script yang ada — pastikan tidak ada null reference tersembunyi (cek `is_instance_valid()` di semua tempat yang pegang referensi node lain) — audit selesai, pola `is_instance_valid()` sudah konsisten dipakai di semua referensi silang spirit↔enemy↔battle
+- [x] Tambah null check di wave/enemy spawning (terutama saat wave kosong / enemies array) — sekaligus perbaiki race condition di `_spawn_enemy()`: `setup(ENEMY_PATH)` sekarang dipanggil **sebelum** `add_child()`, karena `_ready()` jalan langsung saat `add_child()` dan sebelumnya `path` masih kosong di titik itu (sempat "kebetulan jalan" lewat flag `_initialized`, sekarang rapi)
+- [x] Pastikan block mechanic di `spirit.gd` tidak crash kalau Spirit di-undeploy saat sedang blocking musuh — `_try_retreat()` di `battle.gd` sekarang panggil `enemy.clear_blocked()` ke semua musuh yang sedang di-block spirit tsb sebelum `queue_free()`, jadi musuh langsung lanjut jalan tanpa delay 1 frame kosong
+- [x] Setup Git / version control kalau belum ada — repo `raookami/spirit-covenant` sudah di-init, `.gitignore` sudah exclude `.godot/`, `.import`, build artifact GDCubism, dan sudah di-push ke GitHub (private repo)
+- [x] Buat Resource (`.tres`) atau JSON untuk `StageConfig` — pisahkan data stage dari hardcode — dibuat sebagai custom Resource class (`stage_config.gd` + `data/stage_01.tres`), `battle.gd` sekarang load config di `_ready()` lewat `_load_stage_config()`, dengan fallback ke nilai default lama kalau file config gagal ditemukan (tidak silent-break)
+- [x] Simple test scene: Spirit (Raoo) + jalur enemy + Crystal HP — sudah jalan di `battle.tscn`, tinggal pastikan kondisi menang/kalah lengkap — **kondisi Victory sudah terverifikasi jalan** (battle test 22 Juli 2026 berhasil sampai layar VICTORY)
 - [x] GDCubism toolchain siap dipakai kapan saja untuk karakter berikutnya (sudah tidak perlu setup ulang compiler dari nol)
-- [ ] Cek performa Live2D Raookami pakai Godot Profiler (Debugger > Profiler) — catat FPS/render time baseline sekarang, sebelum nambah karakter Live2D lain. Kalau sempat, coba jalankan di 1 device Android low-end/mid-range beneran (bukan cuma PC dev) buat lihat gimana beban render GDCubism di device lemah — ini nentuin apakah perlu batasi jumlah model Live2D yang render bersamaan di 1 battle scene
-- [ ] Setup Sentry (atau tool sejenis, ada free tier) buat auto-capture crash report dari build yang dibagikan ke orang lain — supaya nggak cuma mengandalkan pemain sukarela lapor bug manual
+- [x] Cek performa Live2D Raookami pakai Godot Profiler (Debugger > Profiler) — catat FPS/render time baseline sekarang, sebelum nambah karakter Live2D lain — **hasil (22 Juli 2026): Frame Time ~16.44ms rata-rata ≈ 60 FPS stabil, dengan 1 model Live2D Raookami aktif render selama battle penuh sampai Victory.** Grafik frame time relatif stabil, ada beberapa spike wajar (kemungkinan saat spawn enemy). **Belum dites:** multi-Spirit Live2D render bersamaan, dan device Android low-end/mid-range asli (baru dites di PC dev) — perlu diulang begitu karakter Live2D ke-2 masuk
+- [x] Setup Sentry (atau tool sejenis, ada free tier) buat auto-capture crash report dari build yang dibagikan ke orang lain — supaya nggak cuma mengandalkan pemain sukarela lapor bug manual — **selesai (22 Juli 2026):** SDK resmi `sentry-godot` v2.1.0 terpasang, DSN terkonfigurasi, event test "Hello, World!" berhasil masuk ke dashboard (project `spirit-covenant` di sentry.io)
 
 ### Live Ops & Komunitas (Bisa Mulai Paralel, Tidak Terikat Fase Manapun)
 
@@ -76,7 +76,7 @@ Tujuan: pastikan semua sistem yang sudah ada tidak ada bug critical, dan project
 
 ### Output Fase 0
 
-Satu scene yang bisa dimainkan end-to-end: tempatkan Spirit → musuh datang → Crystal bisa hancur atau survive. **(Sudah tercapai secara fungsional — sisa checklist di atas soal kerapian kode, bukan soal main tidaknya bisa dimainkan.)**
+Satu scene yang bisa dimainkan end-to-end: tempatkan Spirit → musuh datang → Crystal bisa hancur atau survive. **✅ Fase 0 selesai penuh (22 Juli 2026)** — semua item checklist tuntas, termasuk kerapian kode (race condition spawn enemy, retreat/block cleanup), tooling (Git+GitHub, Sentry), dan validasi performa baseline (60 FPS stabil dengan 1 model Live2D).
 
 ---
 
