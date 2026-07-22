@@ -1,6 +1,14 @@
 extends Node2D
 
 # ============================================================
+# 🧪 TEST SEMENTARA — HAPUS/SET FALSE SETELAH SELESAI TEST 🧪
+# Boost HP + block_atk musuh biar cukup kuat & tanky buat stress-test
+# spirit.gd take_damage()/mati. Musuh default (hp=5) mati kelewat cepat
+# sebelum sempat nge-hit balik Spirit yang HP-nya 350-1200.
+# ============================================================
+const TESTING_TANKY_ENEMY := true
+
+# ============================================================
 # STAT MUSUH
 # ============================================================
 var hp: int        = 5
@@ -24,7 +32,7 @@ var _initialized: bool = false
 var blocked_by: Node2D = null   # referensi spirit yang mem-block
 var block_attack_timer: float = 0.0
 var block_attack_cd: float    = 1.0  # musuh serang spirit per 1 detik
-var block_atk: int            = 1    # damage musuh ke spirit (belum dipakai, siap untuk HP spirit)
+var block_atk: int            = 1    # damage musuh ke spirit yang mem-block-nya
 
 # ============================================================
 # NODE REFERENSI
@@ -53,6 +61,14 @@ func setup(enemy_path: Array):
 		_init_position()
 
 func _ready():
+	if TESTING_TANKY_ENEMY:
+		# 🧪 Boost sementara buat stress-test Spirit take_damage()/mati.
+		# HP tinggi = musuh tahan lama kena serang Spirit → block_atk tinggi
+		# = HP Spirit kelihatan turun cepat & bisa habis buat lihat _die().
+		hp          = 560
+		max_hp      = 560
+		block_atk   = 10
+
 	_initialized = true
 	_build_visuals()
 	if path.size() > 0:
@@ -160,8 +176,7 @@ func _process(delta):
 func _attack_blocker():
 	if not is_instance_valid(blocked_by):
 		return
-	# Spirit belum punya HP di sesi ini — placeholder untuk Fase 2
-	# blocked_by.take_damage(block_atk)
+	blocked_by.take_damage(block_atk)
 	modulate = Color(1.0, 0.6, 0.6)
 	await get_tree().create_timer(0.08).timeout
 	if is_instance_valid(self):

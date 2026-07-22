@@ -46,62 +46,111 @@ var DP_START: int        = 10
 # Tambah entry di sini untuk spirit baru.
 # unit_type: "melee" → deploy di PATH | "ranged" → deploy di HIGH
 # block: jumlah musuh yang bisa ditahan sekaligus (ranged = 0)
+#
+# Stat (hp, atk, phys_def, magic_def, atk_spd) diambil dari
+# SPIRIT_COVENANT_ECONOMY.md bagian 5c (starting point, wajib
+# di-playtest ulang). atk_spd dikonversi dari SPD (tile/detik di
+# dokumen economy, di sini dipakai sebagai "attack speed") lewat
+# atk_spd = 1 / SPD — jadi SPD tinggi = serangan lebih sering.
+# phys_def/magic_def belum dipakai terpisah (damage type system
+# belum ada, itu ranahnya Fase 2+); untuk sekarang take_damage()
+# di spirit.gd pakai rata-rata keduanya sebagai reduksi flat.
 # ============================================================
 const SPIRIT_ROSTER = [
 	{
-		"id":        "raookami",
-		"name":      "Raoo",
-		"unit_type": "melee",
-		"cost":      8,
-		"block":     1,
-		"atk":       1,
-		"atk_range": 1.2,   # tile
-		"atk_spd":   1.5,   # detik per serangan
-		"texture":   "res://assets/spirites/characters/raookami/raookami.png",
+		"id":         "raookami",
+		"name":       "Raoo",
+		"unit_type":  "melee",
+		"cost":       8,
+		"block":      1,
+		"hp":         800,
+		"atk":        45,
+		"phys_def":   30,
+		"magic_def":  20,
+		"attack_patterns": {
+			"up":    [Vector2i(0, -1), Vector2i(-1, 0), Vector2i(0, 0), Vector2i(1, 0)],
+			"right": [Vector2i(0, -1), Vector2i(0, 0), Vector2i(1, 0), Vector2i(0, 1)],
+			"down":  [Vector2i(-1, 0), Vector2i(0, 0), Vector2i(1, 0), Vector2i(0, 1)],
+			"left":  [Vector2i(0, -1), Vector2i(-1, 0), Vector2i(0, 0), Vector2i(0, 1)],
+		},
+		"atk_spd":    1.0 / 2.0,   # SPD 2.0 → ~0.5 detik/serangan
+		"texture":    "res://assets/spirites/characters/raookami/raookami.png",
 	},
 	{
-		"id":        "kuma",
-		"name":      "Kuma",
-		"unit_type": "melee",
-		"cost":      12,
-		"block":     3,
-		"atk":       1,
-		"atk_range": 1.0,
-		"atk_spd":   2.0,
-		"texture":   "res://assets/spirites/characters/kuma/kuma.png",
+		"id":         "kuma",
+		"name":       "Kuma",
+		"unit_type":  "melee",
+		"cost":       12,
+		"block":      3,
+		"hp":         1200,
+		"atk":        25,
+		"phys_def":   60,
+		"magic_def":  40,
+		"attack_patterns": {
+			"up":    [Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(-1, 0), Vector2i(0, 0), Vector2i(1, 0)],
+			"right": [Vector2i(1, -1), Vector2i(1, 0), Vector2i(1, 1), Vector2i(0, -1), Vector2i(0, 0), Vector2i(0, 1)],
+			"down":  [Vector2i(1, 1), Vector2i(0, 1), Vector2i(-1, 1), Vector2i(1, 0), Vector2i(0, 0), Vector2i(-1, 0)],
+			"left":  [Vector2i(-1, 1), Vector2i(-1, 0), Vector2i(-1, -1), Vector2i(0, 1), Vector2i(0, 0), Vector2i(0, -1)],
+		},
+		"atk_spd":    1.0 / 0.8,   # SPD 0.8 → 1.25 detik/serangan (paling lambat)
+		"texture":    "res://assets/spirites/characters/kuma/kuma.png",
 	},
 	{
-		"id":        "yoshiki",
-		"name":      "Shiki",
-		"unit_type": "ranged",
-		"cost":      10,
-		"block":     0,
-		"atk":       2,
-		"atk_range": 3.5,
-		"atk_spd":   1.2,
-		"texture":   "res://assets/spirites/characters/yoshiki/yoshiki.png",
+		"id":         "yoshiki",
+		"name":       "Shiki",
+		"unit_type":  "ranged",
+		"cost":       10,
+		"block":      0,
+		"hp":         350,
+		"atk":        70,
+		"phys_def":   10,
+		"magic_def":  15,
+		"attack_patterns": {
+			"up":    [Vector2i(0, 0), Vector2i(0, -1), Vector2i(0, -2), Vector2i(0, -3), Vector2i(0, -4)],
+			"right": [Vector2i(0, 0), Vector2i(1, 0), Vector2i(2, 0), Vector2i(3, 0), Vector2i(4, 0)],
+			"down":  [Vector2i(0, 0), Vector2i(0, 1), Vector2i(0, 2), Vector2i(0, 3), Vector2i(0, 4)],
+			"left":  [Vector2i(0, 0), Vector2i(-1, 0), Vector2i(-2, 0), Vector2i(-3, 0), Vector2i(-4, 0)],
+		},
+		"atk_spd":    1.0 / 1.6,   # SPD 1.6 → 0.625 detik/serangan
+		"texture":    "res://assets/spirites/characters/yoshiki/yoshiki.png",
 	},
 	{
-		"id":        "ratora",
-		"name":      "Tora",
-		"unit_type": "melee",
-		"cost":      9,
-		"block":     2,
-		"atk":       2,
-		"atk_range": 1.0,
-		"atk_spd":   1.0,
-		"texture":   "res://assets/spirites/characters/ratora/ratora.png",
+		"id":         "ratora",
+		"name":       "Tora",
+		"unit_type":  "melee",
+		"cost":       9,
+		"block":      2,
+		"hp":         550,
+		"atk":        75,
+		"phys_def":   15,
+		"magic_def":  10,
+		"attack_patterns": {
+			"up":    [Vector2i(0, 0), Vector2i(0, -1), Vector2i(-1, 0), Vector2i(1, 0), Vector2i(0, 1)],
+			"right": [Vector2i(0, 0), Vector2i(1, 0), Vector2i(0, -1), Vector2i(0, 1), Vector2i(-1, 0)],
+			"down":  [Vector2i(0, 0), Vector2i(0, 1), Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, -1)],
+			"left":  [Vector2i(0, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1), Vector2i(1, 0)],
+		},
+		"atk_spd":    1.0 / 1.8,   # SPD 1.8 → ~0.56 detik/serangan
+		"texture":    "res://assets/spirites/characters/ratora/ratora.png",
 	},
 	{
-		"id":        "koyuuki",
-		"name":      "Yuki",
-		"unit_type": "ranged",
-		"cost":      11,
-		"block":     0,
-		"atk":       1,
-		"atk_range": 4.0,
-		"atk_spd":   2.0,
-		"texture":   "res://assets/spirites/characters/koyuuki/koyuuki.png",
+		"id":         "koyuuki",
+		"name":       "Yuki",
+		"unit_type":  "ranged",
+		"cost":       11,
+		"block":      0,
+		"hp":         550,
+		"atk":        45,
+		"phys_def":   10,
+		"magic_def":  20,
+		"attack_patterns": {
+			"up":    [Vector2i(0, 0), Vector2i(0, -1), Vector2i(0, -2), Vector2i(-1, -1), Vector2i(1, -1), Vector2i(-1, -2), Vector2i(1, -2)],
+			"right": [Vector2i(0, 0), Vector2i(1, 0), Vector2i(2, 0), Vector2i(1, -1), Vector2i(1, 1), Vector2i(2, -1), Vector2i(2, 1)],
+			"down":  [Vector2i(0, 0), Vector2i(0, 1), Vector2i(0, 2), Vector2i(1, 1), Vector2i(-1, 1), Vector2i(1, 2), Vector2i(-1, 2)],
+			"left":  [Vector2i(0, 0), Vector2i(-1, 0), Vector2i(-2, 0), Vector2i(-1, 1), Vector2i(-1, -1), Vector2i(-2, 1), Vector2i(-2, -1)],
+		},
+		"atk_spd":    1.0 / 2.2,   # SPD 2.2 → tercepat di roster, ~0.45 detik/serangan
+		"texture":    "res://assets/spirites/characters/koyuuki/koyuuki.png",
 	},
 ]
 
@@ -114,6 +163,10 @@ var deployed_spirits: Array      = []   # semua spirit yang aktif di field
 # State per spirit — apakah sudah ter-deploy
 # key: spirit id (string) → bool
 var spirit_deployed: Dictionary  = {}
+
+# Cooldown redeploy setelah retreat — key: spirit id → detik tersisa
+var spirit_retreat_cooldown: Dictionary = {}
+const RETREAT_COOLDOWN_SEC := 8.0
 
 # Referensi ColorRect tile untuk highlight saat drag
 var tile_nodes: Dictionary = {}   # "col_row" → ColorRect
@@ -141,6 +194,16 @@ var drag_sprite: Sprite2D = null
 
 # Referensi card node per spirit id — untuk show/hide
 var card_nodes: Dictionary = {}    # spirit_id → Node (container card)
+
+# ============================================================
+# STATE PILIH ARAH — setelah drop valid, spirit BELUM langsung
+# spawn. Muncul 4 tombol panah di sekitar tile tujuan, pemain
+# pilih salah satu, baru spirit spawn dengan facing_dir itu.
+# ============================================================
+var choosing_direction  := false
+var pending_deploy_data: Dictionary = {}
+var pending_deploy_tile: Vector2i   = Vector2i.ZERO   # (col, row)
+var direction_buttons: Array = []   # Array[Node2D] — 4 tombol panah aktif
 
 # ============================================================
 # READY
@@ -258,6 +321,7 @@ func _create_spirit_card(data: Dictionary, index: int, panel_y: int):
 	card.name = "Card_" + data["id"]
 	add_child(card)
 	card_nodes[data["id"]] = card
+	card.set_meta("card_center", Vector2(card_x + 34, card_y + 30))
 
 	# Background card
 	var card_bg = ColorRect.new()
@@ -402,21 +466,42 @@ func _process(delta):
 	active_enemies   = active_enemies.filter(func(e): return is_instance_valid(e))
 	deployed_spirits = deployed_spirits.filter(func(s): return is_instance_valid(s))
 
+	# Tick cooldown retreat
+	for sid in spirit_retreat_cooldown.keys():
+		spirit_retreat_cooldown[sid] = maxf(0.0, spirit_retreat_cooldown[sid] - delta)
+
 	# Cek menang
 	if enemies_spawned >= MAX_ENEMIES and active_enemies.is_empty():
 		_on_battle_won()
 
-# Tint card abu-abu kalau tidak mampu beli atau sudah deployed
+# Tint card abu-abu kalau tidak mampu beli, sudah deployed, atau masih cooldown retreat
 func _refresh_card_availability():
 	for data in SPIRIT_ROSTER:
 		var sid: String = data["id"]
 		var card = card_nodes.get(sid)
 		if card == null:
 			continue
-		var can_afford: bool = int(dp) >= data["cost"]
+		var can_afford: bool  = int(dp) >= data["cost"]
 		var is_deployed: bool = spirit_deployed.get(sid, false)
-		# Gelap = tidak bisa/sudah deployed
-		card.modulate = Color(1, 1, 1, 1) if (can_afford and not is_deployed) else Color(0.4, 0.4, 0.4, 0.7)
+		var cooldown: float   = spirit_retreat_cooldown.get(sid, 0.0)
+		var is_ready: bool    = can_afford and not is_deployed and cooldown <= 0.0
+		# Gelap = tidak bisa/sudah deployed/masih cooldown
+		card.modulate = Color(1, 1, 1, 1) if is_ready else Color(0.4, 0.4, 0.4, 0.7)
+
+		# Label cooldown — tampil angka detik tersisa, sembunyi kalau siap
+		var cd_lbl: Label = card.get_node_or_null("CooldownLabel")
+		if cooldown > 0.0:
+			if cd_lbl == null:
+				cd_lbl = Label.new()
+				cd_lbl.name = "CooldownLabel"
+				cd_lbl.add_theme_font_size_override("font_size", 18)
+				cd_lbl.add_theme_color_override("font_color", Color(1.0, 0.8, 0.3))
+				card.add_child(cd_lbl)
+			cd_lbl.text = "%ds" % int(ceil(cooldown))
+			cd_lbl.position = card.get_meta("card_center", Vector2.ZERO)
+			cd_lbl.visible = true
+		elif cd_lbl != null:
+			cd_lbl.visible = false
 
 # ============================================================
 # SPAWN ENEMY
@@ -479,6 +564,16 @@ func _input(event):
 	if battle_over:
 		return
 
+	# Mode pilih arah aktif — klik kiri di sini HANYA untuk pilih arah,
+	# semua input lain (drag card baru, retreat, dsb) ditahan dulu supaya
+	# tidak nyampur dengan alur deploy yang sedang berlangsung.
+	if choosing_direction:
+		if event is InputEventMouseButton \
+		and event.button_index == MOUSE_BUTTON_LEFT \
+		and event.pressed:
+			_try_pick_direction(get_global_mouse_position())
+		return
+
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.pressed:
 			_handle_card_click(get_global_mouse_position())
@@ -503,6 +598,10 @@ func _handle_card_click(mouse_pos: Vector2):
 
 		# Sudah deployed — tidak bisa di-drag lagi
 		if spirit_deployed.get(sid, false):
+			continue
+
+		# Masih cooldown retreat
+		if spirit_retreat_cooldown.get(sid, 0.0) > 0.0:
 			continue
 
 		# Tidak mampu beli
@@ -557,31 +656,130 @@ func _drop_spirit():
 	and not occupied_tiles.has(tile_key) \
 	and int(dp) >= spirit_data["cost"]:
 
-		# Kurangi DP
-		dp -= float(spirit_data["cost"])
-		_update_dp_hud()
-
-		# Tandai spirit sebagai deployed — card hilang dari panel
-		spirit_deployed[drag_spirit_id] = true
-
-		# Spawn spirit di field
-		var spirit = Node2D.new()
-		var script = load("res://scenes/spirit.gd")
-		spirit.set_script(script)
-		spirit.position = Vector2(
-			col * TILE_SIZE + TILE_SIZE / 2,
-			row * TILE_SIZE + TILE_SIZE / 2
-		)
-		add_child(spirit)
-		spirit.init(self, spirit_data)
-
-		# Simpan referensi spirit_id di node spirit untuk keperluan retreat
-		spirit.set_meta("spirit_id", drag_spirit_id)
-
-		occupied_tiles[tile_key]  = spirit
-		deployed_spirits.append(spirit)
+		# Jangan spawn dulu — masuk mode pilih arah. Spawn beneran
+		# terjadi di _confirm_deploy_direction() setelah pemain klik
+		# salah satu dari 4 tombol panah.
+		pending_deploy_data = spirit_data
+		pending_deploy_tile = Vector2i(col, row)
+		_cleanup_drag()
+		_enter_direction_mode()
+		return
 
 	_cleanup_drag()
+
+# ============================================================
+# MODE PILIH ARAH — 4 tombol panah muncul di sekitar tile tujuan.
+# ============================================================
+func _enter_direction_mode():
+	choosing_direction = true
+
+	var tile_center := Vector2(
+		pending_deploy_tile.x * TILE_SIZE + TILE_SIZE / 2,
+		pending_deploy_tile.y * TILE_SIZE + TILE_SIZE / 2
+	)
+
+	# (label panah, offset arah dari tile center, facing_dir Vector2i)
+	var dirs := [
+		["▲", Vector2(0, -TILE_SIZE * 0.7), Vector2i(0, -1)],
+		["▼", Vector2(0,  TILE_SIZE * 0.7), Vector2i(0, 1)],
+		["◀", Vector2(-TILE_SIZE * 0.7, 0), Vector2i(-1, 0)],
+		["▶", Vector2( TILE_SIZE * 0.7, 0), Vector2i(1, 0)],
+	]
+
+	for d in dirs:
+		var btn := _make_direction_button(d[0], tile_center + d[1], d[2])
+		add_child(btn)
+		direction_buttons.append(btn)
+
+func _make_direction_button(label_text: String, pos: Vector2, dir: Vector2i) -> Node2D:
+	var btn := Node2D.new()
+	btn.position = pos
+	btn.z_index  = 20
+
+	var bg := ColorRect.new()
+	bg.size     = Vector2(40, 40)
+	bg.position = Vector2(-20, -20)
+	bg.color    = Color(0.15, 0.55, 0.95, 0.88)
+	btn.add_child(bg)
+
+	var lbl := Label.new()
+	lbl.text = label_text
+	lbl.add_theme_font_size_override("font_size", 22)
+	lbl.position = Vector2(-9, -16)
+	btn.add_child(lbl)
+
+	btn.set_meta("facing_dir", dir)
+	return btn
+
+func _exit_direction_mode():
+	choosing_direction   = false
+	pending_deploy_data  = {}
+	pending_deploy_tile  = Vector2i.ZERO
+	for btn in direction_buttons:
+		if is_instance_valid(btn):
+			btn.queue_free()
+	direction_buttons.clear()
+
+# Klik salah satu tombol panah → spawn spirit dengan facing_dir terpilih.
+# Klik di luar semua tombol → batal deploy (DP tidak terpotong, tidak
+# pernah dikurangi sebelum konfirmasi arah — beda dari alur lama yang
+# potong DP duluan sebelum spawn).
+func _try_pick_direction(mouse_pos: Vector2) -> bool:
+	for btn in direction_buttons:
+		if not is_instance_valid(btn):
+			continue
+		var rect := Rect2(btn.position - Vector2(20, 20), Vector2(40, 40))
+		if rect.has_point(mouse_pos):
+			var dir: Vector2i = btn.get_meta("facing_dir")
+			_confirm_deploy_direction(dir)
+			return true
+	# Klik di luar tombol manapun = batal
+	_exit_direction_mode()
+	return true
+
+func _confirm_deploy_direction(dir: Vector2i):
+	var spirit_data := pending_deploy_data
+	var col := pending_deploy_tile.x
+	var row := pending_deploy_tile.y
+	var tile_key := "%d_%d" % [col, row]
+	var sid: String = spirit_data["id"]
+
+	_exit_direction_mode()
+
+	# Re-validasi — tile bisa saja berubah (occupied/DP berubah) selama
+	# pemain mikir arah, walau jendela waktunya kecil.
+	if spirit_data.is_empty() or occupied_tiles.has(tile_key) or int(dp) < spirit_data["cost"]:
+		return
+
+	# Kurangi DP
+	dp -= float(spirit_data["cost"])
+	_update_dp_hud()
+
+	# Tandai spirit sebagai deployed — card hilang dari panel
+	spirit_deployed[sid] = true
+
+	# Spawn spirit di field
+	var spirit = Node2D.new()
+	var script = load("res://scenes/spirit.gd")
+	spirit.set_script(script)
+	spirit.position = Vector2(
+		col * TILE_SIZE + TILE_SIZE / 2,
+		row * TILE_SIZE + TILE_SIZE / 2
+	)
+	add_child(spirit)
+	spirit.init(self, spirit_data)
+	spirit.set_facing(dir)
+
+	# Simpan referensi spirit_id & tile_key di node spirit untuk
+	# keperluan retreat manual DAN kematian di battle (take_damage()
+	# sampai hp <= 0) — dua-duanya butuh tahu tile mana yang harus
+	# dibebaskan lagi.
+	spirit.set_meta("spirit_id", sid)
+	spirit.set_meta("tile_key", tile_key)
+	spirit.connect("spirit_died", _on_spirit_died.bind(spirit))
+
+	occupied_tiles[tile_key]  = spirit
+	deployed_spirits.append(spirit)
 
 func _cleanup_drag():
 	_reset_all_tile_highlights()
@@ -589,6 +787,28 @@ func _cleanup_drag():
 		drag_sprite.queue_free()
 		drag_sprite = null
 	drag_spirit_id = ""
+
+# ============================================================
+# DUA JALUR CLEANUP SPIRIT: retreat manual (_try_retreat, klik kanan)
+# vs mati kena damage (_on_spirit_died, signal dari spirit.gd take_damage()).
+# Keduanya membebaskan tile + reset spirit_deployed + mulai cooldown yang
+# sama, supaya pemain tidak bisa langsung redeploy instan begitu Spirit-nya
+# jatuh di battle — behavior yang sama seperti kalau di-retreat manual.
+#
+# Beda kecil: di sini tile dicari lewat meta "tile_key" (bukan posisi mouse,
+# karena tidak ada klik pemain), dan clear_blocked() TIDAK diulang di sini
+# karena spirit.gd sudah urus sendiri di _die() sebelum emit signal ini.
+# ============================================================
+func _on_spirit_died(spirit: Node2D):
+	var sid: String = spirit.get_meta("spirit_id", "")
+	var tile_key: String = spirit.get_meta("tile_key", "")
+
+	if sid != "":
+		spirit_deployed[sid] = false
+		spirit_retreat_cooldown[sid] = RETREAT_COOLDOWN_SEC
+
+	if tile_key != "" and occupied_tiles.has(tile_key):
+		occupied_tiles.erase(tile_key)
 
 func _try_retreat():
 	var mouse_pos := get_global_mouse_position()
@@ -604,10 +824,11 @@ func _try_retreat():
 		occupied_tiles.erase(tile_key)
 		return
 
-	# Kembalikan state spirit → card muncul lagi
+	# Kembalikan state spirit → card muncul lagi, tapi kena cooldown dulu
 	var sid: String = spirit.get_meta("spirit_id", "")
 	if sid != "":
 		spirit_deployed[sid] = false
+		spirit_retreat_cooldown[sid] = RETREAT_COOLDOWN_SEC
 
 	# Lepas semua musuh yang sedang di-block spirit ini SEBELUM spirit dihapus.
 	# Tanpa ini, musuh baru lanjut jalan 1 frame kemudian (saat enemy.gd
