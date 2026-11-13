@@ -573,13 +573,15 @@ Untuk tiap karakter, pisahkan layer minimal:
 - [x] Tempatkan Spirit di grid (spirit.gd, deploy dari roster)
 - [x] Spirit otomatis serang musuh dalam range (block mechanic melee + ranged sudah jalan)
 - [x] Crystal HP yang berkurang kalau musuh sampai ujung jalur
-- [ ] Kondisi menang/kalah — cek apakah sudah lengkap atau masih perlu di-polish
+- [x] Kondisi menang/kalah — **Victory sudah terverifikasi jalan** (battle test 22 Juli 2026 berhasil sampai layar VICTORY)
+- [x] **(belum tercatat sebelumnya)** Direction-picker saat deploy — 4 tombol panah muncul setelah drop tile valid, pemain pilih arah hadap sebelum Spirit spawn; DP dipotong setelah konfirmasi arah, bukan sebelum
+- [x] **(belum tercatat sebelumnya)** Retreat mechanic penuh — tarik Spirit dari tile (klik kanan), cooldown 8 detik sebelum redeploy, berlaku sama baik retreat manual maupun Spirit mati di battle
 
 > ⚠️ Tujuan Fase 1: **game bisa dimainkan**, belum harus bagus. Live2D untuk Raookami sudah lebih maju dari rencana awal (biasanya diintegrasikan di Fase 2) — boleh lanjut karakter lain kalau momentum masih ada, atau fokus dulu ke gameplay loop sisanya.
 
 ### FASE 2 — Content & Polish (Minggu 7-12)
 
-- [ ] Tambah semua 5 Spirit dengan stat berbeda
+- [x] Tambah semua 5 Spirit dengan stat berbeda — **selesai lebih awal di Fase 1** (25 Juli 2026), semua 5 Spirit sudah lengkap stat + attack pattern grid-based di `SPIRIT_ROSTER`, lihat catatan Fase 1 di atas
 - [ ] Sistem skill (pilih 1 dari 3)
 - [ ] 5 stage pertama dengan layout jalur berbeda
 - [ ] 1 Boss enemy

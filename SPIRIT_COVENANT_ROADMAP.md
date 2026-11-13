@@ -89,18 +89,19 @@ Tujuan: semua 5 Spirit bisa deploy, 3 stage berbeda, kondisi menang/kalah jelas.
 ### Minggu 1–2: Spirit System
 
 - [x] Base struktur Spirit ada di `spirit.gd` (HP musuh, ATK, range, attack_cd, block_count) — jalan lewat `init()` dengan data dari roster, bukan lewat class terpisah per Spirit
-- [ ] Implement 5 Spirit dengan stat dari blueprint (Raoo sudah punya visual Live2D; Kuma/Yoshiki/Ratora/Koyuuki masih placeholder/PNG — itu sudah oke sesuai desain fallback)
-  - Raookami: Frontliner, melee, block tinggi — **stat & visual sudah ada**
-  - Kuma: Defender, melee range luas, HP tertinggi
-  - Yoshiki: Ranged, ATK tertinggi, HP rendah
-  - Ratora: DPS, melee AoE kecil, SPD tinggi
-  - Koyuuki: Support/Debuffer, slow musuh
+- [x] Implement 5 Spirit dengan stat dari blueprint — **selesai per 25 Juli 2026**, semua 5 Spirit (bukan cuma Raoo) sudah lengkap di `SPIRIT_ROSTER`: hp, atk, phys_def, magic_def, atk_spd, dan attack_patterns grid-based per-arah (up/right/down/left, non-rotasi matematis karena beberapa Spirit non-rigid)
+  - Raookami: Frontliner, melee, block 1 — **stat, attack pattern, & visual Live2D sudah ada**
+  - Kuma: Defender, melee block 3 (radius luas), HP tertinggi (1200), SPD paling lambat — **stat & attack pattern sudah ada** (visual masih placeholder/PNG)
+  - Yoshiki: Ranged, ATK tertinggi (70), HP rendah (350) — **stat & attack pattern sudah ada** (visual masih placeholder/PNG)
+  - Ratora: Melee block 2, ATK 75 (tertinggi di roster), SPD 1.8 — **stat & attack pattern sudah ada** (visual masih placeholder/PNG)
+  - Koyuuki: Ranged, SPD 2.2 (tercepat di roster) — **stat & attack pattern sudah ada** (visual masih placeholder/PNG)
 - [x] Deploy cost system (Crystal/DP bar terlihat di UI battle scene)
-- [ ] Retreat mechanic (tarik Spirit dari tile, cooldown sebelum bisa deploy lagi)
+- [x] Retreat mechanic (tarik Spirit dari tile, cooldown 8 detik sebelum bisa deploy lagi) — **selesai**, jalan lewat `_try_retreat()` (klik kanan) dengan `clear_blocked()` ke semua musuh yang di-block sebelum `queue_free()`; kematian di battle (`_on_spirit_died`) kena cooldown yang sama biar tidak bisa instant-redeploy
+- [x] **(belum tercatat sebelumnya)** Direction-picker saat deploy — setelah drop tile valid, muncul 4 tombol panah, pemain pilih arah hadap dulu baru Spirit spawn dengan `facing_dir` itu; DP baru dipotong setelah arah dikonfirmasi (bukan sebelum), dan tile/DP di-revalidasi ulang saat konfirmasi
 
 ### Minggu 3: Stage & Enemy
 
-- [ ] 3 enemy type pertama: Grunt, Brute, Sprinter (saat ini `enemy.gd` masih generic — perlu differensiasi stat/behavior per tipe)
+- [ ] 3 enemy type pertama: Grunt, Brute, Sprinter (saat ini `enemy.gd` masih generic — perlu differensiasi stat/behavior per tipe). **Catatan per 25 Juli 2026:** `enemy.gd` sekarang lagi pakai flag `TESTING_TANKY_ENEMY = true` (HP di-boost paksa ke 560, `block_atk` ke 10) buat stress-test `take_damage()`/kematian Spirit — flag ini harus dimatikan/dihapus begitu differensiasi 3 tipe musuh mulai dikerjakan, jangan sampai kebawa ke stat asli tiap tipe
 - [ ] Object pooling untuk enemy, projectile, dan damage number popup — reuse object alih-alih instantiate/destroy terus-menerus tiap battle. Lebih murah dikerjakan sekarang (bareng pembuatan enemy system) daripada refactor belakangan setelah banyak sistem lain menempel
 - [ ] 3 stage layout berbeda (jalur sederhana, jalur cabang, jalur sempit)
 - [x] Crystal HP visible di UI — sudah ada bar + angka DP
