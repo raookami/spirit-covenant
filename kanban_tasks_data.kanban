@@ -1,0 +1,67 @@
+{
+	"categories": [
+		{
+			"uuid": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+			"title": "Task",
+			"color": "569eff"
+		}
+	],
+	"stages": [
+		{
+			"uuid": "fd48f5f7-bbe0-4d4c-8576-892a4680eaac",
+			"title": "Todo",
+			"tasks": [
+				"70b87302-9209-477f-b7ad-cd4aed4e586a",
+				"f224db1b-80ec-45df-a93a-c7f72b73088b"
+			]
+		},
+		{
+			"uuid": "dd823ef2-e5fa-4162-bdc1-1dcaa470abd4",
+			"title": "Doing",
+			"tasks": []
+		},
+		{
+			"uuid": "0b1b10d2-0c4d-4d2d-b43b-f54b6c6c504d",
+			"title": "Done",
+			"tasks": [
+				"fc205c68-4f69-4b42-905c-6a3428c9ed31"
+			]
+		}
+	],
+	"tasks": [
+		{
+			"uuid": "fc205c68-4f69-4b42-905c-6a3428c9ed31",
+			"title": "Enemy Type Differentiation (Grunt, Brute, Sprinter)",
+			"description": "Target: enemy.gd saat ini masih generik (semua musuh sama). Kita butuh 3 tipe dengan stat berbeda.\n\nLangkah Pertama (bisa dikerjakan 15 menit): Tambahkan variabel enemy_type di enemy.gd. Buat match statement sederhana di _ready() yang mengubah hp, speed, dan block_atk berdasarkan tipe (contoh: Grunt = HP 60, Speed 80; Brute = HP 200, Speed 40; Sprinter = HP 40, Speed 150).",
+			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+			"steps": []
+		},
+		{
+			"uuid": "70b87302-9209-477f-b7ad-cd4aed4e586a",
+			"title": "Wave System & UI Counter",
+			"description": "Target: Saat ini battle.gd hanya spawn musuh satu per satu sampai batas MAX_ENEMIES. Belum ada sistem gelombang (wave) dan belum ada teks \"Wave 1/5\" di layar.\n\nLangkah Pertama: Buat label UI sederhana di pojok kanan atas battle.gd yang menampilkan teks \"Wave 1\".",
+			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+			"steps": []
+		},
+		{
+			"uuid": "f224db1b-80ec-45df-a93a-c7f72b73088b",
+			"title": " Object Pooling (Enemy & Projectile)",
+			"description": "Target: Saat ini battle.gd pakai queue_free() dan load() terus-menerus. Untuk game TD dengan banyak musuh, ini bisa bikin lag di Android nanti. Kita perlu sistem \"daur ulang\" node.\n\nLangkah Pertama: Bikin script object_pool.gd sederhana yang menyimpan array musuh yang sudah mati, lalu dipakai lagi (visible = true) saat spawn, alih-alih queue_free().",
+			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+			"steps": []
+		}
+	],
+	"layout": {
+		"columns": [
+			[
+				"fd48f5f7-bbe0-4d4c-8576-892a4680eaac"
+			],
+			[
+				"dd823ef2-e5fa-4162-bdc1-1dcaa470abd4"
+			],
+			[
+				"0b1b10d2-0c4d-4d2d-b43b-f54b6c6c504d"
+			]
+		]
+	}
+}

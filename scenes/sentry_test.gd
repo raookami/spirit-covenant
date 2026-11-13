@@ -1,5 +1,6 @@
 extends Node
 
+
 func _ready():
 	SentrySDK.add_breadcrumb(SentryBreadcrumb.create("Just about to welcome the World."))
 	SentrySDK.capture_message("Hello, World!")
