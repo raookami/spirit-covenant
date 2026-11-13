@@ -674,8 +674,8 @@ func _enter_direction_mode():
 	choosing_direction = true
 
 	var tile_center := Vector2(
-		pending_deploy_tile.x * TILE_SIZE + TILE_SIZE / 2,
-		pending_deploy_tile.y * TILE_SIZE + TILE_SIZE / 2
+		pending_deploy_tile.x * TILE_SIZE + TILE_SIZE / 2.0,
+		pending_deploy_tile.y * TILE_SIZE + TILE_SIZE / 2.0
 	)
 
 	# (label panah, offset arah dari tile center, facing_dir Vector2i)
@@ -763,8 +763,8 @@ func _confirm_deploy_direction(dir: Vector2i):
 	var script = load("res://scenes/spirit.gd")
 	spirit.set_script(script)
 	spirit.position = Vector2(
-		col * TILE_SIZE + TILE_SIZE / 2,
-		row * TILE_SIZE + TILE_SIZE / 2
+		col * TILE_SIZE + TILE_SIZE / 2.0,
+		row * TILE_SIZE + TILE_SIZE / 2.0
 	)
 	add_child(spirit)
 	spirit.init(self, spirit_data)
