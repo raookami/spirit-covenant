@@ -516,7 +516,13 @@ func _spawn_enemy():
 	# urutannya dibalik, _ready() jalan duluan dengan path kosong, dan
 	# posisi awal enemy cuma ketolong secara kebetulan lewat flag _initialized
 	# di setup() — rapuh dan gampang pecah kalau _ready() direfactor nanti.
-	enemy.setup(ENEMY_PATH)
+	
+	# --- TAMBAHKAN BARIS INI ---
+	# Bikin tipe acak: 0 = Grunt, 1 = Brute, 2 = Sprinter
+	var random_type = randi() % 3 
+	enemy.setup(ENEMY_PATH, random_type)
+	# ---------------------------
+
 	add_child(enemy)
 	enemy.connect("enemy_reached_end", _on_enemy_reached_end)
 	enemy.connect("enemy_died", _on_enemy_died)

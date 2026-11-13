@@ -1,5 +1,8 @@
 extends Node2D
 
+enum EnemyType { GRUNT, BRUTE, SPRINTER }
+var current_type: EnemyType = EnemyType.GRUNT
+
 # ============================================================
 # 🧪 TEST SEMENTARA — HAPUS/SET FALSE SETELAH SELESAI TEST 🧪
 # Boost HP + block_atk musuh biar cukup kuat & tanky buat stress-test
@@ -31,7 +34,7 @@ var _initialized: bool = false
 var blocked_by: Node2D = null   # referensi spirit yang mem-block
 var block_attack_timer: float = 0.0
 var block_attack_cd: float    = 1.0  # musuh serang spirit per 1 detik
-var block_atk: int            = 1    # damage musuh ke spirit yang mem-block-nya
+var block_atk: int            = 3    # damage musuh ke spirit yang mem-block-nya
 
 # ============================================================
 # NODE REFERENSI
@@ -39,7 +42,6 @@ var block_atk: int            = 1    # damage musuh ke spirit yang mem-block-nya
 var sprite: Sprite2D
 var hp_bar_bg: ColorRect
 var hp_bar_fill: ColorRect
-
 var enemy_texture = preload("res://assets/spirites/enemies/enemy1.png")
 
 # ============================================================
@@ -54,12 +56,30 @@ signal enemy_died
 # Urutan yang benar: panggil setup() SEBELUM add_child() ke tree, supaya
 # `path` sudah terisi saat _ready() jalan. Cek _initialized di bawah ini
 # cuma safety net kalau ada pemanggilan dari tempat lain dengan urutan kebalik.
-func setup(enemy_path: Array):
+func setup(enemy_path: Array, type: EnemyType = EnemyType.GRUNT):
 	path = enemy_path
+	current_type = type
 	if _initialized:
 		_init_position()
 
 func _ready():
+	# Atur stat berdasarkan tipe
+	match current_type:
+		EnemyType.GRUNT:
+			hp = 60
+			speed = 80.0
+			block_atk = 3
+		EnemyType.BRUTE:
+			hp = 250
+			speed = 45.0
+			block_atk = 15
+		EnemyType.SPRINTER:
+			hp = 30
+			speed = 160.0
+			block_atk = 2
+			
+	max_hp = hp
+
 	_initialized = true
 	_build_visuals()
 	if path.size() > 0:
