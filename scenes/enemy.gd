@@ -6,13 +6,12 @@ extends Node2D
 # spirit.gd take_damage()/mati. Musuh default (hp=5) mati kelewat cepat
 # sebelum sempat nge-hit balik Spirit yang HP-nya 350-1200.
 # ============================================================
-const TESTING_TANKY_ENEMY := true
 
 # ============================================================
 # STAT MUSUH
 # ============================================================
-var hp: int        = 5
-var max_hp: int    = 5
+var hp: int        = 60
+var max_hp: int    = 60
 var speed: float   = 80.0
 var tile_size: int = 128
 
@@ -61,14 +60,6 @@ func setup(enemy_path: Array):
 		_init_position()
 
 func _ready():
-	if TESTING_TANKY_ENEMY:
-		# 🧪 Boost sementara buat stress-test Spirit take_damage()/mati.
-		# HP tinggi = musuh tahan lama kena serang Spirit → block_atk tinggi
-		# = HP Spirit kelihatan turun cepat & bisa habis buat lihat _die().
-		hp          = 560
-		max_hp      = 560
-		block_atk   = 10
-
 	_initialized = true
 	_build_visuals()
 	if path.size() > 0:
@@ -114,13 +105,13 @@ func _init_position():
 	if path.size() < 2:
 		return
 	position = Vector2(
-		path[0][0] * tile_size + tile_size / 2,
-		path[0][1] * tile_size + tile_size / 2
+		path[0][0] * tile_size + tile_size / 2.0,
+		path[0][1] * tile_size + tile_size / 2.0
 	)
 	path_index = 1
 	target_pos = Vector2(
-		path[1][0] * tile_size + tile_size / 2,
-		path[1][1] * tile_size + tile_size / 2
+		path[1][0] * tile_size + tile_size / 2.0,
+		path[1][1] * tile_size + tile_size / 2.0
 	)
 
 # ============================================================
@@ -165,8 +156,8 @@ func _process(delta):
 			queue_free()
 		else:
 			target_pos = Vector2(
-				path[path_index][0] * tile_size + tile_size / 2,
-				path[path_index][1] * tile_size + tile_size / 2
+				path[path_index][0] * tile_size + tile_size / 2.0,
+				path[path_index][1] * tile_size + tile_size / 2.0
 			)
 
 # ============================================================
