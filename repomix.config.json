@@ -5,7 +5,12 @@
     "removeComments": false,
     "showLineNumbers": true
   },
-  "include": ["scenes/**/*.gd", "scenes/**/*.tscn", "data/**/*.tres", "*.md"],
+  "include": [
+    "scenes/**/*.gd",
+    "scenes/**/*.tscn",
+    "data/**/*.tres",
+    "docs/*.md"
+  ],
   "ignore": {
     "useGitignore": true,
     "useDefaultPatterns": true,
