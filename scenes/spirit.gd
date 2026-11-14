@@ -78,18 +78,18 @@ func _input(event):
 			range_circle.visible = _range_visible
 
 
-func init(battle: Node, data: Dictionary):
+func init(battle: Node, data: SpiritData): # <--- Ubah Dictionary jadi SpiritData
 	battle_ref = battle
-	spirit_id = data.get("id", "")
-	unit_type = data.get("unit_type", "melee")
-	hp = data.get("hp", 500)
+	spirit_id = data.id # <--- Ubah kurung siku jadi titik
+	unit_type = data.unit_type
+	hp = data.hp
 	max_hp = hp
-	atk = data.get("atk", 1)
-	phys_def = data.get("phys_def", 0)
-	magic_def = data.get("magic_def", 0)
-	attack_patterns = data.get("attack_patterns", {"up": [Vector2i(0, -1)]})
-	attack_cd = data.get("atk_spd", 1.5)
-	block_count = data.get("block", 1)
+	atk = data.atk
+	phys_def = data.phys_def
+	magic_def = data.magic_def
+	attack_patterns = data.attack_patterns
+	attack_cd = data.atk_spd
+	block_count = data.block
 	_build_visuals()
 	_build_hp_bar()
 

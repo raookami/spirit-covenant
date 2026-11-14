@@ -15,3 +15,4 @@ max_enemies = 8
 dp_start = 10
 dp_max = 99
 dp_regen_rate = 1.0
+waves = [{"type": "grunt", "count": 3}, {"type": "sprinter", "count": 4}, {"type": "brute", "count": 2}]

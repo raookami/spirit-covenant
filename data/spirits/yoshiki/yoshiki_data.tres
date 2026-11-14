@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="SpiritData" format=3 uid="uid://c8o27elycc5q3"]
+
+[ext_resource type="Script" uid="uid://bqf6thlj3ct10" path="res://scripts/spirit_data.gd" id="1_spirit"]
+
+[resource]
+script = ExtResource("1_spirit")
+id = "yoshiki"
+display_name = "Shiki"
+unit_type = "ranged"
+block = 0
+hp = 350
+atk = 70
+magic_def = 15
+atk_spd = 0.625
+texture_path = "res://assets/spirites/characters/yoshiki/yoshiki.png"
+attack_patterns = {
+"down": [Vector2i(0, 0), Vector2i(0, 1), Vector2i(0, 2), Vector2i(0, 3), Vector2i(0, 4)],
+"left": [Vector2i(0, 0), Vector2i(-1, 0), Vector2i(-2, 0), Vector2i(-3, 0), Vector2i(-4, 0)],
+"right": [Vector2i(0, 0), Vector2i(1, 0), Vector2i(2, 0), Vector2i(3, 0), Vector2i(4, 0)],
+"up": [Vector2i(0, 0), Vector2i(0, -1), Vector2i(0, -2), Vector2i(0, -3), Vector2i(0, -4)]
+}
+metadata/_custom_type_script = "uid://bqf6thlj3ct10"

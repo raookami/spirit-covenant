@@ -1,9 +1,21 @@
 [gd_scene format=3 uid="uid://cwdgv27ajdfgw"]
 
 [ext_resource type="Script" uid="uid://d3cd7tnb3fxr1" path="res://scenes/battle.gd" id="1_dn72j"]
+[ext_resource type="Script" uid="uid://bqf6thlj3ct10" path="res://scripts/spirit_data.gd" id="2_th188"]
+[ext_resource type="Resource" path="res://data/spirits/raookami/raookami_data.tres" id="3_p1qf1"]
+[ext_resource type="Resource" uid="uid://jc82w8pnv4wm" path="res://data/spirits/koyuuki/koyuuki_data.tres" id="4_4k1nj"]
+[ext_resource type="Resource" uid="uid://b0hubry81pwbl" path="res://data/spirits/kuma/kuma_data.tres" id="5_f4pi3"]
+[ext_resource type="Resource" uid="uid://dqa0yikl2t1sy" path="res://data/spirits/ratora/ratora_data.tres" id="6_yahae"]
+[ext_resource type="Resource" uid="uid://c8o27elycc5q3" path="res://data/spirits/yoshiki/yoshiki_data.tres" id="7_v7i3o"]
+[ext_resource type="Script" uid="uid://bkfkllfmdlqc6" path="res://scripts/enemy_data.gd" id="8_66ngm"]
+[ext_resource type="Resource" path="res://data/enemies/elite/KK-SH_data.tres" id="9_03edq"]
+[ext_resource type="Resource" path="res://data/enemies/keroco/HY-01_data.tres" id="10_22uqi"]
+[ext_resource type="Resource" path="res://data/enemies/keroco/KG-01_data.tres" id="11_6ni85"]
 
 [node name="Battle" type="Node2D" unique_id=1111014770]
 script = ExtResource("1_dn72j")
+spirit_roster = Array[ExtResource("2_th188")]([ExtResource("3_p1qf1"), ExtResource("4_4k1nj"), ExtResource("5_f4pi3"), ExtResource("6_yahae"), ExtResource("7_v7i3o")])
+enemy_roster = Array[ExtResource("8_66ngm")]([ExtResource("9_03edq"), ExtResource("10_22uqi"), ExtResource("11_6ni85")])
 
 [node name="GDCubismUserModel" type="GDCubismUserModel" parent="." unique_id=1315848375]
 assets = "res://assets/spirites/characters/raookami/raookami_idle.model3.json"
