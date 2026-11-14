@@ -85,6 +85,12 @@ var _last_highlighted_tile: String = ""
 func _ready():
 	_load_stage_config()
 
+	# --- TEMBOK VALIDASI RUNTIME (Paling Penting!) ---
+	if not _validate_all_data():
+		battle_over = true # Kunci game
+		return # Hentikan proses _ready, jangan lanjut gambar grid
+	# --------------------------------------------------
+
 	for s in spirit_roster:
 		spirit_deployed[s.id] = false
 
@@ -152,23 +158,61 @@ func _load_stage_config():
 			]
 		else:
 			waves_data = stage.waves
-	# --- TEMBOK VALIDASI (Anti Silent Fail) ---
-	if waves_data.is_empty():
-		push_error("FATAL: waves_data kosong! Stage gak punya data musuh.")
-		# Nampilin pesan error di layar biar kamu langsung tahu
-		var err_lbl = Label.new()
-		err_lbl.text = "ERROR: Waves data kosong! Cek stage_01.tres"
-		err_lbl.add_theme_color_override("font_color", Color(1, 0, 0))
-		err_lbl.position = Vector2(400, 300)
-		add_child(err_lbl)
-		# Kunci game biar gak lanjut ke Victory
-		battle_over = true
-		return
 
 	dp = float(dp_start)
 	crystal_hp = crystal_max_hp
 
 
+# ============================================================
+# TEMBOK PERTAHANAN (Validasi Data Sebelum Game Jalan)
+# ============================================================
+func _validate_all_data() -> bool:
+	var is_valid := true
+	var error_messages := []
+
+	# 1. Cek Stage & Waves
+	if stage == null and waves_data.is_empty():
+		error_messages.append("- File StageConfig gagal dimuat / data kosong.")
+	elif waves_data.is_empty():
+		error_messages.append("- Data 'waves' di stage kosong! Game tidak bisa jalan.")
+
+	# 2. Cek Spirit Roster
+	if spirit_roster.is_empty():
+		error_messages.append("- Spirit Roster kosong! Lupa masukkan file .tres ke Inspector?")
+	else:
+		for s in spirit_roster:
+			if s.id == "" or s.hp <= 0:
+				error_messages.append("- Spirit '%s' punya ID kosong atau HP <= 0." % s.id)
+
+	# 3. Cek Enemy Roster
+	if enemy_roster.is_empty():
+		error_messages.append("- Enemy Roster kosong!")
+	else:
+		for e in enemy_roster:
+			if e.id == "" or e.hp <= 0:
+				error_messages.append("- Musuh '%s' punya ID kosong atau HP <= 0." % e.id)
+
+	# 4. Evaluasi
+	if not error_messages.is_empty():
+		is_valid = false
+		push_error("=== TEMBOK VALIDASI JEBOL ===")
+		for msg in error_messages:
+			push_error(msg)
+
+		# Tampilkan di layar
+		var err_lbl = Label.new()
+		err_lbl.text = "ERROR DATA:\n" + "\n".join(error_messages)
+		err_lbl.add_theme_color_override("font_color", Color(1, 0.2, 0.2))
+		err_lbl.add_theme_font_size_override("font_size", 20)
+		err_lbl.position = Vector2(100, 100)
+		add_child(err_lbl)
+
+	return is_valid
+
+
+# ============================================================
+# RENDER GRID & UI
+# ============================================================
 func _draw_grid():
 	for row in range(grid_rows):
 		for col in range(grid_cols):
@@ -335,6 +379,9 @@ func _update_dp_hud():
 		dp_bar_fill.size.x = 160.0 * (dp / float(dp_max))
 
 
+# ============================================================
+# GAME LOOP
+# ============================================================
 func _process(delta):
 	if battle_over:
 		return
@@ -431,6 +478,9 @@ func _spawn_enemy():
 		wave_timer = -5.0
 
 
+# ============================================================
+# SIGNAL HANDLERS & RESULT
+# ============================================================
 func _on_enemy_reached_end(enemy: Node2D):
 	crystal_hp -= 1
 	_update_crystal_hud()
@@ -470,6 +520,9 @@ func _show_result_banner(text: String, color: Color):
 	add_child(lbl)
 
 
+# ============================================================
+# INPUT (DRAG & DROP)
+# ============================================================
 func _input(event):
 	if battle_over:
 		return
