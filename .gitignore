@@ -34,3 +34,5 @@ addons/gd_cubism/.sconsign.dblite
 
 # Cubism SDK (biasanya besar & bukan milikmu untuk redistribusi ulang)
 CubismSdkForNative*/
+# RepoSync output
+repomix-output.xml

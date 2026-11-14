@@ -891,19 +891,3 @@ func _can_deploy_at(col: int, row: int, unit_type: String) -> bool:
 		"ranged":
 			return tile_type == TileType.HIGH
 	return false
-
-
-func get_blocking_enemies(spirit_node: Node2D, block_count: int) -> Array:
-	var result := []
-	for enemy in active_enemies:
-		if not is_instance_valid(enemy):
-			continue
-		var enemy_col := int(enemy.position.x / TILE_SIZE)
-		var enemy_row := int(enemy.position.y / TILE_SIZE)
-		var spirit_col := int(spirit_node.position.x / TILE_SIZE)
-		var spirit_row := int(spirit_node.position.y / TILE_SIZE)
-		if enemy_col == spirit_col and enemy_row == spirit_row:
-			result.append(enemy)
-			if result.size() >= block_count:
-				break
-	return result

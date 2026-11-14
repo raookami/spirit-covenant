@@ -1,0 +1,30 @@
+{
+  "output": {
+    "filePath": "repomix-output.xml",
+    "style": "xml",
+    "removeComments": false,
+    "showLineNumbers": true
+  },
+  "include": ["scenes/**/*.gd", "scenes/**/*.tscn", "data/**/*.tres", "*.md"],
+  "ignore": {
+    "useGitignore": true,
+    "useDefaultPatterns": true,
+    "customPatterns": [
+      "addons/**",
+      ".godot/**",
+      ".import/**",
+      "*.png",
+      "*.moc3",
+      "*.model3.json",
+      "*.motion3.json",
+      "*.cdi3.json",
+      "*.2048/**",
+      "*.kanban",
+      "*.log",
+      "repomix-output.xml"
+    ]
+  },
+  "security": {
+    "enableSecurityCheck": true
+  }
+}
