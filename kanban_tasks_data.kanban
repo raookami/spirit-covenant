@@ -10,14 +10,14 @@
 		{
 			"uuid": "fd48f5f7-bbe0-4d4c-8576-892a4680eaac",
 			"title": "Todo",
-			"tasks": [
-				"f224db1b-80ec-45df-a93a-c7f72b73088b"
-			]
+			"tasks": []
 		},
 		{
 			"uuid": "dd823ef2-e5fa-4162-bdc1-1dcaa470abd4",
 			"title": "Doing",
-			"tasks": []
+			"tasks": [
+				"f224db1b-80ec-45df-a93a-c7f72b73088b"
+			]
 		},
 		{
 			"uuid": "0b1b10d2-0c4d-4d2d-b43b-f54b6c6c504d",

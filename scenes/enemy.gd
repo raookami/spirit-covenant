@@ -80,19 +80,42 @@ func _process(delta):
 		if path_index >= path.size():
 			reached_end = true
 			emit_signal("enemy_reached_end")
-			queue_free()
-		else:
-			target_pos = Vector2(
+			visible = false
+			set_process(false)
+			return
+		target_pos = Vector2(
 				path[path_index][0] * tile_size + tile_size / 2.0,
 				path[path_index][1] * tile_size + tile_size / 2.0
-			)
+		)
 
 
 func setup(enemy_path: Array, type: EnemyType = EnemyType.GRUNT):
 	path = enemy_path
 	current_type = type
-	if _initialized:
-		_init_position()
+	path_index = 0
+	reached_end = false
+	blocked_by = null
+	# Reset stat berdasarkan tipe
+	match current_type:
+		EnemyType.GRUNT:
+			hp = 60
+			speed = 80.0
+			block_atk = 3
+		EnemyType.BRUTE:
+			hp = 250
+			speed = 45.0
+			block_atk = 15
+		EnemyType.SPRINTER:
+			hp = 30
+			speed = 160.0
+			block_atk = 2
+
+	max_hp = hp
+	_update_hp_bar()
+	# Munculkan dan jalankan lagi
+	visible = true
+	set_process(true)
+	_init_position()
 
 
 func _build_visuals():
@@ -168,7 +191,8 @@ func take_damage(amount: int):
 		modulate = Color(1, 1, 1)
 
 	if hp <= 0:
-		if blocked_by != null and is_instance_valid(blocked_by):
-			blocked_by.on_enemy_cleared(self)
-		emit_signal("enemy_died")
-		queue_free()
+			if blocked_by != null and is_instance_valid(blocked_by):
+				blocked_by.on_enemy_cleared(self)
+			emit_signal("enemy_died")
+			visible = false
+			set_process(false)

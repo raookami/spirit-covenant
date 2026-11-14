@@ -235,6 +235,7 @@ var crystal_hp_label: Label = null
 var wave_timer: float = 0.0
 var enemies_spawned: int = 0
 var active_enemies: Array = []
+var enemy_pool: Array = []
 var battle_over := false
 var waves_data: Array = []
 var current_wave_index: int = 0
@@ -567,13 +568,18 @@ func _spawn_enemy():
 	if current_wave_index >= waves_data.size():
 		return
 	var current_wave = waves_data[current_wave_index]
-	var enemy = Node2D.new()
-	var script = load("res://scenes/enemy.gd")
-	enemy.set_script(script)
+	var enemy
+	# Cek tong sampah dulu
+	if enemy_pool.size() > 0:
+		enemy = enemy_pool.pop_back()
+	else:
+		# Kalau tong sampah kosong, baru bikin baru
+		enemy = Node2D.new()
+		enemy.set_script(load("res://scenes/enemy.gd"))
+		add_child(enemy)
+		enemy.connect("enemy_reached_end", _on_enemy_reached_end.bind(enemy))
+		enemy.connect("enemy_died", _on_enemy_died.bind(enemy))
 	enemy.setup(enemy_path, current_wave["type"])
-	add_child(enemy)
-	enemy.connect("enemy_reached_end", _on_enemy_reached_end)
-	enemy.connect("enemy_died", _on_enemy_died)
 	active_enemies.append(enemy)
 	enemies_spawned_in_wave += 1
 	if enemies_spawned_in_wave >= current_wave["count"]:
@@ -582,15 +588,17 @@ func _spawn_enemy():
 		wave_timer = -5.0
 
 
-func _on_enemy_reached_end():
+func _on_enemy_reached_end(enemy: Node2D):
 	crystal_hp -= 1
 	_update_crystal_hud()
+	active_enemies.erase(enemy)
+	enemy_pool.append(enemy) # Masukkan ke tong sampah
 	if crystal_hp <= 0 and not battle_over:
 		_on_battle_lost()
 
-
-func _on_enemy_died():
-	pass
+func _on_enemy_died(enemy: Node2D):
+	active_enemies.erase(enemy)
+	enemy_pool.append(enemy) # Masukkan ke tong sampah
 
 
 func _on_battle_won():
