@@ -5,12 +5,7 @@
     "removeComments": false,
     "showLineNumbers": true
   },
-  "include": [
-    "scenes/**/*.gd",
-    "scenes/**/*.tscn",
-    "data/**/*.tres",
-    "docs/*.md"
-  ],
+  "include": ["**/*.gd", "**/*.tscn", "**/*.tres", "**/*.md"],
   "ignore": {
     "useGitignore": true,
     "useDefaultPatterns": true,
@@ -18,6 +13,7 @@
       "addons/**",
       ".godot/**",
       ".import/**",
+      "tests/**",
       "*.png",
       "*.moc3",
       "*.model3.json",

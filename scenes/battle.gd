@@ -236,6 +236,10 @@ var wave_timer: float = 0.0
 var enemies_spawned: int = 0
 var active_enemies: Array = []
 var battle_over := false
+var waves_data: Array = []
+var current_wave_index: int = 0
+var enemies_spawned_in_wave: int = 0
+var wave_label: Label = null
 
 var dragging := false
 var drag_spirit_id := ""
@@ -314,6 +318,10 @@ func _load_stage_config():
 		dp_max = stage.dp_max
 		dp_regen_rate = stage.dp_regen_rate
 		dp_start = stage.dp_start
+		if stage.waves.is_empty():
+			waves_data = [{"type": 0, "count": 3}, {"type": 2, "count": 4}, {"type": 1, "count": 2}]
+		else:
+			waves_data = stage.waves
 
 	dp = float(dp_start)
 	crystal_hp = crystal_max_hp
@@ -456,6 +464,13 @@ func _create_hud():
 	dp_label.position = Vector2(180, 60)
 	add_child(dp_label)
 
+		# === Wave UI ===
+	wave_label = Label.new()
+	wave_label.text = "Wave: 0/0"
+	wave_label.add_theme_font_size_override("font_size", 16)
+	wave_label.position = Vector2(1100, 12)
+	add_child(wave_label)
+
 
 func _crystal_text() -> String:
 	return "💎 Crystal: %d / %d" % [crystal_hp, crystal_max_hp]
@@ -488,11 +503,27 @@ func _process(delta):
 	_update_dp_hud()
 	_refresh_card_availability()
 
-	if enemies_spawned < max_enemies:
+		# Spawn enemy
+	if current_wave_index < waves_data.size():
 		wave_timer += delta
 		if wave_timer >= spawn_interval:
 			wave_timer = 0.0
 			_spawn_enemy()
+	# Update UI Wave
+	if wave_label:
+		var display_wave = min(current_wave_index + 1, waves_data.size())
+		var total_waves = waves_data.size()
+		wave_label.text = "Wave: %d / %d" % [display_wave, total_waves]
+	# Bersihkan node invalid
+	active_enemies = active_enemies.filter(func(e): return is_instance_valid(e))
+	deployed_spirits = deployed_spirits.filter(func(s): return is_instance_valid(s))
+
+	for sid in spirit_retreat_cooldown.keys():
+		spirit_retreat_cooldown[sid] = maxf(0.0, spirit_retreat_cooldown[sid] - delta)
+
+	# Cek menang
+	if current_wave_index >= waves_data.size() and active_enemies.is_empty() and not battle_over:
+		_on_battle_won()
 
 	active_enemies = active_enemies.filter(func(e): return is_instance_valid(e))
 	deployed_spirits = deployed_spirits.filter(func(s): return is_instance_valid(s))
@@ -533,18 +564,22 @@ func _refresh_card_availability():
 
 
 func _spawn_enemy():
+	if current_wave_index >= waves_data.size():
+		return
+	var current_wave = waves_data[current_wave_index]
 	var enemy = Node2D.new()
 	var script = load("res://scenes/enemy.gd")
 	enemy.set_script(script)
-
-	var random_type = randi() % 3
-	enemy.setup(enemy_path, random_type)
-
+	enemy.setup(enemy_path, current_wave["type"])
 	add_child(enemy)
 	enemy.connect("enemy_reached_end", _on_enemy_reached_end)
 	enemy.connect("enemy_died", _on_enemy_died)
 	active_enemies.append(enemy)
-	enemies_spawned += 1
+	enemies_spawned_in_wave += 1
+	if enemies_spawned_in_wave >= current_wave["count"]:
+		current_wave_index += 1
+		enemies_spawned_in_wave = 0
+		wave_timer = -5.0
 
 
 func _on_enemy_reached_end():

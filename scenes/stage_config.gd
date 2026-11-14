@@ -1,5 +1,5 @@
-extends Resource
 class_name StageConfig
+extends Resource
 
 # ============================================================
 # STAGE CONFIG — data satu stage, dipisah dari hardcode battle.gd
@@ -29,6 +29,10 @@ class_name StageConfig
 
 ## Total musuh yang akan spawn di stage ini
 @export var max_enemies: int = 8
+
+## Data gelombang musuh. Format: [{"type": 0, "count": 3}]
+## type: 0=Grunt, 1=Brute, 2=Sprinter. count: jumlah musuh per wave.
+@export var waves: Array[Dictionary] = []
 
 ## DP awal saat battle dimulai
 @export var dp_start: int = 10
