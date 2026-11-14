@@ -145,7 +145,11 @@ func _load_stage_config():
 		dp_regen_rate = stage.dp_regen_rate
 		dp_start = stage.dp_start
 		if stage.waves.is_empty():
-			waves_data = [{"type": 0, "count": 3}, {"type": 2, "count": 4}, {"type": 1, "count": 2}]
+			waves_data = [
+					{"type": "grunt", "count": 3},
+					{"type": "sprinter", "count": 4},
+					{"type": "brute", "count": 2}
+		]
 		else:
 			waves_data = stage.waves
 
