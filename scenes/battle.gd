@@ -146,12 +146,24 @@ func _load_stage_config():
 		dp_start = stage.dp_start
 		if stage.waves.is_empty():
 			waves_data = [
-					{"type": "grunt", "count": 3},
-					{"type": "sprinter", "count": 4},
-					{"type": "brute", "count": 2}
-		]
+				{"type": "grunt", "count": 3},
+				{"type": "sprinter", "count": 4},
+				{"type": "brute", "count": 2}
+			]
 		else:
 			waves_data = stage.waves
+	# --- TEMBOK VALIDASI (Anti Silent Fail) ---
+	if waves_data.is_empty():
+		push_error("FATAL: waves_data kosong! Stage gak punya data musuh.")
+		# Nampilin pesan error di layar biar kamu langsung tahu
+		var err_lbl = Label.new()
+		err_lbl.text = "ERROR: Waves data kosong! Cek stage_01.tres"
+		err_lbl.add_theme_color_override("font_color", Color(1, 0, 0))
+		err_lbl.position = Vector2(400, 300)
+		add_child(err_lbl)
+		# Kunci game biar gak lanjut ke Victory
+		battle_over = true
+		return
 
 	dp = float(dp_start)
 	crystal_hp = crystal_max_hp

@@ -78,7 +78,10 @@ func _input(event):
 			range_circle.visible = _range_visible
 
 
-func init(battle: Node, data: SpiritData): # <--- Ubah Dictionary jadi SpiritData
+func init(battle: Node, data: SpiritData):
+	assert(data != null, "SpiritData null!")
+	assert(data.id != "", "Spirit ID tidak boleh kosong!")
+	assert(data.hp > 0, "HP Spirit harus > 0!")
 	battle_ref = battle
 	spirit_id = data.id # <--- Ubah kurung siku jadi titik
 	unit_type = data.unit_type

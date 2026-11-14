@@ -32,6 +32,10 @@ func _ready():
 
 
 func setup(enemy_path: Array, data: EnemyData):
+	# --- TEMBOK ASSERTION ---
+	assert(data != null, "EnemyData null! File .tres musuh gak valid.")
+	assert(data.hp > 0, "HP musuh harus lebih dari 0! Cek file .tres: " + data.id)
+	assert(enemy_path.size() > 1, "Path musuh terlalu pendek! Minimal 2 waypoint.")
 	path = enemy_path
 	path_index = 0
 	reached_end = false
