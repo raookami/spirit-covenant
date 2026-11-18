@@ -3,6 +3,7 @@
 ## 「喋る猫」(Shaberu Neko) — Versi Bahasa Jepang
 
 > Format: 日本語 (Jepang asli, untuk input TTS) diikuti romaji dan terjemahan Indonesia di tiap baris. Tag ekspresi tetap dipertahankan untuk panduan sprite.
+> Posisi dalam alur resmi: Naskah ini adalah **Chapter 1 (Tantei Jimusho Arc)** yang berlangsung **setelah 5 Stage Prolog** (kontrak 1-per-1 kelima Spirit) selesai.
 
 ---
 

@@ -1,8 +1,8 @@
 # CURRENT_STATE.md (Auto-Generated)
-_Update: 18 Nov 2026 13.38_
+_Update: 18 Nov 2026 20.57_
 
 ## [LOG] GIT TERAKHIR
-- feat: setup full automation & auto-populate kanban - test error gara gara claude - test hook otomatis
+- nambah audit report - feat: setup full automation & auto-populate kanban - test error gara gara claude
 
 ## [NEXT] TASK AKTIF
 - [ ] 3 stage layout berbeda (jalur sederhana, cabang, sempit)
@@ -21,27 +21,12 @@ _Update: 18 Nov 2026 13.38_
 - [ ] Skill Kuma: Memory Seal + Foresight Barrier + Glacier Wall
 - [ ] Skill Yoshiki: Camouflage + Tidal Strike + Frost Current
 - [ ] Skill Ratora: Thunder Crash + Blaze Rush + Berserker Soul
-- [ ] Skill Koyuuki: Dream Veil + Hypnotic Song + Ethereal Form
-- [ ] Covenant Link (Raku): boost 50% ATK 10 detik, cooldown 60 detik + visual
-- [ ] Kuma: layer separation CSP → rigging → idle/attack/hurt motion → export & integrasi
-- [ ] Yoshiki: layer separation CSP → rigging → idle/attack/hurt motion → export & integrasi
-- [ ] Ratora: layer separation CSP → rigging → idle/attack/hurt motion → export & integrasi
-- [ ] Koyuuki: layer separation CSP → rigging → idle/attack/hurt motion → export & integrasi
-- [ ] Raookami: animasi Attack + Hurt (idle sudah selesai)
-- [ ] 10 stage dengan layout & kombinasi enemy berbeda
 - [ ] Stage 1-5: tutorial implisit, satu tipe enemy dominan
-- [ ] Stage 6-10: dua tipe kombinasi, mulai butuh strategi
 - [ ] Setiap stage punya "momen aha" yang didesain
-- [ ] 3-star rating system
 - [ ] Boss 2 fase (HP threshold trigger fase 2)
 - [ ] Boss pakai kombinasi mechanic enemy biasa
 - [ ] Special attack yang butuh respon pemain
-- [ ] Spirit Level 1-20 (EXP dari battle)
-- [ ] Stat naik linear (tidak ada power creep)
 - [ ] Covenant Shards dari battle reward
-- [ ] Bond system level 1-5 per Spirit (unlock dialog + ilustrasi)
-- [ ] Dialog sebelum tiap stage (max 5 baris, tanpa voice)
-- [ ] Unlock lore fragment setelah stage selesai
 - [ ] Pilih 3 Spirit dari roster
 - [ ] 5 stage acak dari pool
 - [ ] Covenant Blessing: pilih 1 dari 3 buff tiap selesai stage
@@ -52,6 +37,22 @@ _Update: 18 Nov 2026 13.38_
 - [ ] Performance check 60fps di mid-range Android
 - [ ] Testing di minimal 2 device berbeda
 - [ ] Soft release: itch.io (Windows) + Google Play beta
+- [ ] Skill Koyuuki (Yuki): Dream Veil + Hypnotic Song + Ethereal Form
+- [ ] Covenant Link (Raku): trigger 1x saat musuh pertama lolos (knockback 3/5 tile, reset CD, shield kebal mati + omnibuff 10s, CP beku 10s, recoil -25% HP awal / 50% Max HP) + visual
+- [ ] Kuma: buat aset modular di atas template chibi + integrasi `Skeleton2D` (idle/attack/hurt/die)
+- [ ] Yoshiki: buat aset modular di atas template chibi + integrasi `Skeleton2D` (idle/attack/hurt/die)
+- [ ] Ratora: buat aset modular di atas template chibi + integrasi `Skeleton2D` (idle/attack/hurt/die)
+- [ ] Yuki (Koyuuki): buat aset modular di atas template chibi + integrasi `Skeleton2D` (idle/attack/hurt/die)
+- [ ] Raookami: animasi Attack + Hurt (Live2D idle sudah jalan; opsional disatukan ke template modular chibi agar seragam)
+- [ ] 10 stage dengan layout & kombinasi enemy berbeda (termasuk 5 Stage Prolog sebagai tutorial + kontrak 1-per-1 Spirit)
+- [ ] Stage 6-10: dua tipe kombinasi & pengenalan gimmick/elemen musuh, mulai butuh strategi
+- [ ] 3-star rating system (tetap bisa 3-star selama Crystal HP utuh walau Covenant Link sempat terpicu)
+- [ ] Spirit Level 1-20 (EXP material + Covenant Gold dari battle)
+- [ ] Stat naik linear (tidak ada power creep / HP inflasi)
+- [ ] Bond system level 1-5 = Portray / Eidolon (bonus kenyamanan/mekanik + unlock dialog & ilustrasi)
+- [ ] Dialog sebelum/sesudah tiap stage (ringkas, tanpa wajib background rumit, menanam benih plot twist)
+- [ ] Unlock lore fragment / catatan kasus detektif setelah stage selesai
+- [ ] Object pooling untuk enemy, projectile, damage number popup
 
 ## [SYNC] HASIL
 - (Tidak ada perubahan baru)

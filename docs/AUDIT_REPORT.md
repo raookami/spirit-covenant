@@ -6,6 +6,17 @@
 
 ---
 
+## Status Penyelesaian Audit (Update 18 Nov 2026)
+
+Seluruh temuan desain & dokumentasi (Kategori 1, 3, dan 4) **telah diputuskan dan disinkronkan ke GDD v2.0**:
+- **Cerita & Dunia:** Tema Kantor Detektif (Dunia Atas & Astral) dengan **Prolog 5 Stage** (kontrak 1-per-1) → **Chapter 1+** (episodik + plot twist tersambung). Setting medieval Vaelthorn dihapus.
+- **Penamaan:** Panggilan Koyuuki diseragamkan menjadi **`Yuki`**; energi deploy menjadi **`CP` (Covenant Point)**; Physical/Magic menjadi **`Manifest` / `Phantasm`**; 5 Main Class menjadi **`Pursuer`, `Sentinel`, `Lurker`, `Channeler`, `Seer`**.
+- **Elemen & Rebalance:** 5 Elemen unik (`Umbra, Flare, Tide, Rime, Veil`) dengan siklus `Veil > Tide > Rime > Veil` & `Umbra ⇄ Flare` (tanpa 10 Elemental Reaction), plus rebalance stat 5 Spirit.
+- **Mekanik & Ekonomi:** **`Covenant Link`** didesain ulang (trigger saat musuh pertama lolos, knockback 3/5 tile, reset CD, shield 10s, CP beku, recoil HP); 5 Spirit dasar gratis (Bond 0) dari Prolog; **Bond 1–5 = Portray/Eidolon** dari gacha; **Alter** ditunda pasca-rilis; jalur aset chibi battle diarahkan ke **1 Template Modular (`Skeleton2D`)**.
+- **Sisa Pekerjaan Teknis (Kategori 2 & 5):** Perbaikan kode `.gd`, `.tres`, dan scene `.tscn` tetap tercatat di bawah sebagai daftar tugas implementasi berikutnya.
+
+---
+
 ## Ringkasan Eksekutif
 
 Repository mengalami drift/ketidaksinkronan antara **dokumen visi awal** (`SPIRIT_COVENANT_BLUEPRINT.md`), **dokumen desain lanjutan** (`SPIRIT_COVENANT_ECONOMY.md`, `Lore.md`, naskah prolog), **tracker/otomasi** (`SPIRIT_COVENANT_ROADMAP.md`, `kanban_tasks_data.kanban`, `.ps1`), dan **implementasi kode Godot aktual** (`scenes/*.gd`, `scripts/*.gd`, `data/**/*.tres`).

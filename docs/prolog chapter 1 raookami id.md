@@ -4,6 +4,7 @@
 
 > Format: Naskah Visual Novel. Tag ekspresi = panduan sprite. Narasi dalam `[ ]` untuk hal yang gak bisa ditunjukin sprite (transisi, SFX, BGM, cue battle).
 > Premis: Kantor Spirit Covenant sudah berdiri. Raku & Raookami menerima kasus dari klien manusia maupun spirit. Tim lengkap (5 Spirit) dianggap sudah gabung sebelumnya — gak perlu dijelasin asal-usulnya di sini.
+> Posisi dalam alur resmi: Naskah ini adalah **Chapter 1 (Kantor Detektif Arc)** yang berlangsung **setelah 5 Stage Prolog** (tutorial & kontrak 1-per-1 kelima Spirit) selesai.
 
 ---
 
