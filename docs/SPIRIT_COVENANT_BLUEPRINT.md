@@ -554,64 +554,7 @@ Untuk tiap karakter, pisahkan layer minimal:
 
 ---
 
-## 8. DEVELOPMENT ROADMAP
-
-### FASE 0 — Setup & Belajar (Minggu 1-2)
-
-- [x] Install Godot 4.7 + setup project 2D
-- [x] Setup toolchain compile GDCubism (MSVC Build Tools, SCons, Cubism SDK for Native) — **selesai, GDCubism ter-compile dari source dan aktif**
-- [ ] Ikuti tutorial Godot basic (Node, Scene, GDScript dasar) — sebagian besar sudah dikuasai dari implementasi battle.gd/enemy.gd/spirit.gd yang sudah ada
-- [ ] Ikuti tutorial Live2D Cubism basic (mesh, deformer, rigging sederhana)
-- [ ] Di CSP: gambar Raookami dengan layer separation (ikuti panduan section 6.3)
-- [ ] Import PNG parts ke Cubism 5.0, buat animasi idle pertama sebagai latihan
-- [x] Import model L2D ke Godot via GDCubism — **Raookami idle motion sudah berjalan loop mulus di battle scene**
-
-### FASE 1 — Prototype Gameplay (Minggu 3-6)
-
-- [x] Buat map grid sederhana di Godot (TileMap)
-- [x] Spawn musuh basic yang berjalan lewat waypoint (enemy.gd)
-- [x] Tempatkan Spirit di grid (spirit.gd, deploy dari roster)
-- [x] Spirit otomatis serang musuh dalam range (block mechanic melee + ranged sudah jalan)
-- [x] Crystal HP yang berkurang kalau musuh sampai ujung jalur
-- [x] Kondisi menang/kalah — **Victory sudah terverifikasi jalan** (battle test 22 Juli 2026 berhasil sampai layar VICTORY)
-- [x] **(belum tercatat sebelumnya)** Direction-picker saat deploy — 4 tombol panah muncul setelah drop tile valid, pemain pilih arah hadap sebelum Spirit spawn; DP dipotong setelah konfirmasi arah, bukan sebelum
-- [x] **(belum tercatat sebelumnya)** Retreat mechanic penuh — tarik Spirit dari tile (klik kanan), cooldown 8 detik sebelum redeploy, berlaku sama baik retreat manual maupun Spirit mati di battle
-
-> ⚠️ Tujuan Fase 1: **game bisa dimainkan**, belum harus bagus. Live2D untuk Raookami sudah lebih maju dari rencana awal (biasanya diintegrasikan di Fase 2) — boleh lanjut karakter lain kalau momentum masih ada, atau fokus dulu ke gameplay loop sisanya.
-
-### FASE 2 — Content & Polish (Minggu 7-12)
-
-- [x] Tambah semua 5 Spirit dengan stat berbeda — **selesai lebih awal di Fase 1** (25 Juli 2026), semua 5 Spirit sudah lengkap stat + attack pattern grid-based di `SPIRIT_ROSTER`, lihat catatan Fase 1 di atas
-- [ ] Sistem skill (pilih 1 dari 3)
-- [ ] 5 stage pertama dengan layout jalur berbeda
-- [ ] 1 Boss enemy
-- [ ] Basic UI (HP crystal, wave counter, cost bar)
-- [ ] Semua 5 karakter: layer separation di CSP selesai
-- [ ] Semua 5 karakter: animasi idle + attack di Live2D Cubism 5.0 selesai
-- [x] GDCubism terintegrasi di Godot — Raookami model sudah berjalan in-game, tinggal 4 karakter lagi
-- [ ] BGM + SFX basic
-
-### FASE 3 — Sistem Lengkap (Bulan 4-6)
-
-- [ ] Sistem leveling Spirit
-- [ ] Sistem Bond
-- [ ] Gacha (in-game currency)
-- [ ] 3 Alter pertama
-- [ ] **Chapter 1: 10 stage** (revisi dari "15 stage" — struktur dipecah per-chapter, lihat Roadmap Fase 4. Chapter 2+ menyusul di update berikutnya, bukan sekaligus di rilis pertama)
-- [ ] Spirit Form / Ultimate
-- [ ] Story mode basic (dialog sederhana antar stage)
-
-### FASE 4 — Android & Release (Bulan 7+)
-
-- [ ] Setup export preset Android di Godot (Android Build Template + Export)
-- [ ] UI responsif untuk layar HP (Godot Control node anchor/container)
-- [ ] Testing di device
-- [ ] Polish & bug fix
-- [ ] Soft release (itch.io / teman-teman dulu)
-
----
-
-## 9. FILE STRUCTURE (Godot Project)
+## 8. FILE STRUCTURE (Godot Project)
 
 ```
 spirit-covenant/
@@ -650,7 +593,7 @@ spirit-covenant/
 
 ---
 
-## 10. ENEMY DESIGN
+## 9. ENEMY DESIGN
 
 ### Tipe Musuh & Counter
 
@@ -673,7 +616,7 @@ spirit-covenant/
 
 ---
 
-## 11. RETENSI & PLAYER EXPERIENCE
+## 10. RETENSI & PLAYER EXPERIENCE
 
 ### Loop yang Membuat Pemain Betah
 
@@ -711,7 +654,7 @@ Setiap stage harus punya **satu momen** di mana pemain merasa cerdas:
 
 ---
 
-## 12. REFERENSI GAME
+## 11. REFERENSI GAME
 
 | Game             | Yang diambil                                                | Yang DIHINDARI                                          |
 | ---------------- | ----------------------------------------------------------- | ------------------------------------------------------- |
@@ -723,7 +666,7 @@ Setiap stage harus punya **satu momen** di mana pemain merasa cerdas:
 
 ---
 
-## 13. CATATAN PENTING UNTUK AI ASSISTANT
+## 12. CATATAN PENTING UNTUK AI ASSISTANT
 
 Kalau kamu (AI lain) membaca dokumen ini untuk membantu developer:
 
@@ -746,5 +689,5 @@ Kalau kamu (AI lain) membaca dokumen ini untuk membantu developer:
 
 ---
 
-_Blueprint ini adalah living document — update seiring development berlanjut._  
-_Last updated: Juli 2026 — v1.4 (Engine & Pipeline Migration: Unity + Live2D Cubism 5.0 → Godot 4 + GDCubism)_
+_Blueprint ini adalah dokumen visi — HANYA berisi tujuan, lore, dan desain inti. Progress, checklist, dan status pengerjaan ADA DI ROADMAP.md dan CURRENT_STATE.md, bukan di sini._  
+_Last updated: 18 Nov 2026 — v1.5 (Pisah dari Roadmap: section Development Roadmap dipindah penuh ke SPIRIT_COVENANT_ROADMAP.md agar Blueprint tetap murni berisi tujuan/visi)_

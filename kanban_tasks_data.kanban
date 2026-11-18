@@ -48,6 +48,13 @@
 			"description": "Target: Saat ini battle.gd pakai queue_free() dan load() terus-menerus. Untuk game TD dengan banyak musuh, ini bisa bikin lag di Android nanti. Kita perlu sistem \"daur ulang\" node.\n\nLangkah Pertama: Bikin script object_pool.gd sederhana yang menyimpan array musuh yang sudah mati, lalu dipakai lagi (visible = true) saat spawn, alih-alih queue_free().",
 			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
 			"steps": []
+		},
+		{
+			"uuid": "7869ef97-e2f2-40fa-bcee-b9680509d2ca",
+			"title": "New task",
+			"description": "",
+			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+			"steps": []
 		}
 	],
 	"layout": {

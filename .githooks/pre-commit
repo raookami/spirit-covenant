@@ -1,0 +1,5 @@
+#!/bin/sh
+# Wrapper supaya Git (yang memanggil file "pre-commit" tanpa ekstensi)
+# bisa menjalankan script PowerShell pre-commit.ps1 di sebelahnya.
+powershell.exe -ExecutionPolicy Bypass -File "$(dirname "$0")/pre-commit.ps1"
+exit $?

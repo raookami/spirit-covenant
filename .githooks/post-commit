@@ -1,0 +1,4 @@
+#!/bin/sh
+# Wrapper supaya Git bisa menjalankan script PowerShell post-commit.ps1 di sebelahnya.
+powershell.exe -ExecutionPolicy Bypass -File "$(dirname "$0")/post-commit.ps1"
+exit 0
