@@ -6,12 +6,20 @@
 script = ExtResource("1_spirit")
 id = "ratora"
 display_name = "Tora"
-cost = 9
+main_class = "Seer"
+element = "Flare"
+damage_type = "phantasm"
+unit_type = "melee"
+is_aoe = true
+cp_gen_amount = 2
+cp_gen_interval = 4.0
+cp_cost = 7
 block = 2
-hp = 550
-atk = 75
-phys_def = 15
-atk_spd = 0.55
+hp = 520
+atk = 35
+manifest_def = 15
+phantasm_def = 10
+atk_spd = 0.8
 texture_path = "res://assets/spirites/characters/ratora/ratora.png"
 attack_patterns = {
 "down": [Vector2i(0, 0), Vector2i(0, 1), Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, -1)],

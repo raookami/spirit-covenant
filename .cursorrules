@@ -1,0 +1,163 @@
+# GDScript — wajib lolos gdlint bawaan + pre-commit
+
+Berlaku setiap kali menulis atau mengedit `*.gd` (bukan `addons/**`).
+
+Repo ini tidak punya `gdlintrc` / `.gdlintrc`. `gdlint` memakai `DEFAULT_CONFIG` godot-gdscript-toolkit (master). Jangan mengarang batas yang lebih longgar. Jangan menambah `# gdlint: disable` / `ignore` untuk meloloskan kode; perbaiki kodenya.
+
+## Urutan anggota kelas (class-definitions-order)
+
+Satu kelas, atas ke bawah, tanpa menyisipkan kelompok yang lebih awal di bawah kelompok yang lebih akhir:
+
+1. `@tool` (hanya jika perlu)
+2. `class_name`
+3. `extends`
+4. docstring kelas (`##` tepat di bawah `extends`, sebelum signal)
+5. `signal`
+6. `enum`
+7. `const`
+8. `static var`
+9. `@export` (termasuk `@export_group` yang menempel pada export itu)
+10. `var` publik (tanpa `_`)
+11. `var` privat (awalan `_`)
+12. `@onready var` publik
+13. `@onready var` privat
+14. `func`, lalu `class` inner
+
+`class_name` selalu di atas `extends`. Inner class di paling bawah, setelah semua fungsi. Di dalam inner class, urutan yang sama.
+
+## Banner komentar
+
+Saat mengedit file yang sudah ada, pertahankan dialek banner file itu (jangan dicampur):
+
+- `scenes/battle.gd`: judul bernomor (`1. ENUM`, `2. CONSTANTS`, …) plus sub-banner fitur di dalam FUNCTIONS.
+- `scenes/spirit.gd`: judul tanpa nomor (`SIGNALS`, `CONSTANTS`, `VARIABLES (PUBLIC)`, `VARIABLES (PRIVATE)`, `FUNCTIONS`, `INNER CLASS`).
+- `scenes/enemy.gd`: tanpa banner; jangan menambahkan banner kalau hanya menyentuh beberapa baris.
+- `scenes/stage_config.gd`: satu blok penjelasan file, lalu `##` di atas tiap `@export`.
+
+File `.gd` baru memakai kerangka bernomor di bawah. Tulis banner hanya untuk kelompok yang ada isinya. Setiap anggota duduk di bawah banner kelompoknya, tidak di atasnya (jangan mengulang pola `battle.gd` yang menaruh `@export` sebelum banner EXPORTED).
+
+Bentuk banner, persis 60 tanda `=`:
+
+```
+# ============================================================
+# 4. EXPORTED VARIABLES
+# ============================================================
+```
+
+Sub-banner fitur hanya boleh di dalam FUNCTIONS, bentuk yang sama, satu baris judul. Satu baris kosong antar kelompok. Dua baris kosong tepat sebelum banner FUNCTIONS. Satu baris kosong antar `func`. `##` dokumentasi anggota menempel di baris tepat di atas anggota itu.
+
+Kerangka file baru (hapus kelompok yang kosong):
+
+```
+class_name NamaKelas
+extends Node
+
+# ============================================================
+# 1. SIGNALS
+# ============================================================
+signal sesuatu_terjadi
+
+# ============================================================
+# 2. ENUM
+# ============================================================
+enum Arah { UTARA, SELATAN }
+
+# ============================================================
+# 3. CONSTANTS
+# ============================================================
+const TILE_SIZE := 128
+
+# ============================================================
+# 4. STATIC VARIABLES
+# ============================================================
+
+# ============================================================
+# 5. EXPORTED VARIABLES
+# ============================================================
+## Label yang muncul di UI.
+@export var stage_name: String = ""
+
+# ============================================================
+# 6. VARIABLES (PUBLIC)
+# ============================================================
+var hp: int = 1
+
+# ============================================================
+# 7. VARIABLES (PRIVATE)
+# ============================================================
+var _siap: bool = false
+
+# ============================================================
+# 8. ONREADY (PUBLIC)
+# ============================================================
+
+# ============================================================
+# 9. ONREADY (PRIVATE)
+# ============================================================
+
+# ============================================================
+# 10. FUNCTIONS
+# ============================================================
+func _ready() -> void:
+	pass
+
+
+func ambil_hp() -> int:
+	return hp
+
+
+# ============================================================
+# 11. INNER CLASS
+# ============================================================
+```
+
+Di dalam FUNCTIONS: callback daur hidup dulu (`_init`, `_enter_tree`, `_ready`, `_process`, `_physics_process`, `_input`, `_unhandled_input`), lalu fungsi publik, lalu fungsi privat. Fungsi yang dipanggil dari luar kelas tidak boleh berawalan `_`.
+
+## Format baris (cek gdlint yang aktif)
+
+- Indentasi hanya tab. Jangan campur tab dan spasi untuk indent (`mixed-tabs-and-spaces`).
+- Tidak ada spasi atau tab di ujung baris (`trailing-whitespace`). Baris kosong benar-benar kosong.
+- Panjang baris maksimal 100. Satu tab dihitung 1 karakter (`max-line-length` + `tab-characters: 1`).
+- Satu file maksimal 1000 baris (`max-file-lines`). `scenes/battle.gd` sudah mendekati batas; kode baru yang membesarkannya harus dipindah ke skrip lain, bukan ditumpuk.
+- Maksimal 10 argumen per fungsi, 6 `return` per fungsi, 20 fungsi publik per kelas (nama tanpa `_`).
+- Setelah cabang yang `return`, jangan pakai `else` atau `elif`. Pecah jadi `if` baru, lalu `return` terakhir di luar.
+
+```
+if sudah_mati:
+	return
+if kena_tembok:
+	return
+jalan()
+```
+
+- Argumen yang tidak dibaca wajib diawali `_` (`unused-argument`). Nama itu tetap harus cocok dengan pola nama di bawah.
+- Jangan biarkan ekspresi menggantung tanpa dipakai (`expression-not-assigned`).
+- Jangan `pass` di blok yang sudah berisi pernyataan lain (`unnecessary-pass`).
+- Jangan membandingkan nilai dengan dirinya sendiri.
+- Jangan `load()` / `preload()` path yang sama dua kali dalam satu file (`duplicated-load`).
+
+## Nama (regex default, tidak boleh dilanggar)
+
+- Kelas / `class_name`: PascalCase `([A-Z][a-z0-9]*)+`
+- Inner class: PascalCase, awalan `_` boleh
+- Fungsi: `snake_case`, atau `_snake_case`, atau `_on_` + PascalCase + `_snake` opsional. Contoh sah: `take_damage`, `_ready`, `_on_Body_area_entered`
+- Signal: `snake_case` tanpa awalan `_`
+- Variabel kelas: `snake_case`, awalan `_` boleh
+- Variabel kelas hasil `load`/`preload`: PascalCase atau `snake_case` (awalan `_` boleh)
+- `const`: `UPPER_SNAKE`, awalan `_` boleh
+- `const` hasil `load`/`preload`: PascalCase atau `UPPER_SNAKE` (awalan `_` boleh)
+- Variabel lokal: `snake_case` tanpa awalan `_`
+- `preload` lokal: PascalCase
+- Argumen dan variabel `for`: `snake_case`, awalan `_` boleh
+- Enum: PascalCase. Anggota enum: `UPPER_SNAKE` tanpa awalan `_`
+
+## Pre-commit (`.githooks/pre-commit.ps1`)
+
+Hook menjalankan `check_deadcode.ps1` → `gdshrapt dead-code`. Commit ditolak jika laporan kode sendiri (di luar `addons/` dan `.godot/`) memuat `[FNC]`, `[VNR]`, `[SNE]`, atau `[CNU]`:
+
+- `[FNC]` fungsi tidak terpanggil
+- `[VNR]` variabel tidak terbaca
+- `[SNE]` signal tidak di-emit dan tidak di-connect
+- `[CNU]` konstanta tidak terpakai
+
+Awalan `_` tidak membebaskan simbol dari hook ini. Jangan menambah fungsi, variabel, signal, atau konstanta “untuk nanti”. Setiap simbol baru harus punya pemakai di kode atau scene yang gdshrapt hitung sebagai referensi, dalam perubahan yang sama.

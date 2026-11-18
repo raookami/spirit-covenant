@@ -6,12 +6,18 @@
 script = ExtResource("1_spirit")
 id = "yoshiki"
 display_name = "Shiki"
+main_class = "Lurker"
+element = "Tide"
+damage_type = "manifest"
 unit_type = "ranged"
-block = 0
-hp = 350
-atk = 70
-magic_def = 15
-atk_spd = 0.625
+is_aoe = false
+cp_cost = 12
+block = 1
+hp = 360
+atk = 85
+manifest_def = 10
+phantasm_def = 15
+atk_spd = 0.7
 texture_path = "res://assets/spirites/characters/yoshiki/yoshiki.png"
 attack_patterns = {
 "down": [Vector2i(0, 0), Vector2i(0, 1), Vector2i(0, 2), Vector2i(0, 3), Vector2i(0, 4)],

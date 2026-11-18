@@ -1,0 +1,18 @@
+---
+description: Susunan dan format GDScript wajib lolos gdlint bawaan serta pre-commit dead-code
+globs: "**/*.gd"
+alwaysApply: false
+---
+
+# GDScript — wajib lolos gdlint bawaan + pre-commit
+
+Berlaku setiap kali menulis atau mengedit `*.gd` di luar `addons/**`. Isi aturan yang mengikat ada di `.cursorrules` di root repo (bagian yang sama). Ikuti file itu apa adanya.
+
+Ringkas yang tidak boleh dilanggar:
+
+- Tidak ada `gdlintrc` di repo. Pakai urutan default gdlint: `@tool`, `class_name`, `extends`, docstring `##`, signal, enum, const, static var, `@export`, var publik, var `_` privat, `@onready` publik, `@onready` privat, func, inner class.
+- Banner komentar mengikuti dialek file yang sedang diedit (`battle.gd` bernomor, `spirit.gd` tanpa nomor, `enemy.gd` tanpa banner, `stage_config.gd` pakai `##` per export). File baru memakai kerangka bernomor di `.cursorrules`. 60 tanda `=`. Anggota tidak boleh duduk di atas banner kelompoknya.
+- Tab saja, tanpa trailing whitespace, baris ≤ 100 (tab dihitung 1), file ≤ 1000 baris, ≤ 10 argumen, ≤ 6 `return`, ≤ 20 metode publik.
+- Jangan `else`/`elif` setelah cabang yang `return`. Argumen tak terpakai diawali `_`. Variabel lokal tidak boleh diawali `_`.
+- Nama: kelas PascalCase, fungsi/signal/var `snake_case`, const dan anggota enum `UPPER_SNAKE`, signal tanpa `_`.
+- Jangan menambah simbol mati. Pre-commit memblokir `[FNC]` `[VNR]` `[SNE]` `[CNU]` dari `gdshrapt dead-code` di luar `addons/` dan `.godot/`. Awalan `_` tidak membebaskan. Jangan memakai `# gdlint: disable` atau `ignore`.

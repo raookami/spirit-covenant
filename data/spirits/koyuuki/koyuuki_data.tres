@@ -6,13 +6,18 @@
 script = ExtResource("1_spirit")
 id = "koyuuki"
 display_name = "Yuki"
+main_class = "Channeler"
+element = "Veil"
+damage_type = "phantasm"
 unit_type = "ranged"
-cost = 11
-block = 0
-hp = 550
-atk = 45
-magic_def = 20
-atk_spd = 0.45
+is_aoe = false
+cp_cost = 10
+block = 1
+hp = 500
+atk = 28
+manifest_def = 10
+phantasm_def = 25
+atk_spd = 0.6
 texture_path = "res://assets/spirites/characters/koyuuki/koyuuki.png"
 attack_patterns = {
 "down": [Vector2i(0, 0), Vector2i(0, 1), Vector2i(0, 2), Vector2i(1, 1), Vector2i(-1, 1), Vector2i(1, 2), Vector2i(-1, 2)],

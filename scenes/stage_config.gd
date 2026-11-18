@@ -7,11 +7,11 @@ extends Resource
 # isi field lewat Inspector Godot, lalu load() dari battle.gd
 # ============================================================
 
-## Nama/label stage yang muncul di UI (misal "Stage 1-3")
+## Nama/label stage yang muncul di UI (misal "Stage 1 - Hutan Pembuka")
 @export var stage_name: String = "Untitled Stage"
 
-## Layout grid map. 0=GROUND 1=PATH 2=HIGH 3=BLOCKED
-## Array of Array — tiap row adalah Array[int] sepanjang GRID_COLS
+## Layout grid map. 0=PATH 1=GROUND 2=HIGH 3=BLOCKED
+## Array of Array — tiap row adalah Array[int] sepanjang grid_cols
 @export var map_layout: Array = []
 
 ## Urutan waypoint musuh, format [[col,row], [col,row], ...]
@@ -27,18 +27,18 @@ extends Resource
 ## Jeda antar spawn musuh (detik)
 @export var spawn_interval: float = 3.0
 
-## Total musuh yang akan spawn di stage ini
-@export var max_enemies: int = 8
+## Total musuh yang akan spawn di stage ini (sinkron dengan jumlah wave)
+@export var max_enemies: int = 9
 
-## Data gelombang musuh. Format: [{"type": 0, "count": 3}]
-## type: 0=Grunt, 1=Brute, 2=Sprinter. count: jumlah musuh per wave.
+## Data gelombang musuh. Format: [{"type": "grunt", "count": 3}]
+## type: string ID yang cocok dengan EnemyData.id ("grunt", "sprinter", "brute")
 @export var waves: Array[Dictionary] = []
 
-## DP awal saat battle dimulai
-@export var dp_start: int = 10
+## CP (Covenant Point) awal saat battle dimulai
+@export var cp_start: int = 10
 
-## DP maksimum yang bisa ditampung
-@export var dp_max: int = 99
+## CP maksimum yang bisa ditampung
+@export var cp_max: int = 99
 
-## DP yang regen per detik
-@export var dp_regen_rate: float = 1.0
+## CP yang regen per detik
+@export var cp_regen_rate: float = 1.0
