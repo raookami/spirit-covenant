@@ -41,10 +41,10 @@ Project sempat direncanakan pakai Unity, lalu pindah ke Godot (20 Juli 2026) kar
 
 ### Live Ops & Komunitas (paralel, tidak terikat fase manapun)
 
-- [ ] Buat Discord server khusus Spirit Covenant <!--id:liveops.discord_server-->
-- [ ] Struktur channel minimal: `#devlog`, `#general`, `#bug-report`, `#feedback-ideas` <!--id:liveops.discord_channels-->
-- [ ] Mulai posting devlog rutin (1-2 post/minggu) <!--id:liveops.devlog-->
-- [ ] Komunikasikan transparan bahwa ini solo dev project <!--id:liveops.transparency-->
+- [x] Buat Discord server khusus Spirit Covenant <!--id:liveops.discord_server-->
+- [x] Struktur channel minimal: `#devlog`, `#general`, `#bug-report`, `#feedback-ideas` <!--id:liveops.discord_channels-->
+- [x] Mulai posting devlog rutin (1-2 post/minggu) <!--id:liveops.devlog-->
+- [x] Komunikasikan transparan bahwa ini solo dev project <!--id:liveops.transparency-->
 
 ### Output Fase 0
 

@@ -10,7 +10,55 @@
 		{
 			"uuid": "fd48f5f7-bbe0-4d4c-8576-892a4680eaac",
 			"title": "Todo",
-			"tasks": []
+			"tasks": [
+				"174593c2-c6a4-4666-a5a4-74fc8b146b1a",
+				"9fe3a083-73ff-4407-812b-1f8b94070bcb",
+				"b36fa1a3-c87b-4dcc-b7fb-31ca21536170",
+				"6cbaecc9-0afe-4004-ae7e-158ad63b2c01",
+				"ce36f675-cb50-411c-a731-c27a3c07be17",
+				"65af36a1-a1fa-45a6-b924-568bf43c730f",
+				"706a2a66-fd3a-4b72-ba87-5ea2ea58e17a",
+				"eef60436-52c5-4717-b609-9e9980aaec25",
+				"483b97a3-4cf7-43e2-8260-1a7bb18afdb9",
+				"61f314c3-a437-4515-a3cd-549b977e96f6",
+				"ef89079e-6aca-428b-94cb-521a80aea92c",
+				"45280073-68a4-40e4-b791-18fc2bc75f6d",
+				"aa4a16a7-92a4-4f32-a428-9ec636f61e1e",
+				"ff240351-eafa-4e0c-847a-7b30c148d25f",
+				"8928b671-42a5-464c-a9ce-d1485abb36c6",
+				"3173bc20-b6e2-4710-a791-fbae94da88b8",
+				"8aa379ad-f896-471d-820f-20733eaf251e",
+				"ca5294a9-f63a-4508-b74d-a8a042bef798",
+				"aec3f0f3-a8ca-4053-a8d4-3d791bfa6de2",
+				"6296c3cf-e143-4b75-946d-15b58fced58b",
+				"2a7f998a-8ae2-4e57-91e2-433ce07b5061",
+				"237adbc6-46e9-4214-a534-24867c3a7a04",
+				"c6c15aa0-65b5-4c20-9618-834942c7c0fc",
+				"283886fd-bf0f-4fd3-8aff-58f8e9fed370",
+				"f7d61809-e9a1-48b4-aaf6-da120388e9ee",
+				"1989ae90-3aa3-4d7d-b8e5-214b32459d6d",
+				"bd554362-8c5d-41a9-99f6-22efdc14c4a7",
+				"1c222ae0-8e1a-436b-9de7-1cdf6efbe0a4",
+				"d8e76425-42a0-4fe4-bcdb-892c38ae384c",
+				"7797ccd0-8290-4b44-a4f3-d6779847632e",
+				"31ad26ca-5f4e-44ef-8d4d-03b2c8c91203",
+				"e4116f71-3822-4a0d-9170-eb5fc35bacb7",
+				"08023f90-25cc-41fe-ae93-a7ecbf57ac06",
+				"0260badb-0a66-47a5-9b20-2971e6e74b1a",
+				"c83b7f22-5a29-40e3-86b6-8d9e338ef559",
+				"10b908c5-5581-47db-a79d-3c02c3f1e819",
+				"13f37fb3-17ae-4880-9747-e26047513e5c",
+				"9edc005f-da3a-4c11-a8e9-59f41c9bbd48",
+				"e479c1b9-bec5-4299-b8ee-1a4948928fd6",
+				"684ccb8f-8ac7-42a0-b070-0b90ab65b91e",
+				"5b6cec79-57a4-44fc-9907-13f824deb073",
+				"252e1df9-1e4d-4cd1-985a-b6ecc1c3bb66",
+				"bbd94da6-a888-4ae0-a887-c46922682b5d",
+				"a738a376-aa32-4208-8fa8-764d4305f893",
+				"88d00e52-ec15-4dfb-a0b8-b501714fef4b",
+				"40b750c5-a4ae-46b2-b1e2-11cd076b8f0d",
+				"97fdb1ac-7612-411f-a589-1bf064dec467"
+			]
 		},
 		{
 			"uuid": "dd823ef2-e5fa-4162-bdc1-1dcaa470abd4",
@@ -21,9 +69,13 @@
 			"uuid": "0b1b10d2-0c4d-4d2d-b43b-f54b6c6c504d",
 			"title": "Done",
 			"tasks": [
+				"74cf93d8-af4a-4917-a7f6-bfdd62b86fd9",
 				"fc205c68-4f69-4b42-905c-6a3428c9ed31",
 				"70b87302-9209-477f-b7ad-cd4aed4e586a",
-				"f224db1b-80ec-45df-a93a-c7f72b73088b"
+				"f224db1b-80ec-45df-a93a-c7f72b73088b",
+				"e4c5f44b-d8f1-4c43-bec7-7792451aa83e",
+				"d21dc0de-531c-4167-aa1b-96e8a9beb3bf",
+				"70c62839-4d44-41df-8a9c-c1e7065a5c27"
 			]
 		}
 	],
@@ -31,7 +83,6 @@
 		{
 			"uuid": "fc205c68-4f69-4b42-905c-6a3428c9ed31",
 			"title": "Enemy Type Differentiation (Grunt, Brute, Sprinter)",
-			"roadmap_id": "fase1.enemy_types",
 			"description": "Target: enemy.gd saat ini masih generik (semua musuh sama). Kita butuh 3 tipe dengan stat berbeda.\n\nLangkah Pertama (bisa dikerjakan 15 menit): Tambahkan variabel enemy_type di enemy.gd. Buat match statement sederhana di _ready() yang mengubah hp, speed, dan block_atk berdasarkan tipe (contoh: Grunt = HP 60, Speed 80; Brute = HP 200, Speed 40; Sprinter = HP 40, Speed 150).",
 			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
 			"steps": []
@@ -39,7 +90,6 @@
 		{
 			"uuid": "70b87302-9209-477f-b7ad-cd4aed4e586a",
 			"title": "Wave System & UI Counter",
-			"roadmap_id": "fase1.wave_ui",
 			"description": "Target: Saat ini battle.gd hanya spawn musuh satu per satu sampai batas MAX_ENEMIES. Belum ada sistem gelombang (wave) dan belum ada teks \"Wave 1/5\" di layar.\n\nLangkah Pertama: Buat label UI sederhana di pojok kanan atas battle.gd yang menampilkan teks \"Wave 1\".",
 			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
 			"steps": []
@@ -47,7 +97,6 @@
 		{
 			"uuid": "f224db1b-80ec-45df-a93a-c7f72b73088b",
 			"title": " Object Pooling (Enemy & Projectile)",
-			"roadmap_id": "fase1.object_pooling",
 			"description": "Target: Saat ini battle.gd pakai queue_free() dan load() terus-menerus. Untuk game TD dengan banyak musuh, ini bisa bikin lag di Android nanti. Kita perlu sistem \"daur ulang\" node.\n\nLangkah Pertama: Bikin script object_pool.gd sederhana yang menyimpan array musuh yang sudah mati, lalu dipakai lagi (visible = true) saat spawn, alih-alih queue_free().",
 			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
 			"steps": []
@@ -56,6 +105,363 @@
 			"uuid": "7869ef97-e2f2-40fa-bcee-b9680509d2ca",
 			"title": "New task",
 			"description": "",
+			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+			"steps": []
+		},
+		{
+			"uuid": "e4c5f44b-d8f1-4c43-bec7-7792451aa83e",
+			"title": "Buat Discord server khusus Spirit Covenant",
+			"description": "Otomatis dari Roadmap. (ID: liveops.discord_server)",
+			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+			"steps": []
+		},
+		{
+			"uuid": "d21dc0de-531c-4167-aa1b-96e8a9beb3bf",
+			"title": "Struktur channel minimal: `#devlog`, `#general`, `#bug-report`, `#feedback-ideas`",
+			"description": "Otomatis dari Roadmap. (ID: liveops.discord_channels)",
+			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+			"steps": []
+		},
+		{
+			"uuid": "70c62839-4d44-41df-8a9c-c1e7065a5c27",
+			"title": "Mulai posting devlog rutin (1-2 post/minggu)",
+			"description": "Otomatis dari Roadmap. (ID: liveops.devlog)",
+			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+			"steps": []
+		},
+		{
+			"uuid": "74cf93d8-af4a-4917-a7f6-bfdd62b86fd9",
+			"title": "Komunikasikan transparan bahwa ini solo dev project",
+			"description": "Otomatis dari Roadmap. (ID: liveops.transparency)",
+			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+			"steps": []
+		},
+		{
+			"uuid": "174593c2-c6a4-4666-a5a4-74fc8b146b1a",
+			"title": "3 stage layout berbeda (jalur sederhana, cabang, sempit)",
+			"description": "Otomatis dari Roadmap. (ID: fase1.3_stage_layouts)",
+			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+			"steps": []
+		},
+		{
+			"uuid": "9fe3a083-73ff-4407-812b-1f8b94070bcb",
+			"title": "Basic SFX: serangan, enemy mati, crystal kena damage",
+			"description": "Otomatis dari Roadmap. (ID: fase1.sfx_basic)",
+			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+			"steps": []
+		},
+		{
+			"uuid": "b36fa1a3-c87b-4dcc-b7fb-31ca21536170",
+			"title": "Screen shake ringan saat crystal kena hit",
+			"description": "Otomatis dari Roadmap. (ID: fase1.screen_shake)",
+			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+			"steps": []
+		},
+		{
+			"uuid": "6cbaecc9-0afe-4004-ae7e-158ad63b2c01",
+			"title": "Damage number popup",
+			"description": "Otomatis dari Roadmap. (ID: fase1.damage_popup)",
+			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+			"steps": []
+		},
+		{
+			"uuid": "ce36f675-cb50-411c-a731-c27a3c07be17",
+			"title": "Pause menu sederhana",
+			"description": "Otomatis dari Roadmap. (ID: fase1.pause_menu)",
+			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+			"steps": []
+		},
+		{
+			"uuid": "65af36a1-a1fa-45a6-b924-568bf43c730f",
+			"title": "Onboarding Stage 1 (guided, 1 Spirit dulu, auto-highlight tile)",
+			"description": "Otomatis dari Roadmap. (ID: fase1.onboarding)",
+			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+			"steps": []
+		},
+		{
+			"uuid": "706a2a66-fd3a-4b72-ba87-5ea2ea58e17a",
+			"title": "Opsi skip tutorial",
+			"description": "Otomatis dari Roadmap. (ID: fase1.skip_tutorial)",
+			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+			"steps": []
+		},
+		{
+			"uuid": "eef60436-52c5-4717-b609-9e9980aaec25",
+			"title": "Integrasi GameAnalytics (gratis untuk indie)",
+			"description": "Otomatis dari Roadmap. (ID: fase1.analytics_setup)",
+			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+			"steps": []
+		},
+		{
+			"uuid": "483b97a3-4cf7-43e2-8260-1a7bb18afdb9",
+			"title": "Track event dasar: level_start, level_complete, level_fail",
+			"description": "Otomatis dari Roadmap. (ID: fase1.analytics_events)",
+			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+			"steps": []
+		},
+		{
+			"uuid": "61f314c3-a437-4515-a3cd-549b977e96f6",
+			"title": "`SkillData` sebagai Resource/Dictionary (nama, deskripsi, tipe, parameter)",
+			"description": "Otomatis dari Roadmap. (ID: fase2.skill_data)",
+			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+			"steps": []
+		},
+		{
+			"uuid": "ef89079e-6aca-428b-94cb-521a80aea92c",
+			"title": "`SkillSelector` UI sebelum battle",
+			"description": "Otomatis dari Roadmap. (ID: fase2.skill_selector_ui)",
+			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+			"steps": []
+		},
+		{
+			"uuid": "45280073-68a4-40e4-b791-18fc2bc75f6d",
+			"title": "`SkillExecutor` component per Spirit",
+			"description": "Otomatis dari Roadmap. (ID: fase2.skill_executor)",
+			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+			"steps": []
+		},
+		{
+			"uuid": "aa4a16a7-92a4-4f32-a428-9ec636f61e1e",
+			"title": "Skill Raookami: Shadow Dash + Dark Howl + Pack Instinct",
+			"description": "Otomatis dari Roadmap. (ID: fase2.skill_raookami)",
+			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+			"steps": []
+		},
+		{
+			"uuid": "ff240351-eafa-4e0c-847a-7b30c148d25f",
+			"title": "Skill Kuma: Memory Seal + Foresight Barrier + Glacier Wall",
+			"description": "Otomatis dari Roadmap. (ID: fase2.skill_kuma)",
+			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+			"steps": []
+		},
+		{
+			"uuid": "8928b671-42a5-464c-a9ce-d1485abb36c6",
+			"title": "Skill Yoshiki: Camouflage + Tidal Strike + Frost Current",
+			"description": "Otomatis dari Roadmap. (ID: fase2.skill_yoshiki)",
+			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+			"steps": []
+		},
+		{
+			"uuid": "3173bc20-b6e2-4710-a791-fbae94da88b8",
+			"title": "Skill Ratora: Thunder Crash + Blaze Rush + Berserker Soul",
+			"description": "Otomatis dari Roadmap. (ID: fase2.skill_ratora)",
+			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+			"steps": []
+		},
+		{
+			"uuid": "8aa379ad-f896-471d-820f-20733eaf251e",
+			"title": "Skill Koyuuki: Dream Veil + Hypnotic Song + Ethereal Form",
+			"description": "Otomatis dari Roadmap. (ID: fase2.skill_koyuuki)",
+			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+			"steps": []
+		},
+		{
+			"uuid": "ca5294a9-f63a-4508-b74d-a8a042bef798",
+			"title": "Covenant Link (Raku): boost 50% ATK 10 detik, cooldown 60 detik + visual",
+			"description": "Otomatis dari Roadmap. (ID: fase2.covenant_link)",
+			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+			"steps": []
+		},
+		{
+			"uuid": "aec3f0f3-a8ca-4053-a8d4-3d791bfa6de2",
+			"title": "Kuma: layer separation CSP → rigging → idle/attack/hurt motion → export & integrasi",
+			"description": "Otomatis dari Roadmap. (ID: fase3.kuma_l2d)",
+			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+			"steps": []
+		},
+		{
+			"uuid": "6296c3cf-e143-4b75-946d-15b58fced58b",
+			"title": "Yoshiki: layer separation CSP → rigging → idle/attack/hurt motion → export & integrasi",
+			"description": "Otomatis dari Roadmap. (ID: fase3.yoshiki_l2d)",
+			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+			"steps": []
+		},
+		{
+			"uuid": "2a7f998a-8ae2-4e57-91e2-433ce07b5061",
+			"title": "Ratora: layer separation CSP → rigging → idle/attack/hurt motion → export & integrasi",
+			"description": "Otomatis dari Roadmap. (ID: fase3.ratora_l2d)",
+			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+			"steps": []
+		},
+		{
+			"uuid": "237adbc6-46e9-4214-a534-24867c3a7a04",
+			"title": "Koyuuki: layer separation CSP → rigging → idle/attack/hurt motion → export & integrasi",
+			"description": "Otomatis dari Roadmap. (ID: fase3.koyuuki_l2d)",
+			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+			"steps": []
+		},
+		{
+			"uuid": "c6c15aa0-65b5-4c20-9618-834942c7c0fc",
+			"title": "Raookami: animasi Attack + Hurt (idle sudah selesai)",
+			"description": "Otomatis dari Roadmap. (ID: fase3.raookami_attack_hurt)",
+			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+			"steps": []
+		},
+		{
+			"uuid": "283886fd-bf0f-4fd3-8aff-58f8e9fed370",
+			"title": "10 stage dengan layout & kombinasi enemy berbeda",
+			"description": "Otomatis dari Roadmap. (ID: fase4.10_stages)",
+			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+			"steps": []
+		},
+		{
+			"uuid": "f7d61809-e9a1-48b4-aaf6-da120388e9ee",
+			"title": "Stage 1-5: tutorial implisit, satu tipe enemy dominan",
+			"description": "Otomatis dari Roadmap. (ID: fase4.stage1_5_tutorial)",
+			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+			"steps": []
+		},
+		{
+			"uuid": "1989ae90-3aa3-4d7d-b8e5-214b32459d6d",
+			"title": "Stage 6-10: dua tipe kombinasi, mulai butuh strategi",
+			"description": "Otomatis dari Roadmap. (ID: fase4.stage6_10_combo)",
+			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+			"steps": []
+		},
+		{
+			"uuid": "bd554362-8c5d-41a9-99f6-22efdc14c4a7",
+			"title": "Setiap stage punya \"momen aha\" yang didesain",
+			"description": "Otomatis dari Roadmap. (ID: fase4.aha_moments)",
+			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+			"steps": []
+		},
+		{
+			"uuid": "1c222ae0-8e1a-436b-9de7-1cdf6efbe0a4",
+			"title": "3-star rating system",
+			"description": "Otomatis dari Roadmap. (ID: fase4.star_rating)",
+			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+			"steps": []
+		},
+		{
+			"uuid": "d8e76425-42a0-4fe4-bcdb-892c38ae384c",
+			"title": "Boss 2 fase (HP threshold trigger fase 2)",
+			"description": "Otomatis dari Roadmap. (ID: fase4.boss_2phase)",
+			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+			"steps": []
+		},
+		{
+			"uuid": "7797ccd0-8290-4b44-a4f3-d6779847632e",
+			"title": "Boss pakai kombinasi mechanic enemy biasa",
+			"description": "Otomatis dari Roadmap. (ID: fase4.boss_combo_mechanic)",
+			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+			"steps": []
+		},
+		{
+			"uuid": "31ad26ca-5f4e-44ef-8d4d-03b2c8c91203",
+			"title": "Special attack yang butuh respon pemain",
+			"description": "Otomatis dari Roadmap. (ID: fase4.boss_special_attack)",
+			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+			"steps": []
+		},
+		{
+			"uuid": "e4116f71-3822-4a0d-9170-eb5fc35bacb7",
+			"title": "Spirit Level 1-20 (EXP dari battle)",
+			"description": "Otomatis dari Roadmap. (ID: fase4.spirit_level)",
+			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+			"steps": []
+		},
+		{
+			"uuid": "08023f90-25cc-41fe-ae93-a7ecbf57ac06",
+			"title": "Stat naik linear (tidak ada power creep)",
+			"description": "Otomatis dari Roadmap. (ID: fase4.linear_stat)",
+			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+			"steps": []
+		},
+		{
+			"uuid": "0260badb-0a66-47a5-9b20-2971e6e74b1a",
+			"title": "Covenant Shards dari battle reward",
+			"description": "Otomatis dari Roadmap. (ID: fase4.currency_shards)",
+			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+			"steps": []
+		},
+		{
+			"uuid": "c83b7f22-5a29-40e3-86b6-8d9e338ef559",
+			"title": "Bond system level 1-5 per Spirit (unlock dialog + ilustrasi)",
+			"description": "Otomatis dari Roadmap. (ID: fase4.bond_system)",
+			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+			"steps": []
+		},
+		{
+			"uuid": "10b908c5-5581-47db-a79d-3c02c3f1e819",
+			"title": "Dialog sebelum tiap stage (max 5 baris, tanpa voice)",
+			"description": "Otomatis dari Roadmap. (ID: fase4.basic_dialog)",
+			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+			"steps": []
+		},
+		{
+			"uuid": "13f37fb3-17ae-4880-9747-e26047513e5c",
+			"title": "Unlock lore fragment setelah stage selesai",
+			"description": "Otomatis dari Roadmap. (ID: fase4.lore_fragment)",
+			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+			"steps": []
+		},
+		{
+			"uuid": "9edc005f-da3a-4c11-a8e9-59f41c9bbd48",
+			"title": "Pilih 3 Spirit dari roster",
+			"description": "Otomatis dari Roadmap. (ID: fase5.pick_3_spirit)",
+			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+			"steps": []
+		},
+		{
+			"uuid": "e479c1b9-bec5-4299-b8ee-1a4948928fd6",
+			"title": "5 stage acak dari pool",
+			"description": "Otomatis dari Roadmap. (ID: fase5.random_5_stage)",
+			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+			"steps": []
+		},
+		{
+			"uuid": "684ccb8f-8ac7-42a0-b070-0b90ab65b91e",
+			"title": "Covenant Blessing: pilih 1 dari 3 buff tiap selesai stage",
+			"description": "Otomatis dari Roadmap. (ID: fase5.blessing_choice)",
+			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+			"steps": []
+		},
+		{
+			"uuid": "5b6cec79-57a4-44fc-9907-13f824deb073",
+			"title": "Reward tetap didapat walau run gagal (no punishment)",
+			"description": "Otomatis dari Roadmap. (ID: fase5.no_punishment)",
+			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+			"steps": []
+		},
+		{
+			"uuid": "252e1df9-1e4d-4cd1-985a-b6ecc1c3bb66",
+			"title": "Godot Export Templates untuk Android",
+			"description": "Otomatis dari Roadmap. (ID: fase6.export_template)",
+			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+			"steps": []
+		},
+		{
+			"uuid": "bbd94da6-a888-4ae0-a887-c46922682b5d",
+			"title": "UI responsif (Control node anchor/container)",
+			"description": "Otomatis dari Roadmap. (ID: fase6.responsive_ui)",
+			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+			"steps": []
+		},
+		{
+			"uuid": "a738a376-aa32-4208-8fa8-764d4305f893",
+			"title": "Touch input: tap to deploy, swipe untuk stats",
+			"description": "Otomatis dari Roadmap. (ID: fase6.touch_input)",
+			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+			"steps": []
+		},
+		{
+			"uuid": "88d00e52-ec15-4dfb-a0b8-b501714fef4b",
+			"title": "Performance check 60fps di mid-range Android",
+			"description": "Otomatis dari Roadmap. (ID: fase6.perf_check_android)",
+			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+			"steps": []
+		},
+		{
+			"uuid": "40b750c5-a4ae-46b2-b1e2-11cd076b8f0d",
+			"title": "Testing di minimal 2 device berbeda",
+			"description": "Otomatis dari Roadmap. (ID: fase6.multi_device_test)",
+			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+			"steps": []
+		},
+		{
+			"uuid": "97fdb1ac-7612-411f-a589-1bf064dec467",
+			"title": "Soft release: itch.io (Windows) + Google Play beta",
+			"description": "Otomatis dari Roadmap. (ID: fase6.soft_release)",
 			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
 			"steps": []
 		}

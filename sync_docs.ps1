@@ -1,6 +1,6 @@
 # ============================================================================
-# sync_docs.ps1 (REVISI - Deterministik via roadmap_id)
-# Sinkronisasi otomatis: Kanban (.kanban) + Git Log -> CURRENT_STATE.md + ROADMAP.md
+# sync_docs.ps1 (THE ULTIMATE NO-TOUCH VERSION)
+# Kamu cuma sentuh Kanban. Skrip ini yang ngurus dokumen & roadmap.
 # ============================================================================
 
 param(
@@ -13,7 +13,7 @@ $kanbanPath   = "kanban_tasks_data.kanban"
 $statePath    = "docs/CURRENT_STATE.md"
 $roadmapPath  = "docs/SPIRIT_COVENANT_ROADMAP.md"
 
-# Util: stopword & tokenizer (HANYA dipakai untuk fitur REMINDER)
+# --- UTIL: Pembersih Kata ---
 $StopWords = @(
     "dan","di","ke","dari","yang","untuk","dengan","sudah","belum","atau",
     "the","a","an","to","of","in","on","for","is","are","be","it","this","that",
@@ -25,8 +25,7 @@ function Get-Tokens {
     param([string]$Text)
     if (-not $Text) { return @() }
     $clean = ($Text.ToLower() -replace '[^a-z0-9\s]', ' ')
-    $words = $clean -split '\s+' | Where-Object { $_.Length -gt 2 -and ($StopWords -notcontains $_) }
-    return $words
+    return $clean -split '\s+' | Where-Object { $_.Length -gt 2 -and ($StopWords -notcontains $_) }
 }
 
 function Get-MatchScore {
@@ -36,9 +35,7 @@ function Get-MatchScore {
     return ($TokensA | Where-Object { $setB -contains $_ } | Select-Object -Unique).Count
 }
 
-# ----------------------------------------------------------------------------
-# Baca file
-# ----------------------------------------------------------------------------
+# --- UTIL: Baca File ---
 function Read-KanbanData {
     if (-not (Test-Path $kanbanPath)) { return $null }
     try { return Get-Content $kanbanPath -Raw -Encoding UTF8 | ConvertFrom-Json } catch { return $null }
@@ -61,8 +58,7 @@ function Get-TasksByStageName {
 function Get-RoadmapItems {
     param([string]$RoadmapText)
     $items = @()
-    $lines = $RoadmapText -split "`r?`n"
-    foreach ($line in $lines) {
+    foreach ($line in ($RoadmapText -split "`r?`n")) {
         if ($line -match '^\s*-\s*\[( |x|X)\]\s*(.+?)\s*<!--id:([a-zA-Z0-9_.]+)-->') {
             $items += [PSCustomObject]@{
                 Id     = $matches[3]
@@ -75,159 +71,166 @@ function Get-RoadmapItems {
     return $items
 }
 
-# ----------------------------------------------------------------------------
-# Proses utama: sinkronisasi
-# ----------------------------------------------------------------------------
+# --- FITUR 1: ROADMAP -> KANBAN ---
+function Sync-RoadmapToKanban {
+    param($KanbanData, $RoadmapItems)
+    $updated = $false
+    $todoStage = $KanbanData.stages | Where-Object { $_.title -eq "Todo" }
+    if (-not $todoStage) { return $false }
+    
+    $categoryUuid = $KanbanData.categories[0].uuid
+
+    foreach ($item in ($RoadmapItems | Where-Object { -not $_.Done })) {
+        # Jika task belum ada di Kanban sama sekali
+        $exists = $KanbanData.tasks | Where-Object { $_.title -eq $item.Label }
+        
+        if (-not $exists) {
+            $newUuid = [guid]::NewGuid().ToString()
+            $newTask = [PSCustomObject]@{
+                uuid = $newUuid
+                title = $item.Label
+                description = "Otomatis dari Roadmap. (ID: $($item.Id))"
+                category = $categoryUuid
+                steps = @()
+            }
+            $KanbanData.tasks += $newTask
+            $todoStage.tasks += $newUuid
+            $updated = $true
+            Write-Host "  [KANBAN] + Task baru di Todo: $($item.Label)" -ForegroundColor Yellow
+        }
+    }
+    return $updated
+}
+
+# --- FITUR 2: KANBAN -> ROADMAP (Pintar & Aman) ---
+function Get-SafeMatch {
+    param($Task, $AllRoadmapItems)
+    $taskTokens = Get-Tokens "$($Task.title) $($Task.description)"
+    $bestScore = 0
+    $bestItem = $null
+
+    # Cari kecocokan terhadap SEMUA item (baik yang [ ] maupun [x])
+    foreach ($item in $AllRoadmapItems) {
+        $score = Get-MatchScore -TokensA $taskTokens -TokensB (Get-Tokens $item.Label)
+        if ($score -gt $bestScore) {
+            $bestScore = $score
+            $bestItem = $item
+        }
+    }
+
+    # Minimal 2 kata kunci nyambung
+    if ($bestScore -ge 2) {
+        return $bestItem
+    }
+    return $null
+}
+
+# --- PROSES UTAMA ---
 function Sync-Once {
     Write-Host "=== Sync Docs: mulai ===" -ForegroundColor Cyan
 
+    if (-not (Test-Path $roadmapPath)) { return }
+    $roadmapText = Get-Content $roadmapPath -Raw -Encoding UTF8
+    $roadmapItems = Get-RoadmapItems -RoadmapText $roadmapText
     $kanban = Read-KanbanData
+
     if (-not $kanban) { return }
+
+    # 1. Tarik Roadmap ke Kanban
+    if (Sync-RoadmapToKanban -KanbanData $kanban -RoadmapItems $roadmapItems) {
+        $kanban | ConvertTo-Json -Depth 10 | Out-File $kanbanPath -Encoding UTF8
+        $kanban = Read-KanbanData # Baca ulang
+    }
 
     $doneTasks  = Get-TasksByStageName -KanbanData $kanban -StageName "Done"
     $todoTasks  = Get-TasksByStageName -KanbanData $kanban -StageName "Todo"
     $doingTasks = Get-TasksByStageName -KanbanData $kanban -StageName "Doing"
 
-    if (-not (Test-Path $roadmapPath)) { return }
-    $roadmapText = Get-Content $roadmapPath -Raw -Encoding UTF8
-    $roadmapItems = Get-RoadmapItems -RoadmapText $roadmapText
-
     $newlyChecked = @()
     $unplanned    = @()
-    $syncErrors   = @()
 
-    # LOGIKA BARU: Murni berdasarkan roadmap_id, TIDAK pakai tebak kata
+    # 2. Tarik Kanban (Done) ke Roadmap
     foreach ($task in $doneTasks) {
-        $targetId = if ($task.PSObject.Properties['roadmap_id']) { $task.roadmap_id } else { $null }
-
-        if ([string]::IsNullOrWhiteSpace($targetId)) {
-            # Task tidak punya roadmap_id -> masuk daftar "Di Luar Rencana"
+        $matchedItem = Get-SafeMatch -Task $task -AllRoadmapItems $roadmapItems
+        
+        if ($matchedItem) {
+            if (-not $matchedItem.Done) {
+                # Centang jika belum selesai
+                $newLine = $matchedItem.Line -replace '^\s*-\s*\[ \]', '- [x]'
+                $roadmapText = $roadmapText.Replace($matchedItem.Line, $newLine)
+                $matchedItem.Done = $true
+                $newlyChecked += "$($task.title) -> $($matchedItem.Id)"
+                Write-Host "  [MATCH] '$($task.title)' dicentang di Roadmap" -ForegroundColor Green
+            }
+            # Jika sudah Done, diamkan (jangan cari match lain).
+        } else {
+            # Jika tidak ada di roadmap, catat sebagai ide baru
             if ($roadmapText -notmatch [regex]::Escape($task.title)) {
                 $unplanned += $task.title
-            }
-        } else {
-            # Task punya roadmap_id -> Cari persis ID tersebut di roadmap
-            $item = $roadmapItems | Where-Object { $_.Id -eq $targetId }
-            if ($item) {
-                if (-not $item.Done) {
-                    $oldLine = $item.Line
-                    $newLine = $oldLine -replace '^\s*-\s*\[ \]', '- [x]'
-                    $roadmapText = $roadmapText.Replace($oldLine, $newLine)
-                    $item.Done = $true
-                    $newlyChecked += "$($task.title) -> $targetId"
-                    Write-Host "  [MATCH] '$($task.title)' dicentang di roadmap ($targetId)" -ForegroundColor Green
-                }
-                # Jika item.Done sudah $true, biarkan saja (berarti sudah pernah disync)
-            } else {
-                # ID salah ketik atau tidak ada di roadmap
-                $syncErrors += "Task '$($task.title)' punya roadmap_id '$targetId', tapi ID itu tidak ditemukan di roadmap."
             }
         }
     }
 
-    # Tulis daftar unplanned ke section "Di Luar Rencana Awal"
+    # Tulis ide baru ke bagian "Di Luar Rencana"
     if ($unplanned.Count -gt 0) {
         $pattern = '(?s)<!--AUTO_UNPLANNED_START-->.*?<!--AUTO_UNPLANNED_END-->'
-        $existingMatch = [regex]::Match($roadmapText, $pattern)
-        if ($existingMatch.Success) {
-            $existingContent = $existingMatch.Value
-            $oldItems = [regex]::Matches($existingContent, '^- (.+)$', 'Multiline') | ForEach-Object { $_.Groups[1].Value }
+        $match = [regex]::Match($roadmapText, $pattern)
+        if ($match.Success) {
+            $oldItems = [regex]::Matches($match.Value, '^- (.+)$', 'Multiline') | ForEach-Object { $_.Groups[1].Value }
             $combined = @($oldItems) + @($unplanned) | Select-Object -Unique
-            $combinedBlock = ($combined | ForEach-Object { "- $_" }) -join "`n"
-            $newBlock = "<!--AUTO_UNPLANNED_START-->`n$combinedBlock`n<!--AUTO_UNPLANNED_END-->"
-            $roadmapText = $roadmapText.Replace($existingContent, $newBlock)
+            $newBlock = "<!--AUTO_UNPLANNED_START-->`n" + (($combined | ForEach-Object { "- $_" }) -join "`n") + "`n<!--AUTO_UNPLANNED_END-->"
+            $roadmapText = $roadmapText.Replace($match.Value, $newBlock)
+            Write-Host "  [UNPLANNED] Ide baru dicatat ke Roadmap." -ForegroundColor Magenta
         }
     }
 
     Set-Content -Path $roadmapPath -Value $roadmapText -Encoding UTF8 -NoNewline
-    Write-Host "Roadmap diupdate. Item dicentang: $($newlyChecked.Count), di luar rencana: $($unplanned.Count)" -ForegroundColor Cyan
 
-    # ------------------------------------------------------------------------
-    # REMINDER: Cari item roadmap yang belum Done DAN belum ada task kanban-nya
-    # ------------------------------------------------------------------------
-    $roadmapItemsFresh = Get-RoadmapItems -RoadmapText $roadmapText
-    $allKanbanText = (@($doneTasks) + @($todoTasks) + @($doingTasks) | ForEach-Object { "$($_.title) $($_.description)" }) -join " "
-    $allKanbanTokens = Get-Tokens $allKanbanText
-
-    $orphanRoadmapItems = @()
-    foreach ($item in ($roadmapItemsFresh | Where-Object { -not $_.Done })) {
-        $itemTokens = Get-Tokens $item.Label
-        $score = Get-MatchScore -TokensA $itemTokens -TokensB $allKanbanTokens
-        if ($score -eq 0) {
-            $orphanRoadmapItems += $item.Label
-        }
-    }
-
-    # ------------------------------------------------------------------------
-    # Tulis CURRENT_STATE.md
-    # ------------------------------------------------------------------------
+    # 3. Update CURRENT_STATE.md
     $recentCommits = git log -3 --pretty=format:"- %s" 2>$null
-    if (-not $recentCommits) { $recentCommits = "- Belum ada commit terbaru." }
+    if (-not $recentCommits) { $recentCommits = "- Belum ada commit." }
 
     $nextTasksList = @()
-    foreach ($t in @($doingTasks) + @($todoTasks)) {
-        $nextTasksList += "- [ ] $($t.title.Trim())"
-    }
-    if ($nextTasksList.Count -eq 0) { $nextTasksList = @("- Semua kartu Done! Waktunya tambah task baru di Kanban.") }
-    $nextTasksBlock = ($nextTasksList | Select-Object -First 5) -join "`n"
+    foreach ($t in @($doingTasks) + @($todoTasks)) { $nextTasksList += "- [ ] $($t.title.Trim())" }
+    if ($nextTasksList.Count -eq 0) { $nextTasksList = @("- Semua kartu Done!") }
 
-    $syncNoteBlock = "- (tidak ada perubahan baru dari sync terakhir)"
-    if ($newlyChecked.Count -gt 0 -or $unplanned.Count -gt 0 -or $syncErrors.Count -gt 0) {
-        $lines = @()
-        foreach ($c in $newlyChecked) { $lines += "- [x] Roadmap auto-dicentang: $c" }
-        foreach ($u in $unplanned) { $lines += "- [+] Dicatat sebagai 'di luar rencana': $u" }
-        foreach ($e in $syncErrors) { $lines += "- [ERROR] $e" }
-        $syncNoteBlock = $lines -join "`n"
-    }
-
-    $orphanBlock = "- (semua item roadmap aktif sudah punya task terkait di Kanban)"
-    if ($orphanRoadmapItems.Count -gt 0) {
-        $orphanBlock = ($orphanRoadmapItems | Select-Object -First 5 | ForEach-Object { "- $_" }) -join "`n"
+    $syncNote = "- (Tidak ada perubahan baru)"
+    if ($newlyChecked.Count -gt 0 -or $unplanned.Count -gt 0) {
+        $syncNote = (($newlyChecked | ForEach-Object { "- [x] Roadmap dicentang: $_" }) + ($unplanned | ForEach-Object { "- [+] Ide baru: $_" })) -join "`n"
     }
 
     $newState = @"
 # CURRENT_STATE.md (Auto-Generated)
-_Update terakhir: $(Get-Date -Format "dd MMM yyyy HH:mm")_
+_Update: $(Get-Date -Format "dd MMM yyyy HH:mm")_
 
-## [LOG] BARU SAJA DIKERJAKAN (Dari Git Log)
+## [LOG] GIT TERAKHIR
 $recentCommits
 
-## [NEXT] TASK AKTIF SEKARANG (Dari Kanban: Doing + Todo)
-$nextTasksBlock
+## [NEXT] TASK AKTIF
+$($nextTasksList -join "`n")
 
-## [SYNC] HASIL SINKRONISASI TERAKHIR
-$syncNoteBlock
-- [AI SYNC] Mode: Deterministik (Explicit roadmap_id)
+## [SYNC] HASIL
+$syncNote
 
-## [REMINDER] ITEM ROADMAP BELUM ADA TASK KANBAN-NYA
-$orphanBlock
-
-## [INFO] CATATAN PENTING
-- (Tambahkan catatan manual di sini jika ada bug atau hal yang butuh perhatian khusus)
+## [INFO]
+- (Catatan manual)
 "@
-
-    $Utf8NoBomEncoding = New-Object System.Text.UTF8Encoding $false
-    [System.IO.File]::WriteAllText((Resolve-Path $statePath), $newState, $Utf8NoBomEncoding)
-
-    Write-Host "=== Sync Docs: selesai ===" -ForegroundColor Green
+    [System.IO.File]::WriteAllText((Resolve-Path $statePath), $newState, (New-Object System.Text.UTF8Encoding $false))
+    Write-Host "=== Sync Selesai ===" -ForegroundColor Green
 }
 
-# Mode Watch
 function Start-WatchMode {
-    Write-Host "Watch mode aktif. Ctrl+C untuk berhenti." -ForegroundColor Cyan
-    if (-not (Test-Path $kanbanPath)) { return }
+    Write-Host "Watch mode aktif. Kamu tinggal drag & drop di Godot. (Ctrl+C untuk stop)" -ForegroundColor Cyan
     $lastWriteTime = (Get-Item $kanbanPath).LastWriteTimeUtc
     Sync-Once
-
     while ($true) {
         Start-Sleep -Seconds 2
-        if (-not (Test-Path $kanbanPath)) { continue }
         $currentWriteTime = (Get-Item $kanbanPath).LastWriteTimeUtc
         if ($currentWriteTime -ne $lastWriteTime) {
             $lastWriteTime = $currentWriteTime
             Start-Sleep -Milliseconds 300
-            Write-Host "`n[Watch] Perubahan terdeteksi, sync ulang..." -ForegroundColor Magenta
-            try { Sync-Once } catch { Write-Host "Sync error: $_" -ForegroundColor Red }
+            Write-Host "`n[Watch] Kanban berubah, update dokumen..." -ForegroundColor Magenta
+            Sync-Once
             $lastWriteTime = (Get-Item $kanbanPath).LastWriteTimeUtc
         }
     }
