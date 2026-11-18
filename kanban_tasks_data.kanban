@@ -31,6 +31,7 @@
 		{
 			"uuid": "fc205c68-4f69-4b42-905c-6a3428c9ed31",
 			"title": "Enemy Type Differentiation (Grunt, Brute, Sprinter)",
+			"roadmap_id": "fase1.enemy_types",
 			"description": "Target: enemy.gd saat ini masih generik (semua musuh sama). Kita butuh 3 tipe dengan stat berbeda.\n\nLangkah Pertama (bisa dikerjakan 15 menit): Tambahkan variabel enemy_type di enemy.gd. Buat match statement sederhana di _ready() yang mengubah hp, speed, dan block_atk berdasarkan tipe (contoh: Grunt = HP 60, Speed 80; Brute = HP 200, Speed 40; Sprinter = HP 40, Speed 150).",
 			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
 			"steps": []
@@ -38,6 +39,7 @@
 		{
 			"uuid": "70b87302-9209-477f-b7ad-cd4aed4e586a",
 			"title": "Wave System & UI Counter",
+			"roadmap_id": "fase1.wave_ui",
 			"description": "Target: Saat ini battle.gd hanya spawn musuh satu per satu sampai batas MAX_ENEMIES. Belum ada sistem gelombang (wave) dan belum ada teks \"Wave 1/5\" di layar.\n\nLangkah Pertama: Buat label UI sederhana di pojok kanan atas battle.gd yang menampilkan teks \"Wave 1\".",
 			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
 			"steps": []
@@ -45,6 +47,7 @@
 		{
 			"uuid": "f224db1b-80ec-45df-a93a-c7f72b73088b",
 			"title": " Object Pooling (Enemy & Projectile)",
+			"roadmap_id": "fase1.object_pooling",
 			"description": "Target: Saat ini battle.gd pakai queue_free() dan load() terus-menerus. Untuk game TD dengan banyak musuh, ini bisa bikin lag di Android nanti. Kita perlu sistem \"daur ulang\" node.\n\nLangkah Pertama: Bikin script object_pool.gd sederhana yang menyimpan array musuh yang sudah mati, lalu dipakai lagi (visible = true) saat spawn, alih-alih queue_free().",
 			"category": "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
 			"steps": []

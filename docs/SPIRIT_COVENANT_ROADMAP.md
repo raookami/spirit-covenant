@@ -1,4 +1,4 @@
-# SPIRIT COVENANT — Solo Dev Roadmap
+﻿# SPIRIT COVENANT — Solo Dev Roadmap
 
 > Berdasarkan Blueprint v1.5 · Dibuat Juli 2026 · Update 18 Nov 2026 (restrukturisasi untuk auto-sync Kanban)
 > Engine: Godot 4.7 (GDScript) · Art: CSP + Live2D Cubism 5.0 (via GDCubism)
@@ -201,7 +201,7 @@ Pemain bisa main tiap hari tanpa merasa gated.
 > Diisi otomatis oleh `sync_docs.ps1` ketika ada task Kanban Done yang **tidak** cocok dengan item checklist manapun di atas — artinya ide/kebutuhan yang muncul di tengah jalan, bukan yang direncanakan dari awal. Tidak perlu diedit manual; cukup dibaca sesekali untuk tahu apa saja yang sudah keluar dari rencana original.
 
 <!--AUTO_UNPLANNED_START-->
-*(belum ada — akan terisi otomatis begitu sync_docs.ps1 menemukan task Done yang tidak cocok dengan roadmap)*
+
 <!--AUTO_UNPLANNED_END-->
 
 ---
