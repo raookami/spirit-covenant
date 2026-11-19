@@ -1,6 +1,6 @@
 # SPIRIT COVENANT — GAME BLUEPRINT
 
-**Version:** 2.0  
+**Version:** 2.1  
 **Engine:** Godot 4.7 (GDScript)  
 **Art Style:** Anime 2D Ilustrasi (CSP + Modular Chibi `Skeleton2D` Godot + Live2D Cubism untuk maskot/ilustrasi spesial)  
 **Platform Target:** Windows (.exe) → Android (.apk)  
@@ -65,12 +65,12 @@ Feeling yang ingin dicapai: _"Di permukaan tampak santai dan sederhana, tetapi p
 
 ### RINGKASAN ROSTER 5 SPIRIT (STAT BASE LEVEL 1)
 
-| Spirit | Main Class | Elemen (Warna) | Tipe DMG | CP | Block | HP | ATK | Attack Interval | Manifest / Phantasm DEF | Pola & Peran |
+| Spirit | Main Class | Elemen (Warna) | Tipe DMG | CP | Block | HP | ATK | Attack Interval | Manifest / Phantasm DEF | Pola Range & Peran |
 | --- | --- | --- | --- | :---: | :---: | :---: | :---: | :---: | :---: | --- |
-| **Ratora** | **Seer** | **Flare** (Oranye-Emas) | **Phantasm** | 7 | 2 | 520 | 35 | 0.80 dtk | 15 / 10 | Melee **AoE** + **Penghasil `CP`** |
-| **Raookami** | **Pursuer** | **Umbra** (Ungu Pekat/Merah Gelap) | **Manifest** | 9 | 1 | 800 | 50 | 0.55 dtk | 30 / 20 | Melee Single-Target cepat (Duelis) |
+| **Ratora** | **Seer** | **Flare** (Oranye-Emas) | **Phantasm** | 7 | 2 | 520 | 35 | 0.80 dtk | 15 / 10 | Melee **AoE** (tile diri + 3 tile depan) + **Penghasil `CP`** |
+| **Raookami** | **Pursuer** | **Umbra** (Ungu Pekat/Merah Gelap) | **Manifest** | 9 | 1 | 800 | 50 | 0.55 dtk | 30 / 20 | Melee Single-Target cepat (1-1: tile diri + 1 tile depan) |
 | **Yuki** | **Channeler** | **Veil** (Hijau Mint) | **Phantasm** | 10 | 1* | 500 | 28 | 0.60 dtk | 10 / 25 | Ranged Support / Healer / Disruptor cepat |
-| **Kuma** | **Sentinel** | **Rime** (Putih Kristal/Silver) | **Manifest** | 12 | 3 | 1350 | 25 | 1.25 dtk | 60 / 40 | Melee Tank utama penahan jalur |
+| **Kuma** | **Sentinel** | **Rime** (Putih Kristal/Silver) | **Manifest** | 12 | 3 | 1350 | 25 | 1.25 dtk | 60 / 40 | Melee Tank utama penahan jalur (1-1: tile diri + 1 tile depan) |
 | **Yoshiki** | **Lurker** | **Tide** (Biru Laut Tua) | **Manifest** | 12 | 1* | 360 | 85 | 0.70 dtk | 10 / 15 | Ranged Single-Target Burst tertinggi |
 
 > _*Catatan Block pada Unit Ranged (`Yuki` & `Yoshiki`): Secara stat memiliki `Block: 1`, namun selama berdiri di tile tinggi (`HIGH`) tidak memblokir musuh jalur darat. Nilai `Block: 1` berguna untuk konsistensi UI, stage khusus, atau interaksi dengan musuh udara di masa depan._
@@ -89,7 +89,7 @@ Feeling yang ingin dicapai: _"Di permukaan tampak santai dan sederhana, tetapi p
 | Kepribadian | Ceria, usil, sangat lengket ke Raku. Kurang akur dengan Yuki |
 | Suka / Tidak Suka | Suka: Daging, salju, Raku · Tidak suka: Yuki |
 
-**Skills (pilih 1 dari 3 sebelum battle):**
+**Skills (pilih 1 dari 3 di kartu bawah sebelum deploy):**
 1. **Shadow Dash** — Dash ke target terdekat, deal damage + stun singkat.
 2. **Dark Howl** — AoE kegelapan di sekitar dirinya, slow semua musuh dalam radius.
 3. **Pack Instinct** _(Passive)_ — Meningkatkan ATK/performa saat efek **Covenant Link** atau buff Master aktif.
@@ -108,11 +108,11 @@ Feeling yang ingin dicapai: _"Di permukaan tampak santai dan sederhana, tetapi p
 | Tinggi | 150 cm |
 | Main Class | **Sentinel** |
 | Elemen | **Rime** |
-| Tipe Damage | **Manifest DMG** (Melee Single-Target Tank, jangkauan area luas) |
+| Tipe Damage | **Manifest DMG** (Melee Single-Target Tank) |
 | Kepribadian | Dewasa, kalem, berwibawa layaknya kakak tertua |
 | Suka / Tidak Suka | Suka: Makanan manis dingin · Tidak suka: Makanan pedas |
 
-**Skills (pilih 1 dari 3 sebelum battle):**
+**Skills (pilih 1 dari 3 di kartu bawah sebelum deploy):**
 1. **Memory Seal** — Menarget satu musuh, musuh terhenti sejenak karena manipulasi memori (*disoriented*).
 2. **Foresight Barrier** — Memprediksi serangan berikutnya, menaikkan DEF semua Spirit di sekitar untuk menahan hantaman berat.
 3. **Glacier Wall** _(Passive)_ — Secara berkala memunculkan kristal es di depannya yang memperlambat musuh yang lewat.
@@ -135,7 +135,7 @@ Feeling yang ingin dicapai: _"Di permukaan tampak santai dan sederhana, tetapi p
 | Kepribadian | Pendiam, *cool*, tenang ala assassin |
 | Suka / Tidak Suka | Suka: Makanan laut, hujan · Tidak suka: Makanan pahit |
 
-**Skills (pilih 1 dari 3 sebelum battle):**
+**Skills (pilih 1 dari 3 di kartu bawah sebelum deploy):**
 1. **Camouflage** — Menghilang dari target musuh selama beberapa detik; serangan pertama setelah keluar dari mode ini menghasilkan *critical* besar.
 2. **Tidal Strike** — Tembakan proyektil arus deras yang menembus beberapa musuh sekaligus (*pierce*).
 3. **Frost Current** _(Passive)_ — Setiap serangan memiliki peluang membekukan target sejenak.
@@ -158,7 +158,7 @@ Feeling yang ingin dicapai: _"Di permukaan tampak santai dan sederhana, tetapi p
 | Kepribadian | Tsundere, hiperaktif, penuh semangat |
 | Suka / Tidak Suka | Suka: Daging, salju, Raku · Tidak suka: Sayuran |
 
-**Skills (pilih 1 dari 3 sebelum battle):**
+**Skills (pilih 1 dari 3 di kartu bawah sebelum deploy):**
 1. **Thunder Crash** — Ledakan energi petir AoE di sekitarnya, memberi damage dan *stun* singkat + tambahan `CP`.
 2. **Blaze Rush** — Menerjang ke depan melewati jalur musuh dan meninggalkan jejak bara api (*damage over time*).
 3. **Berserker Soul** _(Toggle)_ — ATK dan kecepatan serangan naik drastis dengan konsekuensi DEF turun dan HP berkurang perlahan; matikan toggle untuk berhenti.
@@ -182,7 +182,7 @@ Feeling yang ingin dicapai: _"Di permukaan tampak santai dan sederhana, tetapi p
 | Suka / Tidak Suka | Suka: Buah-buahan, malam · Tidak suka: Makanan pahit |
 | Catatan | Kurang akur dengan Raookami |
 
-**Skills (pilih 1 dari 3 sebelum battle):**
+**Skills (pilih 1 dari 3 di kartu bawah sebelum deploy):**
 1. **Dream Veil** — Menyelubungi musuh/area atau rekan dengan kabut mimpi untuk meredam ancaman serta memulihkan/melindungi Spirit terdekat.
 2. **Hypnotic Song** — Gelombang suara hipnosis yang membuat target kuat terhenti menyerang atau melambat drastis sambil melemahkan fokusnya.
 3. **Ethereal Form** — Memasuki wujud kabut malam; menyerang cepat sambil memulihkan HP Spirit terdekat berdasarkan persentase damage (*blood/veil drain*) atau memicu *disrupt* area.
@@ -197,7 +197,7 @@ Feeling yang ingin dicapai: _"Di permukaan tampak santai dan sederhana, tetapi p
 
 ### 4.1 Core Loop
 Lobby (Interaktif) → Pilih Stage → Pilih Tim (dari 5 Spirit) →
-Pilih Skill per Spirit (1 dari 3) → Battle →
+Battle (atur Skill S1/S2/S3 di kartu bawah, deploy, taktik real-time) →
 Reward (EXP material, Covenant Gold, Covenant Shards) → Kembali ke Lobby
 
 ### 4.2 Battle System
@@ -209,29 +209,38 @@ Reward (EXP material, Covenant Gold, Covenant Shards) → Kembali ke Lobby
 > 🗺️ **PRINSIP STAGE DESIGN: MULTI-SOLUTION**
 > Setiap stage harus dapat diselesaikan oleh pemain F2P dengan komposisi dasar (Bond 0). Kesulitan tidak dibuat untuk memaksa pemain punya Bond tinggi atau Alter.
 
-**Penempatan Spirit (`CP` / Covenant Point):**
-- Setiap Spirit membutuhkan **`CP` (Covenant Point)** untuk di-deploy.
-- `CP` bertambah otomatis seiring waktu (dan bisa dipercepat oleh **Ratora** sebagai *Seer*).
-- Saat meletakkan Spirit, pemain memilih **4 arah hadap** (`▲`, `▼`, `◀`, `▶`) untuk mengarahkan pola serangannya; `CP` dipotong setelah arah dikonfirmasi.
-- Spirit dapat ditarik kembali (**Retreat**, klik kanan) dan masuk masa **cooldown 8 detik** sebelum bisa di-deploy ulang (tanpa penalti HP).
+**Penempatan Spirit (`CP` / Covenant Point) & Kontrol Swipe + Kamera:**
+- Setiap Spirit membutuhkan **`CP` (Covenant Point)** untuk di-deploy. `CP` bertambah otomatis seiring waktu (dan dipercepat oleh **Ratora** sebagai *Seer*).
+- **Kecepatan & Slow-Motion Otomatis:**
+  - Tersedia tombol **`1x` / `2x`** di HUD kanan atas.
+  - Waktu arena otomatis melambat (**Slow-Motion ~`0.15x`**) pada 2 momen krusial: saat sedang **deploy/swipe arah** dan saat **hendak mengaktifkan skill Spirit** di arena.
+- **Alur Deploy & Swipe Arah (*Swipe-to-Face* + Zoom Kamera):**
+  1. Tarik kartu Spirit dari panel bawah dan jatuhkan ke tile valid → karakter **langsung berdiri di tile tersebut** (range belum ditampilkan) dan kamera **zoom-in halus** ke karakter sambil waktu melambat.
+  2. Klik & **swipe (geser)** dari tengah tubuh karakter ke 4 arah (`▲`, `▼`, `◀`, `▶`) → range jangkauan langsung **muncul dan berputar** mengikuti arah tarikan secara real-time.
+  3. **Lepas mouse/jari** → arah langsung terkunci, `CP` dipotong, range menghilang, kamera **zoom-out kembali normal**, dan kecepatan arena kembali normal.
+- **Klik Spirit di Lapangan & Aturan Pause Taktis:**
+  - Mengklik Spirit yang sudah berdiri di arena membuat kamera **zoom-in**, menampilkan jangkauan serangnya, serta tombol **`↩ RETREAT`** (ramah sentuhan Android maupun PC; klik kanan cepat di PC tetap berfungsi sebagai pintasan Retreat). Spirit masuk **cooldown 8 detik** tanpa penalti HP.
+  - **Aturan Pause:** Saat game di-Pause (`⏸`), pemain tetap bisa mengganti skill di kartu bawah dan **men-deploy Spirit baru** dari deck bawah, tetapi Spirit di lapangan **terkunci dari klik baru**. Untuk menarik Spirit saat Pause, pemain harus **mengklik Spirit-nya lebih dulu sebelum menekan Pause**, sehingga tombol `↩ RETREAT`-nya masih bisa ditekan selama Pause.
 
-**Tipe Damage (`Manifest` vs `Phantasm`) & Defense:**
-- **Manifest DMG:** Serangan fisik nyata (cakar, hantaman, proyektil padat). Efektif melawan musuh ber-`Manifest DEF` rendah.
-- **Phantasm DMG:** Serangan energi astral/roh (kilat energi, gelombang suara, sihir). Efektif melawan musuh ber-`Phantasm DEF` rendah.
-- **Aturan Penting:** Semua Spirit tetap bisa melukai semua jenis musuh (tidak ada imun total 0 damage) — perbedaan `Manifest DEF` dan `Phantasm DEF` musuh hanya mengurangi besaran damage agar pemain terdorong memadukan tim secara taktis.
+**Pola Jangkauan (*Range*), Aturan Block, & Tipe Damage:**
+- **Range Gaya *Arknights*:** Pola serangan di `.tres` mengikuti arah hadap depan yang dipilih (misal `1-1` untuk Raookami/Kuma: tile sendiri + 1 tile di depan; Ratora: tile sendiri + 3 tile di depan).
+- **Aturan Serang Musuh Terblokir:** Spirit melee yang sedang memblokir musuh tetap dapat menyerang musuh yang diblokirnya meskipun musuh tersebut berada di belakang arah hadap visual Spirit.
+- **Manifest DMG vs Phantasm DMG:**
+  - **Manifest DMG:** Serangan fisik nyata (ditahan oleh `Manifest DEF`).
+  - **Phantasm DMG:** Serangan energi astral/roh (ditahan oleh `Phantasm DEF`).
+  - **Aturan Penting:** Semua Spirit tetap bisa melukai semua musuh (tidak ada imun total 0 damage), hanya berbeda pengurangan damage sesuai defense target.
 
 **Sistem 5 Elemen & Siklus Advantage:**
 - Setiap Spirit memiliki **1 elemen tetap** (tanpa sistem 10 reaksi elemen yang rumit):
   - **Segitiga Utama:** `Veil > Tide > Rime > Veil` *(Veil mengalahkan Tide, Tide mengalahkan Rime, Rime mengalahkan Veil)*.
   - **Pasangan Berlawanan:** `Umbra ⇄ Flare` *(keduanya saling memberikan bonus damage ekstra satu sama lain)*.
-- Modifier elemen dijaga **ringan** (sekitar **+20% saat unggul / -15% saat lemah**) agar tetap ramah bagi strategi *multi-solution* dan tidak menghukum pemain secara berlebihan.
+- Modifier elemen dijaga **ringan** (sekitar **+20% saat unggul / -15% saat lemah**).
 
 **Mekanik Khas: `Covenant Link` (Last Stand Raku):**
-Mekanik penyelamatan darurat yang menjadi ciri khas *Spirit Covenant*:
 - **Pemicu:** Aktif otomatis **1 kali per battle** tepat saat **musuh pertama kali berhasil menembus garis akhir menuju Crystal**.
 - **Efek Langsung:**
   1. Musuh yang menerobos **tertahan sebelum mengurangi HP Crystal** dan **terpental mundur** di jalurnya (**3 tile** untuk musuh biasa/elite, **5 tile** untuk Boss).
-  2. Layar memunculkan efek visual khusus (vignette energi kalung & momen serius Raku).
+  2. Layar memunculkan **efek Border Glow halus di 4 sisi tepi layar + aura tipis** beserta banner status (tidak menutupi tengah arena dengan blok warna pekat).
   3. Seluruh Spirit yang sedang mati / dalam masa *cooldown* langsung **reset** dan siap di-deploy kembali.
   4. Seluruh Spirit yang masih hidup di arena langsung **full HP**.
   5. Seluruh Spirit di arena mendapatkan **shield khusus kebal mati** + **omnibuff** (peningkatan HP, DEF, ATK SPD, dll.) selama **10 detik**.
@@ -240,7 +249,7 @@ Mekanik penyelamatan darurat yang menjadi ciri khas *Spirit Covenant*:
   2. Setelah **10 detik** berakhir, shield dan seluruh buff dicabut:
      - Spirit yang sudah hidup di arena sebelum *Covenant Link* → HP-nya kembali ke kondisi awal sebelum terpicu, lalu **dikurangi 25%** dari HP awal tersebut.
      - Spirit yang baru bangkit dari status mati/cooldown → HP-nya langsung diset menjadi **50% dari Max HP**.
-- **Star Rating:** Karena Crystal belum terkena damage saat musuh ditahan, pemain **tetap berpeluang meraih 3-Star** jika berhasil bertahan dari efek samping dan menjaga HP Crystal tetap utuh sampai akhir stage!
+- **Star Rating:** Karena Crystal belum terkena damage saat musuh ditahan, pemain **tetap berpeluang meraih 3-Star** jika berhasil menjaga HP Crystal tetap utuh sampai akhir stage!
 
 **Musuh & Prinsip Anti-Inflasi:**
 - Musuh bergerak di jalur; memiliki tipe beragam (keroco cepat, elite tebal, terbang, berpelindung/armored, healer, hingga Boss berfase).
@@ -250,38 +259,46 @@ Mekanik penyelamatan darurat yang menjadi ciri khas *Spirit Covenant*:
 - **Menang:** Semua gelombang musuh berhasil dikalahkan.
 - **Kalah:** HP Crystal of Covenant mencapai 0.
 
-### 4.3 Sistem Skill
+### 4.3 Sistem Skill & In-Battle Skill Switcher
 
-Sebelum battle, tiap Spirit memilih **1 dari 3 skill**:
-- Skill 1: Terbuka sejak awal (Starter).
-- Skill 2: Terbuka di Spirit Level 10.
-- Skill 3: Terbuka di Spirit Level 20.
+- **Pilih Skill di Kartu Bawah Saat Battle (Pengganti Menu Pra-Battle):**
+  - Saat sudah masuk ke battle, pemain bisa memilih 1 dari 3 skill untuk tiap Spirit langsung dari kartu panel bawah: **Klik Kanan** (untuk PC) atau **Ketuk Singkat 1x tanpa menyeret** (untuk Android/layar sentuh).
+  - **Aturan Anti-Curang:** Penggantian skill **hanya boleh dilakukan sebelum Spirit di-deploy** (atau setelah di-Retreat/mati dan cooldown selesai). Begitu Spirit turun ke arena, skill-nya **terkunci**. Kartu bawah menampilkan indikator **`S1` / `S2` / `S3`** yang aktif.
+  - Skill 1 terbuka sejak awal, Skill 2 terbuka di Level 10, Skill 3 terbuka di Level 20.
+- **5 Tipe Aktivasi & Durasi Skill (`SkillData`):**
+  1. **`Passive`:** Selalu aktif tanpa bar/klik.
+  2. **`Auto`:** Bar mengisi lalu otomatis aktif dan reset.
+  3. **`Manual`:** Bar mengisi penuh lalu menunggu pemain klik untuk aktif (dengan *slow-mo* saat menarget/konfirmasi).
+  4. **`Toggle`:** Bisa dinyalakan dan dimatikan kapan saja (*contoh: Berserker Soul Ratora*).
+  5. **`Unlimited Duration`:** Sekali aktif (atau setelah terisi dan dipicu manual), bertahan **permanen** selama Spirit masih di arena sampai mati atau di-Retreat (*ala Skill 3 Thorns Arknights*).
+  - _Aturan Desain:_ Skill 2 dan Skill 3 wajib tidak otomatis (`Manual / Toggle / Unlimited`), dan harus ada Spirit yang ketiga skill-nya **full manual** agar gameplay selalu membutuhkan kontrol aktif pemain.
 
 ### 4.4 Sistem Alter (Pasca-Rilis)
 
 > 🎯 **Filosofi Alter: Horizontal, Bukan Vertikal**
-> Alter **tidak boleh lebih kuat secara mentah** daripada bentuk dasar. Alter hadir sebagai **variasi cara bermain & gimmick tim baru** (misalnya archetype *DoT/Racun*, *Extra Action/Follow-up*, *Charge/Dynamo*, dll.) tanpa membuat versi dasar menjadi usang.
+> Alter **tidak boleh lebih kuat secara mentah** daripada bentuk dasar. Alter hadir sebagai **variasi cara bermain & gimmick tim baru** (misalnya archetype *DoT/Racun*, *Extra Action/Follow-up*, *Charge/Dynamo*, *Pursuit*, dll.) tanpa membuat versi dasar menjadi usang.
 
 - **Jadwal Rilis:** Alter baru mulai dirilis **setelah game rilis dan seluruh banner karakter dasar selesai masuk ke Standard pool** — dirilis bertahap satu per satu, tidak sekaligus.
-- Setiap Alter tetap memakai **1 elemen** (tidak ada reaksi silang rumit), hadir dengan **skill set baru** serta **kisah singkat musiman** di kantor detektif.
+- Setiap Alter tetap memakai **1 elemen**, hadir dengan **skill set baru** serta **kisah singkat musiman** di kantor detektif.
 
 ### 4.5 Roguelite Mode — "Covenant Run"
 
-Mode sampingan tanpa stamina yang bisa dimainkan kapan saja:
+Mode sampingan *endgame* tanpa stamina yang bisa dimainkan kapan saja:
 - Pemain memilih tim (3 Spirit) dan melewati **5 stage acak** dari pool.
 - Setiap stage selesai, pemain memilih **1 dari 3 Covenant Blessing (buff acak)**.
 - Tidak ada hukuman jika gagal — pemain tetap mendapat reward sesuai jumlah stage yang berhasil dilalui.
 
-### 4.6 Daily & Weekly System *(Scope Freeze: Setelah Fase 4)*
+### 4.6 Daily, Weekly, & Event System *(Scope Freeze: Setelah Fase 4)*
 
 > 🗓️ **Filosofi: Main karena mau, bukan karena takut rugi.**
 
-- **Daily Quest & Login Bonus Progresif:** Membantu pemasukan *Covenant Shards* rutin tanpa sistem stamina/energi dan **tanpa streak punishment** (jika bolong sehari, tahap login hanya berhenti menunggu, tidak pernah reset ke nol).
-- Sesuai **Scope Freeze Rules** di Roadmap, sistem Daily Quest baru diimplementasikan setelah Fase 4 selesai.
+- **Daily Quest & Login Bonus Progresif:** Pemasukan *Covenant Shards* rutin tanpa stamina dan **tanpa streak punishment** (jika bolong, tahap login berhenti menunggu, tidak reset).
+- **Event Permanen (Reset Mingguan) (`data/events/weekly/`):** Tantangan rutin yang selalu ada dan di-reset setiap minggu agar pemain santai tetap bisa mengejar reward di akhir pekan.
+- **Event Patch / Musiman (`data/events/patch/`):** Konten cerita/stage khusus tiap update besar atau Alter season (pasca-rilis).
 
 ### 4.7 Leveling & Bond System
 
-Progression karakter sengaja dibuat **2 lapis yang ramping** (tanpa sistem *Elite Phase* dan tanpa *Skill Leveling* terpisah):
+Progression karakter sengaja dibuat **2 lapis yang ramping** (tanpa *Elite Phase* dan tanpa *Skill Leveling* terpisah):
 
 | Lapis | Cara Naik | Fungsi |
 | --- | --- | --- |
@@ -293,12 +310,8 @@ Progression karakter sengaja dibuat **2 lapis yang ramping** (tanpa sistem *Elit
 > 💎 **Filosofi: F2P First & Tetap Punya Alasan Menarik untuk Pull**
 
 - **Unit Awal Gratis:** Melalui **5 Stage Prolog**, semua pemain otomatis mendapatkan **ke-5 Spirit dasar di Bond 0**.
-- **Tujuan Gacha:** Banner *Rate-Up* & *Standard* digunakan untuk menaikkan **Bond 1–5 (Portray/Eidolon)** Spirit favorit dan (pasca-rilis) mendapatkan **Alter** dengan gimmick tim baru. Setelah banner rate-up berakhir, karakter dasar masuk ke banner Standard.
-- **Mata Uang Resmi:**
-  - **Covenant Shards:** Currency pull gacha (`150 Shards = 1 pull`, **Hard Pity 70**, *pity carry-over* antar banner).
-  - **Covenant Fragment:** Didapat dari duplikat berlebih setelah Bond 5 penuh (**4 Fragment per duplikat**, **20 Fragment = 1 tiket gacha pilihan Standard atau Featured**).
-  - **Covenant Gold & EXP Material:** Resource upgrade Level 1–20 dari farm stage (dengan cap harian pengganti stamina) dan tiap pull gacha.
-- Detail kalkulasi angka dan kurva ada di `docs/SPIRIT_COVENANT_ECONOMY.md`.
+- **Tujuan Gacha:** Banner *Rate-Up* & *Standard* digunakan untuk menaikkan **Bond 1–5 (Portray/Eidolon)** Spirit favorit dan (pasca-rilis) mendapatkan **Alter** dengan gimmick tim baru. Karakter awal setelah selesai banner rate-up-nya langsung masuk ke pool **Standard**.
+- **Mata Uang Resmi:** **Covenant Shards** (`150 Shards = 1 pull`, **Hard Pity 70**), **Covenant Fragment** (`4/duplikat` setelah Bond 5 penuh, `20 Fragment = 1 tiket pilihan`), **Covenant Gold**, & **EXP Material**. Detail angka ada di `docs/SPIRIT_COVENANT_ECONOMY.md`.
 
 ---
 
@@ -307,34 +320,27 @@ Progression karakter sengaja dibuat **2 lapis yang ramping** (tanpa sistem *Elit
 ### 5.1 Layar Utama (Lobby Interaktif)
 [HOME / LOBBY SCREEN]
 ├── Showcase Spirit Favorit (bergerak/bernapas di lobby + tap untuk dialog)
-├── Battle (Prolog / Chapter / Covenant Run)
-├── Spirit (Kelola Level, Bond, & Pilih 1 dari 3 Skill)
+├── Battle (Prolog / Chapter / Event Patch & Weekly / Covenant Run)
+├── Spirit (Kelola Level & Bond)
 ├── Gacha (Rate-Up & Standard)
 ├── Shop (Exchange Fragment / Top-Up)
 └── Settings
 
 ### 5.2 Battle UI
-[ATAS] HP Crystal of Covenant | Gelombang ke-X/Y | Timer / Pause
-[TENGAH] Map Grid + Spirit + Musuh (+ Efek Layar Covenant Link saat aktif)
-[BAWAH] CP Bar | [Kartu Spirit 1–5]
+[ATAS] HP Crystal of Covenant | Gelombang ke-X/Y | Tombol Speed [1x/2x] | Pause [⏸]
+[TENGAH] Map Grid + Spirit (Camera Zoom-In saat deploy/klik) + Border Glow Covenant Link
+[BAWAH] CP Bar | [Kartu Spirit 1–5 + badge S1/S2/S3 (klik kanan/tap pilih skill)]
 
 ### 5.3 Palet Warna UI & Elemen
 
 - **UI Utama:** Dark Navy + Gold Accent.
-- **5 Elemen:**
-  - **Umbra:** Ungu Pekat + Aksen Hitam / Merah Gelap *(Raookami)*
-  - **Flare:** Oranye-Kuning Emas Terang *(Ratora)*
-  - **Tide:** Biru Laut Tua *(Yoshiki)*
-  - **Rime:** Putih Kristal + Silver *(Kuma)*
-  - **Veil:** Hijau Mint *(Yuki)*
+- **5 Elemen:** **Umbra** *(Ungu Pekat + Hitam/Merah Gelap)* · **Flare** *(Oranye-Kuning Emas)* · **Tide** *(Biru Laut Tua)* · **Rime** *(Putih Kristal + Silver)* · **Veil** *(Hijau Mint)*.
 
 ---
 
 ## 6. ART DIRECTION & PIPELINE (RAMAH SOLO DEV)
 
 ### 6.1 Prinsip Produksi Aset
-
-Untuk menjaga konsistensi visual layaknya *Arknights* tanpa membebani solo dev mengerjakan rig berat dari nol untuk tiap karakter:
 Clip Studio Paint (CSP)
 → Gambar 1 Manekin/Proporsi Chibi Dasar + variasi rambut, baju, ekor/sayap, senjata (~7–9 bagian)
 ↓
@@ -369,30 +375,104 @@ Live2D Cubism 5.0 (Opsional / Spesial)
 
 ---
 
-## 8. FILE STRUCTURE (Godot Project)
+## 8. FILE STRUCTURE (Godot Project — Arsitektur Modular Final)
+
+> Prinsip: **"1 File = 1 Fitur"** dan **Data-Driven**. Seluruh kerangka folder sampai game rilis telah disiapkan agar pengembangan bisa melompat antar fitur dengan rapi.
+
+```text
 spirit-covenant/
 ├── assets/
-│ └── spirites/
-│ ├── characters/
-│ │ └── raookami/ ← aset PNG + Live2D idle (.moc3, .model3.json, .motion3.json)
-│ └── enemies/
-│ └── enemy1.png
+│   ├── audio/
+│   │   ├── bgm/
+│   │   ├── sfx/
+│   │   └── voice/
+│   ├── fonts/
+│   └── spirites/
+│       ├── characters/             ← raookami (ada), kuma, yoshiki, ratora, koyuuki
+│       ├── enemies/                ← sprite musuh
+│       ├── tiles/                  ← aset tile map
+│       ├── ui/                     ← ikon elemen, ikon class, frame kartu, crystal
+│       └── vfx/                    ← bentuk putih polos (slash, spark, proyektil)
 ├── addons/
-│ ├── gd_cubism/ ← plugin GDExtension Live2D (compile manual)
-│ └── kanban_tasks/ ← tracker task internal di editor Godot
+│   ├── gd_cubism/                  ← plugin GDExtension Live2D (compile manual)
+│   └── kanban_tasks/               ← tracker task internal di editor Godot
+├── autoload/                       ← global script nanti (GameManager, AudioManager, Save, Analytics)
 ├── data/
-│ ├── chapter/1/stage_01.tres ← StageConfig resource
-│ ├── enemies/ ← EnemyData .tres (keroco & elite)
-│ └── spirits/ ← SpiritData .tres (5 Spirit)
-├── docs/ ← Blueprint, Economy, Lore, Prolog, Roadmap, Audit, Workflow
+│   ├── chapter/
+│   │   ├── prolog/                 ← 5 stage Prolog (kontrak 1-per-1 + tutorial)
+│   │   └── 1/stage_01.tres         ← stage Chapter 1 Kantor Detektif
+│   ├── dialogs/                    ← data dialog cerita & lore fragment
+│   ├── enemies/
+│   │   ├── keroco/                 ← EnemyData keroco (KG-01, HY-01)
+│   │   ├── elite/                  ← EnemyData elite (KK-SH)
+│   │   └── boss/                   ← Boss Stage 5 & 10
+│   ├── events/
+│   │   ├── patch/                  ← Event Patch / Musiman
+│   │   └── weekly/                 ← Event Permanen Reset Mingguan
+│   ├── roguelite/                  ← pool stage & BlessingData Covenant Run
+│   ├── skills/                     ← SkillData .tres (3 skill per Spirit)
+│   └── spirits/                    ← SpiritData .tres (5 Spirit)
+├── docs/                           ← Blueprint, Economy, Lore, Prolog, Roadmap, Audit, Workflow
 ├── scenes/
-│ ├── battle.tscn / battle.gd
-│ ├── spirit.gd
-│ ├── enemy.gd
-│ └── stage_config.gd
+│   ├── battle/                     ← Inti Arena Battle (1 file = 1 fitur)
+│   │   ├── battle.tscn
+│   │   ├── battle.gd               ← wasit utama: grid, CP, Crystal HP, Speed/SlowMo/Pause, kamera
+│   │   ├── battle_hud.gd           ← HUD (Crystal, CP, Wave, 1x/2x, Pause, kartu bawah, Retreat btn)
+│   │   ├── deploy_controller.gd    ← drag & drop, swipe-to-face, klik unit & aturan kunci pause
+│   │   ├── wave_spawner.gd         ← timer wave, spawn musuh, enemy_pool
+│   │   ├── covenant_link_controller.gd ← mekanik Covenant Link + border glow 4 sisi layar
+│   │   └── vfx_pool.gd             ← object pooling proyektil & VFX
+│   ├── entities/                   ← Unit di arena
+│   │   ├── spirit.gd               ← otak tempur Spirit (HP/DEF, block, target, attack, link)
+│   │   ├── spirit_visual.gd        ← visual Spirit (Live2D / Skeleton2D / PNG / badge / bar)
+│   │   └── enemy.gd                ← gerak jalur, attack blocker, Manifest/Phantasm, knockback
+│   ├── events/                     ← scene menu Event Patch & Weekly
+│   ├── menus/                      ← layar penuh (Lobby, StageSelect, SpiritMenu, CovenantRun, Gacha)
+│   └── ui/                         ← widget reusable (PauseOverlay, DamagePopup, DialogBox, SkillPopup)
 ├── scripts/
-│ ├── spirit_data.gd
-│ └── enemy_data.gd
-├── tests/
-│ └── sentry_test.tscn / .gd
-└── project.godot
+│   ├── resources/                  ← cetakan Resource (.gd) tetap tipis meski ribuan data .tres
+│   │   ├── spirit_data.gd
+│   │   ├── enemy_data.gd
+│   │   └── stage_config.gd
+│   └── utils/                      ← helper umum
+└── tests/
+    └── sentry_test.tscn / .gd
+Catatan Compile GDCubism: GDCubism (github.com/MizunagiKB/gd_cubism) di-compile manual memakai SCons + MSVC Build Tools + Cubism SDK for Native R4_1 (bukan versi terbaru karena isu linking toolset MSVC). Untuk Live2D motion loop, gunakan start_motion_loop() pada node GDCubismUserModel.
+9. ENEMY DESIGN
+Tipe Musuh & Counter
+Tipe	Karakteristik	Counter Spirit	Catatan
+Grunt	HP rendah, jumlah banyak	Ratora (Melee AoE + CP), Yoshiki (Pierce)	Keroco pembuka gelombang
+Brute	HP tinggi, lambat	Kuma (Sentinel Block 3), Raookami (Pursuer burst)	Melatih penempatan tank & tipe DMG
+Sprinter	HP rendah, sangat cepat	Yuki (Slow/Hypnosis), Raookami (cegat cepat)	Menguji reaksi cepat & Covenant Link
+Flyer	Terbang, melewati rintangan	Yuki (Channeler), Yoshiki (Lurker)	Tidak terblokir melee darat biasa
+Armored	Salah satu DEF (Manifest atau Phantasm) sangat tinggi	Serang dengan tipe DMG lawannya (tetap bisa dipukul semua Spirit)	Mengajarkan komposisi Manifest + Phantasm
+Healer	Memulihkan musuh sekitar	Prioritas burst Yoshiki / Ratora	Harus segera disingkirkan
+Boss	Punya elemen, 2 fase, kombinasi gimmick	Situasional + timing Skill & Covenant Link	Muncul di akhir arc/stage kunci (Stage 5 & 10)
+Prinsip Scaling Musuh
+Stage awal (Prolog 1–5): Musuh mayoritas Netral (tanpa elemen) untuk pengenalan mekanik dasar.
+Stage menengah–akhir: Mulai memadukan Manifest/Phantasm DEF, elemen musuh (Umbra, Flare, Tide, Rime, Veil), jalur bercabang, dan gimmick khusus — HP musuh tidak pernah mengalami inflasi ekstrem.
+10. RETENSI & PLAYER EXPERIENCE
+Hari 1–7: Kenalan dengan 5 Spirit lewat Prolog 5 Stage, nikmati karakter favorit di Lobby, rasakan taktisnya kontrol Swipe + Slow-Mo dan tegangnya Covenant Link.
+Minggu 2–4: Eksperimen ganti-ganti skill S1/S2/S3 di tengah battle lewat Retreat/Redeploy, elemen, serta Manifest vs Phantasm.
+Bulan 2+: Replay Covenant Run (roguelite), kejar Event Mingguan tanpa tekanan streak, kumpulkan Bond 1–5 (dialog/ilustrasi), dan tunggu update cerita/kasus kantor detektif serta Alter pasca-rilis.
+Anti-Frustrasi: Tidak ada stamina, kalah langsung retry gratis, tetap dapat reward di Covenant Run walau gagal, dan tidak ada hukuman streak harian.
+11. REFERENSI GAME
+Game	Yang Diambil	Yang Dihindari
+Arknights	Grid TD, notasi range depan, speed 1x/2x + slow-mo deploy, kontrol pause taktis, skill Unlimited Duration, proporsi chibi modular seragam	Cerita terlalu suram di awal, ketergantungan karakter rarity tertinggi, skill terkunci permanen sejak sebelum battle
+Reverse: 1999	Sistem dua tipe damage abstrak (Manifest/Phantasm), siklus elemen + pasangan berlawanan, Bond = Portray, gimmick tim unik pada karakter baru	Rigging Live2D full-body berat untuk semua karakter di awal
+Mobile Legends	Feel gestur swipe arah targeting & respons kamera halus	—
+Honkai: Star Rail	Eidolon/Bond berfokus kenyamanan mekanik, vibe karakter hidup, mode roguelite buff	Inflasi HP musuh & power creep
+Detective Conan / Kemono Jihen	Kasus episodik detektif supranatural yang santai tapi menanam benih misteri yang saling terhubung	—
+Hades	Loop roguelite Covenant Run yang selalu segar	—
+12. CATATAN PENTING UNTUK AI ASSISTANT
+Jika kamu (AI lain) membaca dokumen ini untuk membantu developer:
+Engine & Arsitektur: Godot 4.7, GDScript, arsitektur modular "1 File = 1 Fitur" (scenes/battle/, scenes/entities/, scripts/resources/). Hindari menumpuk kode kembali ke satu file raksasa.
+Prioritas & Realitas Solo Dev: Gameplay loop & rasa senang coding lebih utama daripada beban gambar berat. Jangan sarankan Live2D full-body wajib untuk semua karakter atau background ilustrasi rumit.
+Istilah Resmi: Gunakan CP (Covenant Point) (bukan DP/Cost), Yuki (bukan Uki), Manifest DMG / Phantasm DMG (bukan Physical/Magic), serta 5 Main Class Pursuer, Sentinel, Lurker, Channeler, Seer.
+Kontrol & Battle UX: Speed 1x/2x, slow-mo saat deploy/swipe arah & saat aktifkan skill, aturan Pause taktis (boleh deploy dari bawah, unit arena terkunci dari klik baru kecuali diklik sebelum Pause), serta pilih skill S1/S2/S3 langsung di kartu bawah sebelum deploy/setelah Retreat.
+Sistem Elemen: 5 Elemen tetap (Umbra, Flare, Tide, Rime, Veil) dengan siklus Veil > Tide > Rime > Veil dan Umbra ⇄ Flare (modifier ringan ±15–20%). Jangan sarankan sistem 10 Elemental Reaction.
+Mekanik Khas: Covenant Link aktif otomatis 1x saat musuh pertama lolos (tahan Crystal + knockback 3/5 tile + border glow 4 tepi layar + reset CD + shield kebal mati & omnibuff 10 detik + CP beku 10 detik + recoil HP -25% awal / 50% Max HP setelah selesai + tetap sah 3-Star jika Crystal utuh).
+Melee & Range Rule: Range mengikuti pola depan gaya Arknights; Spirit melee yang sedang memblokir musuh tetap bisa menyerang musuh yang terblokir meski di belakangnya. Hanya Ratora (Seer) yang melee AoE (+ cetak CP); Raookami & Kuma single-target; serangan melee tidak menembakkan proyektil ranged.
+5 Spirit Dasar Gratis (Bond 0): Didapat dari 5 Stage Prolog. Bond 1–5 = Portray/Eidolon dari gacha; Alter & Event hanya untuk pasca-rilis (patuhi Scope Freeze sebelum Fase 4 selesai).
+Blueprint ini adalah dokumen visi — HANYA berisi tujuan, lore, dan desain inti. Progress, checklist, dan status pengerjaan ada di SPIRIT_COVENANT_ROADMAP.md dan CURRENT_STATE.md, bukan di sini.
+Last updated: 20 Nov 2026 — v2.1 (Update kontrol battle ala Arknights×ML [Swipe-to-Face, Zoom Kamera, Slow-Mo Deploy & Skill, Speed 1x/2x, Pause Taktis], In-Battle Skill Switcher + 5 tipe aktivasi termasuk Unlimited Duration, serangan melee ke unit terblokir, Event Patch & Weekly, serta Arsitektur Folder Modular Final).

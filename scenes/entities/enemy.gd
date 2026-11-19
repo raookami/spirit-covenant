@@ -128,6 +128,8 @@ func _build_visuals():
 	hp_bar_fill.position = Vector2(-23, -50)
 	hp_bar_fill.color = Color(0.15, 0.85, 0.3)
 	add_child(hp_bar_fill)
+	hp_bar_bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	hp_bar_fill.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 
 func _update_hp_bar():

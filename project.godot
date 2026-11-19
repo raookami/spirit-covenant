@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="spirit covenant"
-run/main_scene="uid://cwdgv27ajdfgw"
+run/main_scene="res://scenes/battle/battle.tscn"
 config/features=PackedStringArray("4.7", "Mobile")
 config/icon="res://icon.svg"
 

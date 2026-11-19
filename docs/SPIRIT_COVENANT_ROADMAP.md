@@ -1,6 +1,6 @@
 ﻿# SPIRIT COVENANT — Solo Dev Roadmap
 
-> Berdasarkan Blueprint v2.0 · Dibuat Juli 2026 · Update 18 Nov 2026 (sinkronisasi GDD v2.0 & audit kode)
+> Berdasarkan Blueprint v2.1 · Dibuat Juli 2026 · Update 20 Nov 2026 (arsitektur modular, kontrol swipe+zoom+slow-mo, & in-battle skill switcher)
 > Engine: Godot 4.7 (GDScript) · Art: CSP + Modular Chibi (`Skeleton2D` Godot) + Live2D Cubism 5.0 (GDCubism untuk maskot/skin spesial)
 
 > ℹ️ **Cara baca file ini:** Setiap item checklist punya tag `<!--id:xxx-->` di akhir baris. Tag ini dipakai `sync_docs.ps1` untuk mencocokkan task Kanban yang sudah Done dan mencentang baris yang sesuai secara otomatis. **Jangan hapus tag ini** walau kelihatan aneh — itu bukan komentar biasa, itu kunci sinkronisasi. Histori detail teknis (tanggal, angka FPS, cara compile, dll) ada di Git log dan commit message, bukan di sini — roadmap ini sengaja dijaga ringkas di level fase.
@@ -9,7 +9,7 @@
 
 ## Status Sekarang (Ringkas)
 
-Fondasi gameplay loop sudah ada dan jalan: grid map, deploy system, enemy pathfinding, block mechanic (melee+ranged), Crystal HP/CP (saat ini di HUD masih tertulis `DP`), attack & projectile dasar. GDCubism (plugin Live2D unofficial) sudah berhasil di-compile dan terintegrasi — Raookami chibi sudah render dengan Live2D idle motion di battle scene. **Fase 0 dan sebagian besar Fase 1 sudah selesai.** Lihat `CURRENT_STATE.md` untuk snapshot ter-update otomatis.
+Fondasi arsitektur modular (**1 File = 1 Fitur**) sudah dibangun di `scenes/battle/`, `scenes/entities/`, dan `scripts/resources/`, lengkap dengan kerangka seluruh folder hingga rilis. Core gameplay berjalan: grid map, `CP`, *object pooling* enemy & projectile (`wave_spawner.gd` & `vfx_pool.gd`), speed `1x/2x`, kontrol Pause awal, dan prototipe `Covenant Link`. **Saat ini sedang menyempurnakan kontrol *Swipe-to-Face + Zoom Kamera*, aturan serangan unit terblokir, dan flip Live2D.** Lihat `CURRENT_STATE.md` untuk snapshot ter-update otomatis.
 
 ### Catatan Migrasi Engine (Unity → Godot)
 
@@ -34,7 +34,7 @@ Project sempat direncanakan pakai Unity, lalu pindah ke Godot (20 Juli 2026) kar
 - [x] Audit script untuk null reference & race condition tersembunyi <!--id:fase0.audit_null--> *(pola `is_instance_valid()` konsisten dipakai; race condition `_spawn_enemy()` sudah diperbaiki)*
 - [x] Block mechanic aman dari crash saat Spirit di-retreat/mati saat blocking <!--id:fase0.block_safety-->
 - [x] Setup Git/GitHub (repo private) <!--id:fase0.git_setup-->
-- [x] Pisahkan StageConfig dari hardcode (`stage_config.gd` + `data/chapter/1/stage_01.tres`) <!--id:fase0.stage_config-->
+- [x] Pisahkan StageConfig dari hardcode (`scripts/resources/stage_config.gd` + `data/chapter/1/stage_01.tres`) <!--id:fase0.stage_config-->
 - [x] Simple test scene end-to-end: Spirit + enemy + Crystal, kondisi Victory/Lose terverifikasi <!--id:fase0.e2e_test-->
 - [x] Baseline performa Live2D (Godot Profiler) — ~60 FPS stabil dengan 1 model Live2D aktif <!--id:fase0.perf_baseline--> *(belum dites: multi-Spirit bersamaan & device Android asli)*
 - [x] Setup Sentry untuk auto-capture crash report <!--id:fase0.sentry-->
@@ -54,20 +54,20 @@ Satu scene yang bisa dimainkan end-to-end: tempatkan Spirit → musuh datang →
 
 ## FASE 1 — Playable Prototype (3–4 minggu) 🔄 SEDANG BERJALAN
 
-> Game bisa dimainkan, belum harus bagus. Tujuan: 5 Spirit bisa deploy sesuai role/elemen/damage type, 3 stage berbeda, menang/kalah jelas.
+> Game bisa dimainkan dengan kontrol taktis yang mulus (`1x/2x`, slow-mo, pause taktis, swipe arah). Tujuan: 5 Spirit bisa deploy sesuai role/elemen/damage type, 3 stage berbeda, menang/kalah jelas.
 
 ### Spirit System
 
-- [x] Base struktur Spirit (`spirit.gd`: HP, ATK, range, attack_cd, block_count) via `init()` <!--id:fase1.spirit_base-->
-- [x] 5 Spirit lengkap dengan stat dari blueprint di `spirit_roster` `.tres` (Raookami, Kuma, Yoshiki, Ratora, Yuki) <!--id:fase1.spirit_roster_5--> *(perlu update rebalance stat, 5 Main Class, 5 Elemen, Manifest/Phantasm DMG, serta perbaikan melee AoE khusus Ratora & arah hadap)*
-- [x] Deploy cost system (`CP` / Covenant Point bar di UI) <!--id:fase1.deploy_cost--> *(di kode/UI saat ini masih tertulis `DP`, perlu disesuaikan ke `CP`)*
-- [x] Retreat mechanic (klik kanan, cooldown 8 detik) <!--id:fase1.retreat-->
-- [x] Direction-picker saat deploy (4 arah, CP dipotong setelah konfirmasi) <!--id:fase1.direction_picker-->
+- [x] Base struktur Spirit (`scenes/entities/spirit.gd` + `spirit_visual.gd`: HP, ATK, range, attack_cd, block_count) via `init()` <!--id:fase1.spirit_base-->
+- [x] 5 Spirit lengkap dengan stat dari blueprint di `spirit_roster` `.tres` (Raookami, Kuma, Yoshiki, Ratora, Yuki) <!--id:fase1.spirit_roster_5--> *(stat rebalance, 5 Main Class, 5 Elemen, Manifest/Phantasm DMG, & range ala Arknights; perlu fix `_find_enemies_in_pattern` + hit unit terblokir & flip Live2D)*
+- [x] Deploy cost system (`CP` / Covenant Point bar di UI + penghasil CP Ratora) <!--id:fase1.deploy_cost-->
+- [x] Retreat mechanic (klik Spirit → tombol `RETREAT` / klik kanan PC, cooldown 8 detik) <!--id:fase1.retreat-->
+- [x] Direction-picker saat deploy (Swipe-to-Face 4 arah + Zoom Kamera + Slow-Mo, CP dipotong setelah konfirmasi) <!--id:fase1.direction_picker--> *(sedang perbaikan bug swipe arah & zoom klik arena)*
 
 ### Stage & Enemy
 
 - [x] 3 enemy type pertama: Grunt, Brute, Sprinter (differensiasi stat/behavior) <!--id:fase1.enemy_types--> *(stat sudah dipisah via `EnemyData` `.tres`; diferensiasi visual, Manifest/Phantasm DEF, & behavior unik menyusul)*
-- [ ] Object pooling untuk enemy, projectile, damage number popup <!--id:fase1.object_pooling--> *(Enemy sudah di-pool, namun masih ada bug reset state & double-death; Projectile masih `queue_free()` & Damage Popup belum dibuat)*
+- [ ] Object pooling untuk enemy, projectile, damage number popup <!--id:fase1.object_pooling--> *(Enemy & Projectile sudah di-pool di `wave_spawner.gd` & `vfx_pool.gd`; Damage Number Popup belum)*
 - [ ] 3 stage layout berbeda (jalur sederhana, cabang, sempit) <!--id:fase1.3_stage_layouts-->
 - [x] Crystal HP visible di UI <!--id:fase1.crystal_hp_ui-->
 - [x] Wave UI: "Wave 1/5" counter <!--id:fase1.wave_ui-->
@@ -77,7 +77,7 @@ Satu scene yang bisa dimainkan end-to-end: tempatkan Spirit → musuh datang →
 - [ ] Basic SFX: serangan, enemy mati, crystal kena damage <!--id:fase1.sfx_basic-->
 - [ ] Screen shake ringan saat crystal kena hit <!--id:fase1.screen_shake-->
 - [ ] Damage number popup <!--id:fase1.damage_popup-->
-- [ ] Pause menu sederhana <!--id:fase1.pause_menu-->
+- [ ] Pause menu & kontrol taktis (bisa deploy dari deck saat pause, unit arena terkunci kecuali sudah diklik sebelum pause + speed `1x/2x`) <!--id:fase1.pause_menu--> *(tombol `1x/2x` & `⏸` sudah ada di `battle_hud.gd`; overlay menu Pause lengkap menyusul)*
 - [ ] Onboarding Stage 1 (guided, 1 Spirit dulu, auto-highlight tile) <!--id:fase1.onboarding-->
 - [ ] Opsi skip tutorial <!--id:fase1.skip_tutorial-->
 
@@ -88,27 +88,27 @@ Satu scene yang bisa dimainkan end-to-end: tempatkan Spirit → musuh datang →
 
 ### Output Fase 1
 
-Demo yang bisa dikasih ke orang lain untuk dicoba. Tidak perlu cantik.
+Demo yang bisa dikasih ke orang lain untuk dicoba. Kontrol terasa mulus dan responsif.
 
 ---
 
 ## FASE 2 — Skill System & Covenant Link (2–3 minggu)
 
-> Implementasi mechanic "pilih 1 dari 3 skill" + mekanik Last Stand `Covenant Link` — core identity game
+> Implementasi mechanic "pilih 1 dari 3 skill" di dalam battle + slow-mo saat aktifkan skill + `Covenant Link` — core identity game
 
-- [ ] `SkillData` sebagai Resource/Dictionary (nama, deskripsi, tipe, parameter) <!--id:fase2.skill_data-->
-- [ ] `SkillSelector` UI sebelum battle <!--id:fase2.skill_selector_ui-->
-- [ ] `SkillExecutor` component per Spirit <!--id:fase2.skill_executor-->
+- [ ] `SkillData` sebagai Resource (nama, deskripsi, tipe aktivasi `Passive/Auto/Manual/Toggle/Unlimited`, parameter) <!--id:fase2.skill_data-->
+- [ ] `SkillSelector` di kartu panel bawah saat battle (klik kanan PC / ketuk singkat 1x HP sebelum deploy atau setelah Retreat, badge `S1/S2/S3`) <!--id:fase2.skill_selector_ui-->
+- [ ] `SkillExecutor` component per Spirit + slow-mo otomatis saat mau aktifkan skill manual <!--id:fase2.skill_executor-->
 - [ ] Skill Raookami: Shadow Dash + Dark Howl + Pack Instinct <!--id:fase2.skill_raookami-->
 - [ ] Skill Kuma: Memory Seal + Foresight Barrier + Glacier Wall <!--id:fase2.skill_kuma-->
 - [ ] Skill Yoshiki: Camouflage + Tidal Strike + Frost Current <!--id:fase2.skill_yoshiki-->
 - [ ] Skill Ratora: Thunder Crash + Blaze Rush + Berserker Soul <!--id:fase2.skill_ratora-->
 - [ ] Skill Koyuuki (Yuki): Dream Veil + Hypnotic Song + Ethereal Form <!--id:fase2.skill_koyuuki-->
-- [ ] Covenant Link (Raku): trigger 1x saat musuh pertama lolos (knockback 3/5 tile, reset CD, shield kebal mati + omnibuff 10s, CP beku 10s, recoil -25% HP awal / 50% Max HP) + visual <!--id:fase2.covenant_link-->
+- [ ] Covenant Link (Raku): trigger 1x saat musuh pertama lolos (knockback 3/5 tile, reset CD, shield kebal mati + omnibuff 10s, CP beku 10s, recoil -25% HP awal / 50% Max HP) + Border Glow <!--id:fase2.covenant_link--> *(inti logika & border glow sudah ada di `covenant_link_controller.gd`; tersisa polish animasi & uji tuntas)*
 
 ### Output Fase 2
 
-Battle terasa strategic dan penuh kejutan — pemain mulai mikir komposisi, tipe damage, elemen, dan timing skill.
+Battle terasa strategic dan penuh kejutan — pemain aktif mengatur timing skill, slow-mo, dan adaptasi ganti skill lewat Retreat.
 
 ---
 
@@ -187,7 +187,7 @@ Pemain bisa main tiap hari tanpa merasa gated.
 
 - [ ] Godot Export Templates untuk Android <!--id:fase6.export_template-->
 - [ ] UI responsif (Control node anchor/container) <!--id:fase6.responsive_ui-->
-- [ ] Touch input: tap to deploy, swipe untuk stats <!--id:fase6.touch_input-->
+- [ ] Touch input: ketuk singkat kartu pilih skill, drag & swipe-to-face deploy, klik Spirit di arena <!--id:fase6.touch_input-->
 - [ ] Performance check 60fps di mid-range Android <!--id:fase6.perf_check_android-->
 - [ ] Testing di minimal 2 device berbeda <!--id:fase6.multi_device_test-->
 - [ ] Soft release: itch.io (Windows) + Google Play beta <!--id:fase6.soft_release-->
@@ -205,7 +205,6 @@ Pemain bisa main tiap hari tanpa merasa gated.
 ---
 
 ## Timeline Ringkas
-
 Sekarang
 │
 ├── Fase 0: Stabilisasi 1–2 minggu ✅ Selesai
@@ -218,7 +217,7 @@ Sekarang
 ──────────
 Total estimasi: ~4–5 bulan
 (dengan buffer solo dev 1.5x)
-
+Code
 ---
 
 ## Scope Freeze Rules
@@ -226,6 +225,7 @@ Total estimasi: ~4–5 bulan
 **Tidak boleh ditambah sebelum Fase 4 selesai:**
 
 - Alter karakter (dirilis bertahap pasca-rilis setelah seluruh banner 5 Spirit dasar masuk Standard pool)
+- Event Patch & Event Permanen Mingguan (folder `data/events/` & `scenes/events/` sudah disiapkan, kode menyusul setelah Fase 4)
 - Gacha system lengkap
 - Season event
 - Fitur multiplayer / leaderboard apapun

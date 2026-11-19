@@ -58,7 +58,13 @@
                                      "4261e9d8-669c-4b7f-a349-8faf242d9659",
                                      "4205fa43-440d-4ea1-886b-c734265a28fa",
                                      "3e6f15aa-abe5-40b2-85a0-e571eff0acb4",
-                                     "d991a660-1e7e-4e09-a5c2-017e98192572"
+                                     "d991a660-1e7e-4e09-a5c2-017e98192572",
+                                     "197ba0b9-f9c4-455d-81be-2167beb33adc",
+                                     "d9b1cb78-97c4-4022-b016-df2d58fd581d",
+                                     "081f22f3-0699-46ee-9841-beda80e8d473",
+                                     "11a2982d-1a11-4812-81db-61fe24708531",
+                                     "fb474923-d6d5-46cb-b101-695a795830a7",
+                                     "624da671-cf5b-43e8-848f-df2560aaf836"
                                  ]
                    },
                    {
@@ -563,6 +569,60 @@
                       "uuid":  "d991a660-1e7e-4e09-a5c2-017e98192572",
                       "title":  "Object pooling untuk enemy, projectile, damage number popup",
                       "description":  "Otomatis dari Roadmap. (ID: fase1.object_pooling)",
+                      "category":  "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+                      "steps":  [
+
+                                ]
+                  },
+                  {
+                      "uuid":  "197ba0b9-f9c4-455d-81be-2167beb33adc",
+                      "title":  "Pause menu \u0026 kontrol taktis (bisa deploy dari deck saat pause, unit arena terkunci kecuali sudah diklik sebelum pause + speed `1x/2x`)",
+                      "description":  "Otomatis dari Roadmap. (ID: fase1.pause_menu)",
+                      "category":  "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+                      "steps":  [
+
+                                ]
+                  },
+                  {
+                      "uuid":  "d9b1cb78-97c4-4022-b016-df2d58fd581d",
+                      "title":  "`SkillData` sebagai Resource (nama, deskripsi, tipe aktivasi `Passive/Auto/Manual/Toggle/Unlimited`, parameter)",
+                      "description":  "Otomatis dari Roadmap. (ID: fase2.skill_data)",
+                      "category":  "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+                      "steps":  [
+
+                                ]
+                  },
+                  {
+                      "uuid":  "081f22f3-0699-46ee-9841-beda80e8d473",
+                      "title":  "`SkillSelector` di kartu panel bawah saat battle (klik kanan PC / ketuk singkat 1x HP sebelum deploy atau setelah Retreat, badge `S1/S2/S3`)",
+                      "description":  "Otomatis dari Roadmap. (ID: fase2.skill_selector_ui)",
+                      "category":  "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+                      "steps":  [
+
+                                ]
+                  },
+                  {
+                      "uuid":  "11a2982d-1a11-4812-81db-61fe24708531",
+                      "title":  "`SkillExecutor` component per Spirit + slow-mo otomatis saat mau aktifkan skill manual",
+                      "description":  "Otomatis dari Roadmap. (ID: fase2.skill_executor)",
+                      "category":  "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+                      "steps":  [
+
+                                ]
+                  },
+                  {
+                      "uuid":  "fb474923-d6d5-46cb-b101-695a795830a7",
+                      "title":  "Covenant Link (Raku): trigger 1x saat musuh pertama lolos (knockback 3/5 tile, reset CD, shield kebal mati + omnibuff 10s, CP beku 10s, recoil -25% HP awal / 50% Max HP) + Border Glow",
+                      "description":  "Otomatis dari Roadmap. (ID: fase2.covenant_link)",
+                      "category":  "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
+                      "steps":  [
+
+                                ]
+                  },
+                  {
+                      "uuid":  "624da671-cf5b-43e8-848f-df2560aaf836",
+                      "title":  "Touch input: ketuk singkat kartu pilih skill, drag \u0026 swipe-to-face deploy, klik Spirit di arena",
+                      "description":  "Otomatis dari Roadmap. (ID: fase6.touch_input)",
                       "category":  "e1a6d931-8f0b-40d3-8360-0bc0222f43bb",
                       "steps":  [
 

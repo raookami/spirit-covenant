@@ -1,8 +1,8 @@
 # CURRENT_STATE.md (Auto-Generated)
-_Update: 19 Nov 2026 04.41_
+_Update: 20 Nov 2026 05.56_
 
 ## [LOG] GIT TERAKHIR
-- docs: sync GDD v2.0, lore, economy, and roadmap - nambah audit report - feat: setup full automation & auto-populate kanban
+- feat: sync gameplay & data to GDD v2.0 (CP, Covenant Link, 5 elements, stat rebalance) - docs: sync GDD v2.0, lore, economy, and roadmap - nambah audit report
 
 ## [NEXT] TASK AKTIF
 - [ ] 3 stage layout berbeda (jalur sederhana, cabang, sempit)
@@ -53,6 +53,12 @@ _Update: 19 Nov 2026 04.41_
 - [ ] Dialog sebelum/sesudah tiap stage (ringkas, tanpa wajib background rumit, menanam benih plot twist)
 - [ ] Unlock lore fragment / catatan kasus detektif setelah stage selesai
 - [ ] Object pooling untuk enemy, projectile, damage number popup
+- [ ] Pause menu & kontrol taktis (bisa deploy dari deck saat pause, unit arena terkunci kecuali sudah diklik sebelum pause + speed `1x/2x`)
+- [ ] `SkillData` sebagai Resource (nama, deskripsi, tipe aktivasi `Passive/Auto/Manual/Toggle/Unlimited`, parameter)
+- [ ] `SkillSelector` di kartu panel bawah saat battle (klik kanan PC / ketuk singkat 1x HP sebelum deploy atau setelah Retreat, badge `S1/S2/S3`)
+- [ ] `SkillExecutor` component per Spirit + slow-mo otomatis saat mau aktifkan skill manual
+- [ ] Covenant Link (Raku): trigger 1x saat musuh pertama lolos (knockback 3/5 tile, reset CD, shield kebal mati + omnibuff 10s, CP beku 10s, recoil -25% HP awal / 50% Max HP) + Border Glow
+- [ ] Touch input: ketuk singkat kartu pilih skill, drag & swipe-to-face deploy, klik Spirit di arena
 
 ## [SYNC] HASIL
 - (Tidak ada perubahan baru)
