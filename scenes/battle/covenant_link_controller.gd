@@ -6,7 +6,6 @@ signal link_ended
 
 const DURATION := 10.0
 
-var battle_ref: Node = null
 var link_used: bool = false
 var is_active: bool = false
 var timer: float = 0.0
@@ -19,8 +18,7 @@ var aura_tint: ColorRect
 var banner_label: Label
 
 
-func setup(battle: Node):
-	battle_ref = battle
+func setup():
 	_build_visuals()
 
 

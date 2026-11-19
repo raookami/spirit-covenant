@@ -91,7 +91,7 @@ func _build_components():
 	add_child(deploy_ctrl)
 
 	link_ctrl = CovenantLinkController.new()
-	link_ctrl.setup(self)
+	link_ctrl.setup()
 	link_ctrl.link_activated.connect(_on_covenant_link_activated)
 	link_ctrl.link_ended.connect(_on_covenant_link_ended)
 	add_child(link_ctrl)

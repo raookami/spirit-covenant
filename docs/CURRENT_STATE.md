@@ -1,8 +1,8 @@
 # CURRENT_STATE.md (Auto-Generated)
-_Update: 20 Nov 2026 06.40_
+_Update: 20 Nov 2026 06.42_
 
 ## [LOG] GIT TERAKHIR
-- refactor: modular battle architecture, swipe deploy, camera zoom, & GDD v2.1 - feat: sync gameplay & data to GDD v2.0 (CP, Covenant Link, 5 elements, stat rebalance) - docs: sync GDD v2.0, lore, economy, and roadmap
+- refactor: modular battle architecture, swipe deploy, camera zoom, & GDD v2.1, dan hapus file zip yang ke bawa - refactor: modular battle architecture, swipe deploy, camera zoom, & GDD v2.1 - feat: sync gameplay & data to GDD v2.0 (CP, Covenant Link, 5 elements, stat rebalance)
 
 ## [NEXT] TASK AKTIF
 - [ ] 3 stage layout berbeda (jalur sederhana, cabang, sempit)
