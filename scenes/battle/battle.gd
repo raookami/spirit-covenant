@@ -51,6 +51,7 @@ var cam: Camera2D
 var default_cam_pos := Vector2(640, 360)
 var default_cam_zoom := Vector2(1.0, 1.0)
 var _cam_tween: Tween = null
+var _shake_tween: Tween = null
 
 
 func _ready():
@@ -104,11 +105,11 @@ func _build_components():
 	hud = BattleHUD.new()
 	hud.speed_toggle_requested.connect(_on_speed_toggle)
 	hud.pause_toggle_requested.connect(_on_pause_toggle)
+	hud.retry_requested.connect(_on_retry_requested)
 	hud.retreat_requested.connect(deploy_ctrl.execute_retreat_selected)
 	hud.skill_requested.connect(deploy_ctrl.execute_skill_selected)
 	hud.card_drag_started.connect(deploy_ctrl.handle_card_start_drag)
 	add_child(hud)
-
 
 func _load_stage_config():
 	if stage_config_path != "" and ResourceLoader.exists(stage_config_path):
@@ -224,7 +225,7 @@ func _input(event):
 
 
 func _unhandled_input(event):
-	if battle_over or deploy_ctrl.choosing_direction or deploy_ctrl.dragging:
+	if battle_over or is_game_paused or deploy_ctrl.choosing_direction or deploy_ctrl.dragging:
 		return
 
 	if event is InputEventMouseButton and event.pressed and event.position.y < 640:
@@ -428,6 +429,7 @@ func _on_enemy_reached_end(enemy: Node2D):
 
 	crystal_hp = maxi(0, crystal_hp - 1)
 	hud.update_crystal(crystal_hp, crystal_max_hp)
+	shake_camera(10.0, 0.25)
 	enemy.deactivate_to_pool()
 	active_enemies.erase(enemy)
 	spawner.recycle_enemy(enemy)
@@ -469,3 +471,35 @@ func _on_battle_lost():
 	is_slowmo_active = false
 	Engine.time_scale = 1.0
 	hud.show_result("DEFEAT", Color(0.9, 0.2, 0.2))
+
+func shake_camera(intensity: float = 10.0, duration: float = 0.25):
+	if cam == null:
+		return
+	if _shake_tween != null and _shake_tween.is_valid():
+		_shake_tween.kill()
+	_shake_tween = get_tree().create_tween()
+	_shake_tween.set_ignore_time_scale(true)
+	var steps := 5
+	var step_dur := duration / float(steps)
+	for i in range(steps):
+		var decay := 1.0 - (float(i) / float(steps))
+		var offset_pos := Vector2(
+			randf_range(-intensity, intensity) * decay,
+			randf_range(-intensity, intensity) * decay
+		)
+		_shake_tween.tween_property(cam, "offset", offset_pos, step_dur)
+	_shake_tween.tween_property(cam, "offset", Vector2.ZERO, step_dur)
+
+
+func _on_enemy_damaged(amount: int, atk_element: String, enemy: Node2D):
+	if vfx == null or not is_instance_valid(enemy):
+		return
+	var color := Color(1.0, 0.95, 0.75)
+	if SpiritVisual.ELEMENT_COLORS.has(atk_element):
+		color = SpiritVisual.ELEMENT_COLORS[atk_element]
+	vfx.spawn_damage_number(enemy.position + Vector2(0, -32), amount, color)
+
+
+func _on_retry_requested():
+	Engine.time_scale = 1.0
+	get_tree().reload_current_scene()

@@ -67,7 +67,7 @@ Satu scene yang bisa dimainkan end-to-end: tempatkan Spirit → musuh datang →
 ### Stage & Enemy
 
 - [x] 3 enemy type pertama: Grunt, Brute, Sprinter (differensiasi stat/behavior) <!--id:fase1.enemy_types--> *(stat sudah dipisah via `EnemyData` `.tres`; diferensiasi visual, Manifest/Phantasm DEF, & behavior unik menyusul)*
-- [ ] Object pooling untuk enemy, projectile, damage number popup <!--id:fase1.object_pooling--> *(Enemy & Projectile sudah di-pool di `wave_spawner.gd` & `vfx_pool.gd`; Damage Number Popup belum)*
+- [x] Object pooling untuk enemy, projectile, damage number popup <!--id:fase1.object_pooling--> *(Enemy & Projectile sudah di-pool di `wave_spawner.gd` & `vfx_pool.gd`; Damage Number Popup belum)*
 - [ ] 3 stage layout berbeda (jalur sederhana, cabang, sempit) <!--id:fase1.3_stage_layouts-->
 - [x] Crystal HP visible di UI <!--id:fase1.crystal_hp_ui-->
 - [x] Wave UI: "Wave 1/5" counter <!--id:fase1.wave_ui-->
@@ -75,9 +75,9 @@ Satu scene yang bisa dimainkan end-to-end: tempatkan Spirit → musuh datang →
 ### Game Feel
 
 - [ ] Basic SFX: serangan, enemy mati, crystal kena damage <!--id:fase1.sfx_basic-->
-- [ ] Screen shake ringan saat crystal kena hit <!--id:fase1.screen_shake-->
+- [x] Screen shake ringan saat crystal kena hit <!--id:fase1.screen_shake-->
 - [ ] Damage number popup <!--id:fase1.damage_popup-->
-- [ ] Pause menu & kontrol taktis (bisa deploy dari deck saat pause, unit arena terkunci kecuali sudah diklik sebelum pause + speed `1x/2x`) <!--id:fase1.pause_menu--> *(tombol `1x/2x` & `⏸` sudah ada di `battle_hud.gd`; overlay menu Pause lengkap menyusul)*
+- [x] Pause menu & kontrol taktis (bisa deploy dari deck saat pause, unit arena terkunci kecuali sudah diklik sebelum pause + speed `1x/2x`) <!--id:fase1.pause_menu--> *(tombol `1x/2x` & `⏸` sudah ada di `battle_hud.gd`; overlay menu Pause lengkap menyusul)*
 - [ ] Onboarding Stage 1 (guided, 1 Spirit dulu, auto-highlight tile) <!--id:fase1.onboarding-->
 - [ ] Opsi skip tutorial <!--id:fase1.skip_tutorial-->
 

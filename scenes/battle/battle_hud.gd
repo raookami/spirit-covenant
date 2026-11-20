@@ -1,6 +1,7 @@
 class_name BattleHUD
 extends CanvasLayer
 
+signal retry_requested
 signal speed_toggle_requested
 signal pause_toggle_requested
 signal retreat_requested
@@ -15,6 +16,7 @@ const ELEMENT_COLORS := {
 	"Veil": Color(0.22, 0.85, 0.65),
 }
 
+var pause_banner: Control
 var battle_ref: Node = null
 
 var crystal_hp_label: Label
@@ -38,6 +40,43 @@ func setup(battle: Node):
 	_create_hud()
 	_create_bottom_panel()
 	_create_retreat_panel()
+	_create_pause_banner()
+
+func _create_pause_banner():
+	pause_banner = Control.new()
+	pause_banner.visible = false
+	pause_banner.z_index = 30
+	pause_banner.position = Vector2(460, 12)
+	pause_banner.size = Vector2(360, 40)
+	pause_banner.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(pause_banner)
+
+	var bg := ColorRect.new()
+	bg.size = Vector2(360, 40)
+	bg.color = Color(0.05, 0.08, 0.14, 0.88)
+	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	pause_banner.add_child(bg)
+
+	var lbl := Label.new()
+	lbl.text = "⏸ PAUSE (Deploy tetap aktif)"
+	lbl.add_theme_font_size_override("font_size", 13)
+	lbl.add_theme_color_override("font_color", Color(0.85, 0.92, 1.0))
+	lbl.position = Vector2(12, 10)
+	pause_banner.add_child(lbl)
+
+	var resume_btn := Button.new()
+	resume_btn.text = "▶"
+	resume_btn.size = Vector2(36, 28)
+	resume_btn.position = Vector2(228, 6)
+	resume_btn.pressed.connect(func(): emit_signal("pause_toggle_requested"))
+	pause_banner.add_child(resume_btn)
+
+	var retry_btn := Button.new()
+	retry_btn.text = "↻ Retry"
+	retry_btn.size = Vector2(78, 28)
+	retry_btn.position = Vector2(272, 6)
+	retry_btn.pressed.connect(func(): emit_signal("retry_requested"))
+	pause_banner.add_child(retry_btn)
 
 
 func _process(_delta: float):
@@ -309,6 +348,8 @@ func set_speed_text(speed_scale: float):
 func set_pause_text(is_paused: bool):
 	if pause_btn:
 		pause_btn.text = "▶" if is_paused else "⏸"
+	if pause_banner:
+		pause_banner.visible = is_paused
 
 
 func show_result(text: String, color: Color):

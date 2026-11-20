@@ -72,6 +72,7 @@ func _spawn_one_enemy():
 			battle_ref.add_child(enemy)
 			enemy.connect("enemy_reached_end", battle_ref._on_enemy_reached_end.bind(enemy))
 			enemy.connect("enemy_died", battle_ref._on_enemy_died.bind(enemy))
+			enemy.connect("enemy_damaged", battle_ref._on_enemy_damaged.bind(enemy))
 
 		enemy.setup(enemy_path, enemy_data)
 		battle_ref.active_enemies.append(enemy)

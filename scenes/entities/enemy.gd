@@ -2,6 +2,7 @@ extends Node2D
 
 signal enemy_reached_end
 signal enemy_died
+signal enemy_damaged(amount: int, atk_element: String)
 
 const ENEMY_TEXTURE = preload("res://assets/spirites/enemies/enemy1.png")
 
@@ -245,6 +246,7 @@ func take_damage(
 
 	hp = maxi(0, hp - final_dmg)
 	_update_hp_bar()
+	emit_signal("enemy_damaged", final_dmg, atk_element)
 
 	if hp <= 0:
 		is_dead = true

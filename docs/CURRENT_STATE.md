@@ -1,15 +1,12 @@
 # CURRENT_STATE.md (Auto-Generated)
-_Update: 20 Nov 2026 06.42_
+_Update: 21 Nov 2026 00.58_
 
 ## [LOG] GIT TERAKHIR
-- refactor: modular battle architecture, swipe deploy, camera zoom, & GDD v2.1, dan hapus file zip yang ke bawa - refactor: modular battle architecture, swipe deploy, camera zoom, & GDD v2.1 - feat: sync gameplay & data to GDD v2.0 (CP, Covenant Link, 5 elements, stat rebalance)
+- bersihkan deadcode - refactor: modular battle architecture, swipe deploy, camera zoom, & GDD v2.1, dan hapus file zip yang ke bawa - refactor: modular battle architecture, swipe deploy, camera zoom, & GDD v2.1
 
 ## [NEXT] TASK AKTIF
 - [ ] 3 stage layout berbeda (jalur sederhana, cabang, sempit)
 - [ ] Basic SFX: serangan, enemy mati, crystal kena damage
-- [ ] Screen shake ringan saat crystal kena hit
-- [ ] Damage number popup
-- [ ] Pause menu sederhana
 - [ ] Onboarding Stage 1 (guided, 1 Spirit dulu, auto-highlight tile)
 - [ ] Opsi skip tutorial
 - [ ] Integrasi GameAnalytics (gratis untuk indie)
@@ -52,8 +49,6 @@ _Update: 20 Nov 2026 06.42_
 - [ ] Bond system level 1-5 = Portray / Eidolon (bonus kenyamanan/mekanik + unlock dialog & ilustrasi)
 - [ ] Dialog sebelum/sesudah tiap stage (ringkas, tanpa wajib background rumit, menanam benih plot twist)
 - [ ] Unlock lore fragment / catatan kasus detektif setelah stage selesai
-- [ ] Object pooling untuk enemy, projectile, damage number popup
-- [ ] Pause menu & kontrol taktis (bisa deploy dari deck saat pause, unit arena terkunci kecuali sudah diklik sebelum pause + speed `1x/2x`)
 - [ ] `SkillData` sebagai Resource (nama, deskripsi, tipe aktivasi `Passive/Auto/Manual/Toggle/Unlimited`, parameter)
 - [ ] `SkillSelector` di kartu panel bawah saat battle (klik kanan PC / ketuk singkat 1x HP sebelum deploy atau setelah Retreat, badge `S1/S2/S3`)
 - [ ] `SkillExecutor` component per Spirit + slow-mo otomatis saat mau aktifkan skill manual
@@ -61,7 +56,9 @@ _Update: 20 Nov 2026 06.42_
 - [ ] Touch input: ketuk singkat kartu pilih skill, drag & swipe-to-face deploy, klik Spirit di arena
 
 ## [SYNC] HASIL
-- (Tidak ada perubahan baru)
+- [x] Roadmap dicentang: Pause menu & kontrol taktis (bisa deploy dari deck saat pause, unit arena terkunci kecuali sudah diklik sebelum pause + speed `1x/2x`) -> fase1.pause_menu
+- [x] Roadmap dicentang: Damage number popup -> fase1.object_pooling
+- [x] Roadmap dicentang: Screen shake ringan saat crystal kena hit -> fase1.screen_shake
 
 ## [INFO]
 - (Catatan manual)
